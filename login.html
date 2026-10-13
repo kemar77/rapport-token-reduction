@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Token Reduction Tutorial — Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#B85042; --forest:#2C5F2D; --sand:#E7E8D1; --ink:#1F2421; --paper:#FBF9F4;
+    --muted:#5A5F58;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(231,232,209,.9), transparent 70%),
+    var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;padding:24px}
+  .door{background:#fff;border:1px solid var(--sand);border-radius:18px;
+    box-shadow:0 18px 50px rgba(31,36,33,.10);padding:44px 40px;max-width:420px;width:100%;text-align:center}
+  .eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta);margin-bottom:14px}
+  h1{font-family:'Playfair Display',Georgia,serif;font-size:1.8rem;font-weight:800;line-height:1.2;margin-bottom:10px}
+  p.sub{font-size:.92rem;color:var(--muted);margin-bottom:26px}
+  input{width:100%;font-family:'Inter',sans-serif;font-size:1.15rem;text-align:center;letter-spacing:.4em;
+    padding:14px;border:1px solid var(--sand);border-radius:12px;background:var(--paper);color:var(--ink);outline:none;
+    transition:border-color .2s}
+  input:focus{border-color:var(--terracotta)}
+  button{margin-top:14px;width:100%;background:var(--ink);color:var(--paper);border:none;border-radius:999px;
+    padding:14px;font-size:.98rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;
+    transition:transform .2s, box-shadow .2s}
+  button:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(31,36,33,.18)}
+  button:focus-visible,input:focus-visible{outline:3px solid var(--terracotta);outline-offset:3px}
+  .err{margin-top:14px;font-size:.88rem;color:var(--terracotta);font-weight:500;min-height:1.3em}
+  .hint{margin-top:22px;font-size:.78rem;color:var(--muted);opacity:.8}
+</style>
+</head>
+<body>
+<div class="door">
+  <p class="eyebrow">Private copy</p>
+  <h1>Token Reduction Tutorial</h1>
+  <p class="sub">Enter the access code to continue.</p>
+  <input id="code" inputmode="numeric" autocomplete="off" placeholder="••••" aria-label="Access code">
+  <button id="go">Open the tutorial →</button>
+  <p class="err" id="err" role="alert"></p>
+  <p class="hint">Tip: the code has four digits.</p>
+</div>
+<script>
+(function(){
+  var KEY = 'rtk_tuto_auth';
+  function open(){
+    sessionStorage.setItem(KEY,'1');
+    window.location.href = 'tutorial.html';
+  }
+  if(sessionStorage.getItem(KEY) === '1'){ open(); return; }
+  function attempt(){
+    var v = document.getElementById('code').value.trim();
+    if(v === '9999'){ open(); }
+    else {
+      document.getElementById('err').textContent = 'Wrong code — try again.';
+      document.getElementById('code').value = '';
+      document.getElementById('code').focus();
+    }
+  }
+  document.getElementById('go').addEventListener('click', attempt);
+  document.getElementById('code').addEventListener('keydown', function(e){
+    if(e.key === 'Enter') attempt();
+  });
+  document.getElementById('code').focus();
+})();
+</script>
+</body>
+</html>

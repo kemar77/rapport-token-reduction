@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stop Paying Full Price — A Beginner's Guide to Token Reduction for AI Coding Agents</title>
+<meta name="description" content="A 15-minute, copy-paste tutorial on cutting token costs (input and output) in Claude Code and OpenAI Codex CLI: prompt caching, context discipline, and RTK.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#B85042; --forest:#2C5F2D; --sand:#E7E8D1; --ink:#1F2421; --paper:#FBF9F4;
+    --muted:#5A5F58;
+    --surface:#FFFFFF; --ink-soft:#3C423C; --chrome:#2A312D; --chrome-muted:#9AA39B;
+    --ring-green:#7FC97F; --dot-red:#FF5F57; --dot-yellow:#FEBC2E; --dot-green:#28C840;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  main,header.hero,footer{max-width:760px;margin:0 auto;padding:0 28px}
+  h1,h2,.score-num{font-family:'Playfair Display',Georgia,serif}
+  h2{font-size:2rem;font-weight:700;line-height:1.2;margin-bottom:18px;letter-spacing:-.01em}
+  p{margin-bottom:16px}
+  a{color:var(--terracotta);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:hover{color:var(--forest)}
+  section{padding:56px 0;border-bottom:1px solid var(--sand)}
+  section:last-of-type{border-bottom:none}
+  .eyebrow{font-size:.75rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta);margin-bottom:14px}
+  .note{font-size:.85rem;color:var(--muted);margin-top:8px}
+  /* HERO */
+  header.hero{padding:84px 28px 64px;text-align:center;background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(231,232,209,.9), transparent 70%),
+    var(--paper)}
+  header.hero h1{font-size:clamp(2.1rem,5.5vw,3.3rem);font-weight:800;line-height:1.12;letter-spacing:-.015em;margin:18px auto 14px;max-width:19ch}
+  header.hero .sub{font-size:1.06rem;color:var(--muted);max-width:46ch;margin:0 auto 30px}
+  .score-wrap{display:flex;align-items:center;justify-content:center;gap:26px;flex-wrap:wrap;margin:34px 0 30px}
+  .ring{position:relative;width:170px;height:170px;flex:none}
+  .ring svg{transform:rotate(-90deg)}
+  .ring .track{fill:none;stroke:var(--sand);stroke-width:10}
+  .ring .fill{fill:none;stroke:var(--terracotta);stroke-width:10;stroke-linecap:round;stroke-dasharray:402.1;stroke-dashoffset:402.1;transition:stroke-dashoffset 1.8s cubic-bezier(.22,1,.36,1)}
+  .score-legend{text-align:left;max-width:300px}
+  .score-num{font-size:3rem;font-weight:800;color:var(--terracotta);line-height:1}
+  .score-cap{font-size:.92rem;color:var(--muted);margin-top:8px}
+  .score-cap .dim-note{font-size:.78rem;color:var(--muted);opacity:.85}
+  .cta{display:inline-block;background:var(--ink);color:var(--paper)!important;text-decoration:none;font-weight:600;font-size:.95rem;padding:14px 30px;border-radius:999px;transition:transform .2s ease, box-shadow .2s ease}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(31,36,33,.18);color:var(--paper)!important}
+  .cta:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--terracotta);outline-offset:3px}
+  /* STAT CARDS */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:26px 0 8px}
+  .card{background:var(--surface);border:1px solid var(--sand);border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(31,36,33,.05);transition:transform .25s ease, box-shadow .25s ease}
+  .card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(31,36,33,.10)}
+  .card .label{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .card .val{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700}
+  .card .val em{font-style:normal;color:var(--terracotta)}
+  .card .sub{font-size:.82rem;color:var(--muted);margin-top:6px}
+  /* BOXED QUOTE */
+  .quote{border-left:3px solid var(--forest);background:rgba(44,95,45,.06);padding:14px 18px;border-radius:0 12px 12px 0;font-size:.92rem;margin:18px 0}
+  .quote .q-src{display:block;margin-top:6px;font-size:.8rem}
+  /* CHECKLIST */
+  ul.wins{list-style:none;margin:24px 0}
+  ul.wins li{position:relative;padding:18px 20px 18px 52px;background:var(--surface);border:1px solid var(--sand);border-radius:14px;margin-bottom:14px;transition:transform .25s ease, box-shadow .25s ease}
+  ul.wins li:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(31,36,33,.09)}
+  ul.wins li::before{content:"✓";position:absolute;left:18px;top:18px;width:22px;height:22px;border-radius:50%;background:var(--forest);color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+  ul.wins li b{display:block;margin-bottom:3px}
+  ul.wins li{font-size:.94rem;color:var(--ink-soft)}
+  /* TERMINAL */
+  .terminal{background:var(--ink);border-radius:14px;overflow:hidden;box-shadow:0 14px 40px rgba(31,36,33,.28);margin:26px 0}
+  .terminal .bar{background:var(--chrome);padding:10px 16px;display:flex;gap:7px;align-items:center;border-bottom:1px solid rgba(231,232,209,.08)}
+  .terminal .dot{width:11px;height:11px;border-radius:50%}
+  .terminal .bar .title{margin-left:10px;font-size:.8rem;color:var(--chrome-muted);letter-spacing:.05em}
+  .terminal pre{padding:22px 24px;color:var(--sand);font-family:ui-monospace,'Cascadia Code',Consolas,Menlo,monospace;font-size:.88rem;line-height:1.8;overflow-x:auto}
+  .terminal .hl{color:var(--ring-green);font-weight:700}
+  .terminal .dim{color:var(--chrome-muted)}
+  /* CODE / COPY BLOCKS */
+  .codeblock{position:relative;margin:22px 0;background:var(--ink);border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(31,36,33,.22)}
+  .codeblock .head{display:flex;justify-content:space-between;align-items:center;background:var(--chrome);padding:9px 16px;border-bottom:1px solid rgba(231,232,209,.08)}
+  .codeblock .head span{font-size:.78rem;letter-spacing:.06em;color:var(--chrome-muted);text-transform:uppercase;font-weight:600}
+  .copybtn{background:var(--sand);color:var(--ink);border:none;border-radius:999px;padding:6px 16px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s}
+  .copybtn:hover{background:var(--surface)}
+  .copybtn.done{background:var(--forest);color:#fff}
+  .codeblock pre{padding:18px 20px;color:var(--sand);font-family:ui-monospace,'Cascadia Code',Consolas,Menlo,monospace;font-size:.85rem;line-height:1.75;overflow-x:auto;white-space:pre-wrap}
+  /* SOURCES */
+  ol.sources{margin:20px 0 0;padding-left:22px;font-size:.92rem}
+  ol.sources li{margin-bottom:9px;color:var(--ink-soft)}
+  ol.sources li span{color:var(--muted);font-size:.84rem}
+  /* REVEAL MOTION */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1)}
+  .reveal.visible{opacity:1;transform:none}
+  footer{padding:40px 28px 70px;text-align:center;color:var(--muted);font-size:.85rem}
+  footer b{color:var(--ink)}
+  /* CA SVG */
+  .cafig{display:block;margin:26px auto;max-width:100%;height:auto}
+  /* PRINT */
+  @media print{
+    body{font-size:12px}
+    .cta,.copybtn{display:none}
+    .terminal,.codeblock{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .terminal{box-shadow:none}
+    .codeblock{box-shadow:none;border:1px solid var(--sand)}
+    section{break-inside:avoid;padding:26px 0}
+    .reveal{opacity:1;transform:none}
+  }
+  @media (max-width:640px){
+    body{font-size:16px}
+    h2{font-size:1.6rem}
+    .cards{grid-template-columns:1fr}
+    .score-wrap{gap:14px}
+    header.hero{padding:56px 20px 44px}
+    main,header.hero,footer{padding-left:20px;padding-right:20px}
+    ul.wins li{padding-left:46px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .ring .fill{transition:none;stroke-dashoffset:46.65!important}
+    .card:hover,ul.wins li:hover,.cta:hover{transform:none}
+  }
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none}</style></noscript>
+</head>
+<body>
+
+<header class="hero">
+  <p class="eyebrow">A 15-minute tutorial · Claude Code &amp; OpenAI Codex CLI</p>
+  <h1>Stop paying full price for every token.</h1>
+  <div class="score-wrap">
+    <div class="ring" role="img" aria-label="Progress ring showing 88.4 percent of tokens saved">
+      <svg width="170" height="170" viewBox="0 0 170 170" aria-hidden="true">
+        <circle class="track" cx="85" cy="85" r="64"></circle>
+        <circle class="fill" id="ringfill" cx="85" cy="85" r="64"></circle>
+      </svg>
+    </div>
+    <div class="score-legend">
+      <div class="score-num"><span id="counter">88.4</span>%</div>
+      <p class="score-cap">of <b>input tokens</b> saved across <b>71,556 real commands</b> — measured on our own setup, all kinds of commands mixed. <span class="dim-note">Snapshot frozen 13 Oct — the counter keeps ticking.</span></p>
+    </div>
+  </div>
+  <p class="sub">Your AI coding agent reads far more than it needs to, and bills you for every read. Here is how the bill actually works — and the copy-paste fixes that shrink it.</p>
+  <a class="cta" href="#cache">Show me how ↓</a>
+</header>
+
+<main>
+
+<section id="token" data-od-id="what-is-a-token" class="reveal">
+  <p class="eyebrow">1 · The meter</p>
+  <h2>What is a token?</h2>
+  <p>An AI model doesn't read words — it reads <b>tokens</b>: small chunks of text worth roughly <b>3.5 English characters each</b> on most Claude models (the newest 4.7+ models spread the same text across ~30% <em>more</em> tokens — <a href="https://platform.claude.com/docs/en/about-claude/glossary" target="_blank" rel="noopener">source</a>). Everything your agent touches becomes tokens: your prompts, whole files it opens, and every command output it reads.</p>
+  <p>And you pay both directions, like a toll booth charging every car twice: <b>input tokens</b> (what goes in) and <b>output tokens</b> (what comes out). Output is the expensive direction — on today's Claude models it costs <b>exactly 5× the input price</b>.</p>
+  <div class="cards">
+    <div class="card">
+      <div class="label">Price asymmetry · Claude Sonnet 5.5</div>
+      <div class="val">$2 in · <em>$10 out</em></div>
+      <div class="sub">per million tokens — output is 5× input on every current Claude model (<a href="https://claude.com/pricing" target="_blank" rel="noopener">pricing</a>)</div>
+    </div>
+    <div class="card">
+      <div class="label">Size of a token</div>
+      <div class="val">≈ 3.5 chars</div>
+      <div class="sub">of English per token, most Claude models; 4.7+ models emit ~30% more tokens (<a href="https://platform.claude.com/docs/en/about-claude/glossary" target="_blank" rel="noopener">glossary</a>)</div>
+    </div>
+  </div>
+  <p class="note">A 200-line file your agent reads "just to look" is real money — paid on every single turn of the conversation.</p>
+</section>
+
+<section id="cache" data-od-id="the-cache" class="reveal">
+  <p class="eyebrow">2 · The invisible lever</p>
+  <h2>The cache: your agent's biggest discount</h2>
+  <p>Here's the part nobody tells beginners: every time you send a message, the <b>entire conversation</b> — all previous turns, files, and outputs — is re-sent to the model as input. Without a cache, turn 40 pays full price for turns 1 through 39, all over again, every single time.</p>
+  <p><b>Prompt caching</b> fixes this. The provider remembers the <b>unchanged beginning</b> of the conversation (the "prefix") and re-reads it at a fraction of the price:</p>
+  <ul style="list-style:none;margin:18px 0">
+    <li style="padding-left:26px;margin-bottom:10px;position:relative"><span style="position:absolute;left:0;color:var(--forest);font-weight:700">●</span><b>Cache read</b> = <b>0.1×</b> the input price — a 90% discount (0.05× on Sonnet 5.5 and Opus 5.5, and as low as 0.025× — 97.5% off — on the very newest).</li>
+    <li style="padding-left:26px;margin-bottom:10px;position:relative"><span style="position:absolute;left:0;color:var(--terracotta);font-weight:700">●</span><b>Cache write</b> costs +25% once, when a new prefix is stored (a TTL — time-to-live — of 5 minutes on API keys; the stored copy is refreshed for free every time you use it, a "cache hit").</li>
+  </ul>
+  <svg class="cafig" width="640" height="150" viewBox="0 0 640 150" role="img" aria-label="Diagram: the unchanged conversation prefix is read from cache cheaply; only new tokens pay full price">
+    <rect x="20"  y="20" width="100" height="48" rx="8" fill="var(--forest)"/>
+    <rect x="130" y="20" width="100" height="48" rx="8" fill="var(--forest)"/>
+    <rect x="240" y="20" width="100" height="48" rx="8" fill="var(--forest)"/>
+    <rect x="350" y="20" width="110" height="48" rx="8" fill="var(--sand)" stroke="var(--sand)"/>
+    <rect x="470" y="20" width="150" height="48" rx="8" fill="var(--terracotta)"/>
+    <text x="70"  y="51" font-size="20" fill="var(--paper)" text-anchor="middle" font-family="Inter,sans-serif">system</text>
+    <text x="180" y="51" font-size="20" fill="var(--paper)" text-anchor="middle" font-family="Inter,sans-serif">tools</text>
+    <text x="290" y="51" font-size="20" fill="var(--paper)" text-anchor="middle" font-family="Inter,sans-serif">turns 1…n</text>
+    <text x="405" y="51" font-size="20" fill="var(--ink)" text-anchor="middle" font-family="Inter,sans-serif">cached</text>
+    <text x="545" y="51" font-size="20" fill="var(--paper)" text-anchor="middle" font-family="Inter,sans-serif">new turn</text>
+    <path d="M20 100 H460" stroke="var(--forest)" stroke-width="2" stroke-dasharray="5 5"/>
+    <text x="240" y="128" font-size="20" fill="var(--forest)" text-anchor="middle" font-family="Inter,sans-serif">identical prefix → ~90% cheaper</text>
+    <path d="M470 100 H620" stroke="var(--terracotta)" stroke-width="2" stroke-dasharray="5 5"/>
+    <text x="545" y="128" font-size="20" fill="var(--terracotta)" text-anchor="middle" font-family="Inter,sans-serif">full price</text>
+  </svg>
+  <p><b>When does the discount disappear?</b> On a <b>cache miss</b> — and that's the one thing to protect. The cache only survives if the beginning of the conversation stays byte-for-byte identical:</p>
+  <blockquote class="quote">"Cache hits require 100% identical prompt segments." Changing the system prompt (the standing instructions the agent starts every conversation with), the tools list (the set of functions the agent may call), or anything before your latest message invalidates everything after it — and the whole conversation is re-billed at full price.
+    <span class="q-src">— <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching" target="_blank" rel="noopener">Anthropic, Prompt caching docs</a></span>
+  </blockquote>
+  <p>Think of a highway <b>toll pass</b>: as long as the windshield tag stays visible and untouched, the barrier opens at the discount rate. Swap the windshield sticker mid-trip — new system prompt, swapped model, edited first message — and you pay the full toll on the whole road again. One practical detail: on <b>API keys</b> the cache lives 5 minutes; on Claude <b>subscriptions</b> it lives 1 hour. Either way it refreshes free each time you hit it — work in bursts, and it stays warm. (Everything the model can "see" at once — its working memory — is called its <b>context window</b> — the cache keeps most of that context at the discount rate.)</p>
+</section>
+
+<section id="wins" data-od-id="free-wins" class="reveal">
+  <p class="eyebrow">3 · Zero-cost habits</p>
+  <h2>The free wins (no tool required)</h2>
+  <p>Before installing anything, four habits cut the bill today — each one is the official recommendation, not folk wisdom:</p>
+  <ul class="wins">
+    <li><b>Keep your context file lean.</b> <span>CLAUDE.md (Claude Code) and AGENTS.md (Codex) are loaded at the start of every session and re-sent on every request. The official advice: "aim to keep CLAUDE.md under 200 lines." Codex caps the combined instruction files at 32 KiB but still injects them everywhere. (<a href="https://code.claude.com/docs/en/costs" target="_blank" rel="noopener">costs</a> · <a href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener">memory</a> · <a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" target="_blank" rel="noopener">AGENTS.md</a>)</span></li>
+    <li><b>Compact instead of clearing.</b> <span>When the context window fills, /compact summarizes the conversation mid-task (Claude Code also auto-compacts when you approach the limit); /context shows a colored grid of what's eating it. Switching tasks? /clear — stale context is billed on every later message. (<a href="https://code.claude.com/docs/en/commands" target="_blank" rel="noopener">commands</a>)</span></li>
+    <li><b>Delegate heavy reading to subagents.</b> <span>A subagent is a helper instance the main agent spawns; it runs in its own isolated context window — it wades through logs and files, and only the short summary returns to your main thread. Fair warning from the docs: each subagent spends tokens of its own. (<a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener">sub-agents</a>)</span></li>
+    <li><b>Read with a scalpel, not a bulldozer.</b> <span>Never dump a whole file or a raw command. Claude Code's <em>hooks</em> (small scripts the tool runs before/after each command) can enforce this for you: the docs show a test-run hook that greps errors and keeps only the first 100 lines — turning "tens of thousands of tokens" into "hundreds." (<a href="https://code.claude.com/docs/en/costs" target="_blank" rel="noopener">costs</a>)</span></li>
+  </ul>
+  <p class="note">Just switching to Codex? OpenAI's caching is automatic (up to 95% off reused tokens, 30-minute TTL) — same prefix rule applies (<a href="https://developers.openai.com/api/docs/guides/prompt-caching" target="_blank" rel="noopener">docs</a>). The habits above are identical.</p>
+</section>
+
+<section id="rtk" data-od-id="rtk-the-filter" class="reveal">
+  <p class="eyebrow">4 · Automate it</p>
+  <h2>RTK: the filter we measured</h2>
+  <p>Everything in section 3 asks the agent to be disciplined. <b>RTK</b> doesn't ask — it <b>enforces</b>. It's a small Rust program (<a href="https://github.com/rtk-ai/rtk" target="_blank" rel="noopener">github.com/rtk-ai/rtk</a>, Apache-2.0, single binary) that sits between your agent and the terminal: every command the agent runs goes through it, and only a compact, filtered summary reaches the model. Its README claims 60–90% reduction on common dev commands.</p>
+  <p>This isn't marketing — it's what we measured on our own machine, on real work:</p>
+  <div class="terminal">
+    <div class="bar"><span class="dot" style="background:var(--dot-red)"></span><span class="dot" style="background:var(--dot-yellow)"></span><span class="dot" style="background:var(--dot-green)"></span><span class="title">rtk gain — local measurement, 13 Oct 2026 (edited excerpt)</span></div>
+    <pre>RTK Token Savings <span class="dim">(Global Scope)</span>
+Total commands:    71556
+Input tokens:      232.0M
+Output tokens:     26.9M
+Tokens saved:      <span class="hl">205.1M (88.4%)</span>
+Efficiency meter:  █████████████████████░░░ 88.4%</pre>
+  </div>
+  <p class="note">⚠️ Your numbers will differ — this is a local measurement, not a published benchmark. But the mechanism is the same one from section 3, applied automatically to every command.</p>
+  <div class="codeblock">
+    <div class="head"><span>Install RTK</span><button class="copybtn" data-copy="winget install rtk-ai.rtk   # Windows
+# macOS / Linux: brew install rtk
+rtk init --global              # wires the hook into Claude Code" aria-label="Copy RTK install commands">Copy</button></div>
+    <pre>winget install rtk-ai.rtk   # Windows
+# macOS / Linux: brew install rtk
+rtk init --global              # wires the hook into Claude Code</pre>
+  </div>
+  <p class="note">Windows users: just two commands — <span style="font-family:ui-monospace,monospace">winget install rtk-ai.rtk</span> then <span style="font-family:ui-monospace,monospace">rtk init --global</span>. The brew line is for macOS/Linux only.</p>
+  <p class="note">🚫 Don't run <span style="font-family:ui-monospace,monospace">cargo install rtk</span> — that installs a different project called "Rust Type Kit" (a real name collision, documented in RTK's own README). Verify with <span style="font-family:ui-monospace,monospace">rtk --version</span>.</p>
+</section>
+
+<section id="kit" data-od-id="copy-paste-kit" class="reveal">
+  <p class="eyebrow">5 · Steal these</p>
+  <h2>The copy-paste kit</h2>
+  <p>Paste block A (or B) once, and your agent follows the discipline from section 3 on every task. Block C finds your personal waste.</p>
+  <div class="codeblock">
+    <div class="head"><span>A · paste into CLAUDE.md (Claude Code)</span><button class="copybtn" data-copy="# Token discipline
+- Before reading a whole file, grep the relevant section and read only that.
+- Never dump full command output; pipe through head -100 or filter with grep.
+- When a command is verbose, report a one-sentence summary, not the raw text.
+- If the context window fills mid-task, run /compact instead of /clear.
+- Keep my instructions files short: this file must stay under 200 lines." aria-label="Copy CLAUDE.md token discipline snippet">Copy</button></div>
+    <pre># Token discipline
+- Before reading a whole file, grep the relevant section and read only that.
+- Never dump full command output; pipe through head -100 or filter with grep.
+- When a command is verbose, report a one-sentence summary, not the raw text.
+- If the context window fills mid-task, run /compact instead of /clear.
+- Keep my instructions files short: this file must stay under 200 lines.</pre>
+  </div>
+  <div class="codeblock">
+    <div class="head"><span>B · paste into AGENTS.md (Codex CLI)</span><button class="copybtn" data-copy="# Token discipline
+- Read files surgically: locate with grep first, read the matching range only.
+- Truncate terminal output: `&lt;command&gt; 2&gt;&amp;1 | head -100` unless full output is needed.
+- Summarize verbose results in one sentence instead of echoing them.
+- Keep AGENTS.md minimal — it is injected into every request (32 KiB cap)." aria-label="Copy AGENTS.md token discipline snippet">Copy</button></div>
+    <pre># Token discipline
+- Read files surgically: locate with grep first, read the matching range only.
+- Truncate terminal output: `&lt;command&gt; 2&gt;&amp;1 | head -100` unless full output is needed.
+- Summarize verbose results in one sentence instead of echoing them.
+- Keep AGENTS.md minimal — it is injected into every request (32 KiB cap).</pre>
+  </div>
+  <div class="codeblock">
+    <div class="head"><span>C · one-shot waste audit (any agent)</span><button class="copybtn" data-copy="Audit my last session's token usage: list the 5 heaviest
+sources of waste (files read whole, raw command dumps,
+repeated context), and tell me the single command I
+should stop running raw." aria-label="Copy waste audit prompt">Copy</button></div>
+    <pre>Audit my last session's token usage: list the 5 heaviest
+sources of waste (files read whole, raw command dumps,
+repeated context), and tell me the single command I
+should stop running raw.</pre>
+  </div>
+</section>
+
+<section id="sources" data-od-id="sources" class="reveal">
+  <p class="eyebrow">6 · Receipts</p>
+  <h2>Sources</h2>
+  <p style="font-size:.94rem">Every number in this tutorial traces to an official page, visited and verified on 13 October 2026. Measured figures (88.4%, 71,556 commands) come from our own local RTK counter.</p>
+  <ol class="sources">
+    <li><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching" target="_blank" rel="noopener">Anthropic — Prompt caching</a> <span>· read 0.1×, write +25%, prefix rule</span></li>
+    <li><a href="https://claude.com/pricing" target="_blank" rel="noopener">Anthropic — Pricing</a> <span>· output = 5× input</span></li>
+    <li><a href="https://platform.claude.com/docs/en/about-claude/glossary" target="_blank" rel="noopener">Anthropic — Glossary</a> <span>· token ≈ 3.5 chars; 4.7+ models +30%</span></li>
+    <li><a href="https://code.claude.com/docs/en/costs" target="_blank" rel="noopener">Claude Code — Manage costs</a> <span>· 200-line rule, grep|head hook, subagents</span></li>
+    <li><a href="https://code.claude.com/docs/en/prompt-caching" target="_blank" rel="noopener">Claude Code — Prompt caching</a> <span>· TTL 5 min API / 1 h subscription, /usage</span></li>
+    <li><a href="https://code.claude.com/docs/en/commands" target="_blank" rel="noopener">Claude Code — Commands</a> <span>· /compact, /context, /clear</span></li>
+    <li><a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener">Claude Code — Sub-agents</a> <span>· isolated context, summary-only return</span></li>
+    <li><a href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener">Claude Code — Memory</a> <span>· CLAUDE.md loaded every session</span></li>
+    <li><a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" target="_blank" rel="noopener">Codex — AGENTS.md</a> <span>· once per run, 32 KiB cap</span></li>
+    <li><a href="https://developers.openai.com/api/docs/guides/prompt-caching" target="_blank" rel="noopener">OpenAI — Prompt caching</a> <span>· automatic, −95%, 30-min TTL</span></li>
+    <li><a href="https://github.com/rtk-ai/rtk" target="_blank" rel="noopener">RTK — github.com/rtk-ai/rtk</a> <span>· Apache-2.0, the tool we measured</span></li>
+    <li><a href="https://www.rtk-ai.app" target="_blank" rel="noopener">RTK — official site</a> <span>· install &amp; rtk init</span></li>
+    <li><a href="https://claude.dev/blog/lessons-from-building-claude-code-prompt-caching-is-everything/" target="_blank" rel="noopener">Anthropic — “Prompt caching is everything”</a> <span>· why agents live on the cache</span></li>
+  </ol>
+</section>
+
+</main>
+
+<footer>
+  <p><b>One rule to remember:</b> the bill punishes reading, twice. Read less, cache everything that doesn't change, filter what must be read.<br>
+  Every link was live and official on 13 October 2026 · Made with the very discipline it teaches.</p>
+</footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var C = 2 * Math.PI * 64; // 402.12
+  function setRing(p){
+    var f = document.getElementById('ringfill');
+    if(f) f.style.strokeDashoffset = (C * (1 - p)).toFixed(1);
+  }
+  function clipboardFallback(txt){
+    var ta = document.createElement('textarea');
+    ta.value = txt; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
+  }
+  // No-JS / print fallback: static HTML already says 88.4. Animate from 0 when JS runs.
+  function runCounter(){
+    var el = document.getElementById('counter');
+    var target = 88.4, dur = 1800, t0 = null;
+    setRing(target/100);
+    if(reduced){ el.textContent = '88.4'; return; }
+    function step(ts){
+      if(!t0) t0 = ts;
+      var k = Math.min((ts - t0)/dur, 1);
+      k = 1 - Math.pow(1 - k, 3); // ease-out cubic
+      el.textContent = (target * k).toFixed(1);
+      if(k < 1) requestAnimationFrame(step);
+    }
+    el.textContent = '0.0';            // start from zero only when animation will run
+    requestAnimationFrame(step);
+  }
+  if(reduced){ setRing(0.884); }
+  else { setTimeout(runCounter, 250); }
+
+  // reveal on scroll
+  if(!reduced && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  // copy buttons
+  document.querySelectorAll('.copybtn').forEach(function(btn){
+    if(!btn.dataset.copy){ // block C: copy from the pre itself
+      btn.dataset.copy = btn.closest('.codeblock').querySelector('pre').textContent;
+    }
+    btn.addEventListener('click', function(){
+      var txt = btn.dataset.copy;
+      function done(){
+        var old = btn.textContent;
+        btn.textContent = 'Copied ✓'; btn.classList.add('done');
+        setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 1600);
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(done, function(){
+          clipboardFallback(txt); done();
+        });
+      } else {
+        clipboardFallback(txt); done();
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
