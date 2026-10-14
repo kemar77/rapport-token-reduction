@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your AI Gameplan</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%23B85042'/%3E%3C/svg%3E">
+<meta name="description" content="Tell us what you want to build with AI. 31 quick questions, about 7-10 minutes. No account, no payment, no personal data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#B85042; --forest:#2C5F2D; --sand:#E7E8D1; --ink:#1F2421; --paper:#FBF9F4;
+    --muted:#5A5F58; --surface:#FFFFFF; --ink-soft:#3C423C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+  h1,h2,.logo{font-family:'Playfair Display',Georgia,serif}
+  /* PROGRESS */
+  .progress{position:sticky;top:0;z-index:10;background:rgba(251,249,244,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--sand);padding:14px 0}
+  .progress .bar{height:6px;background:var(--sand);border-radius:999px;overflow:hidden}
+  .progress .fill{height:100%;width:0%;background:var(--terracotta);border-radius:999px;transition:width .4s cubic-bezier(.22,1,.36,1)}
+  .progress .meta{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:6px;font-weight:500}
+  /* HEADER */
+  header.hero{padding:56px 0 40px;text-align:center}
+  .eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta);margin-bottom:12px}
+  header.hero h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;line-height:1.15;letter-spacing:-.015em;margin-bottom:14px}
+  header.hero .sub{color:var(--muted);max-width:52ch;margin:0 auto}
+  .trust{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+  .trust span{font-size:.78rem;color:var(--forest);background:rgba(44,95,45,.07);border:1px solid rgba(44,95,45,.25);border-radius:999px;padding:5px 14px;font-weight:600}
+  /* SECTIONS */
+  section{padding:44px 0;border-top:1px solid var(--sand)}
+  section:first-of-type{border-top:none}
+  .sechead{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+  .secnum{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:800;color:var(--sand);line-height:1}
+  .sechead h2{font-size:1.45rem;font-weight:700;letter-spacing:-.01em}
+  .secsub{color:var(--muted);font-size:.92rem;margin-bottom:8px}
+  /* QUESTIONS */
+  .q{margin:30px 0}
+  .qlabel{font-weight:700;font-size:1rem;margin-bottom:4px}
+  .why{font-size:.82rem;color:var(--muted);margin-bottom:12px;font-style:italic}
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opt{position:relative;display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--surface);border:1px solid var(--sand);border-radius:12px;cursor:pointer;transition:border-color .15s, background .15s, transform .15s;font-size:.94rem}
+  .opt:hover{border-color:var(--terracotta);transform:translateX(2px)}
+  .opt input{position:absolute;opacity:0;pointer-events:none}
+  .opt .dot{width:18px;height:18px;flex:none;border-radius:50%;border:2px solid var(--muted);position:relative;transition:border-color .15s}
+  .opt:has(input:focus-visible){outline:3px solid var(--terracotta);outline-offset:2px}
+  .opt:has(input:checked){border-color:var(--terracotta);background:rgba(184,80,66,.05)}
+  .opt:has(input:checked) .dot{border-color:var(--terracotta)}
+  .opt:has(input:checked) .dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--terracotta)}
+  .opt.checked{border-color:var(--terracotta);background:rgba(184,80,66,.05)}
+  .opt.checked .dot{border-color:var(--terracotta)}
+  .opt.checked .dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--terracotta)}
+  .opt.focus-visible,input:focus-visible,button:focus-visible,textarea:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
+  .freetext{margin-top:10px;display:none}
+  .freetext.show{display:block;animation:fadein .3s ease}
+  textarea{width:100%;min-height:64px;resize:vertical;font-family:'Inter',sans-serif;font-size:.94rem;color:var(--ink);background:var(--surface);border:1px solid var(--sand);border-radius:12px;padding:12px 14px;outline:none;transition:border-color .2s}
+  textarea:focus{border-color:var(--terracotta)}
+  .freetext label{display:block;font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:6px}
+  @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  /* SUMMARY */
+  .summary{margin:50px 0 30px;background:var(--ink);border-radius:20px;padding:34px 30px;color:var(--paper);box-shadow:0 16px 44px rgba(31,36,33,.26)}
+  .summary .eyebrow{color:var(--sand)}
+  .summary h2{color:var(--paper);font-size:1.7rem;font-weight:800;margin-bottom:8px}
+  .summary .sub{color:rgba(231,232,209,.75);font-size:.92rem;margin-bottom:20px}
+  #summaryOut{font-family:ui-monospace,'Cascadia Code',Consolas,Menlo,monospace;font-size:.82rem;line-height:1.75;white-space:pre-wrap;color:var(--sand);background:rgba(251,249,244,.05);border:1px solid rgba(231,232,209,.12);border-radius:12px;padding:18px 20px;max-height:340px;overflow-y:auto}
+  .copybtn{margin-top:16px;background:var(--sand);color:var(--ink);border:none;border-radius:999px;padding:13px 30px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .2s, background .2s}
+  .copybtn:hover{transform:translateY(-2px);background:#fff}
+  .copybtn.done{background:var(--forest);color:#fff}
+  .copybtn:focus-visible{outline:3px solid var(--paper);outline-offset:2px}
+  .counter{font-size:.8rem;color:rgba(231,232,209,.6);margin-top:10px}
+  footer{padding:34px 0 60px;text-align:center;color:var(--muted);font-size:.82rem}
+  footer .rule{width:60px;height:2px;background:var(--sand);margin:0 auto 16px;border-radius:2px}
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1)}
+  .reveal.visible{opacity:1;transform:none}
+  /* PRINT + MOBILE + MOTION */
+  @media print{.progress,.copybtn{display:none}.summary{-webkit-print-color-adjust:exact;print-color-adjust:exact}section{break-inside:avoid;padding:20px 0}.reveal{opacity:1;transform:none}}
+  @media (max-width:600px){
+    body{font-size:15px}
+    .secnum{font-size:1.9rem}
+    .sechead{gap:9px}
+    .sechead h2{font-size:1.2rem}
+    header.hero h1{font-size:1.7rem}
+    .summary{padding:26px 20px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .progress .fill{transition:none}
+    .opt:hover,.copybtn:hover{transform:none}
+    .freetext.show{animation:none}
+  }
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none}</style></noscript>
+</head>
+<body>
+
+<div class="progress">
+  <div class="wrap">
+    <div class="bar"><div class="fill" id="pfill"></div></div>
+    <div class="meta"><span id="pcount">0 of 31 answered</span><span>≈ 7-10 minutes</span></div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Your AI Gameplan — intake form</p>
+    <h1>What do you want to build with AI?</h1>
+    <p class="sub">31 quick questions. At the end you get a clear summary of what you picked — copy it, send it back, and we'll turn it into a concrete plan and a precise quote.</p>
+    <div class="trust">
+      <span>✓ No account needed</span>
+      <span>✓ No payment</span>
+      <span>✓ Nothing leaves your browser until you copy it</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+<form id="qcm" autocomplete="off">
+
+<section id="s1" data-od-id="about-you" class="reveal" data-sec="1">
+  <div class="sechead"><span class="secnum">1</span><h2>About you &amp; your venture</h2></div>
+  <p class="secsub">Four questions so we quote the right shape — an agency and a solo seller don't buy the same things.</p>
+
+  <div class="q" data-q="1"><p class="qlabel">What kind of venture are you building (or planning to build)?</p><p class="why">An agency buys different things than a solo e-commerce seller — this decides the shape of your quote.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q1" value="Freelance / independent"><span class="dot"></span>Freelance / independent — I sell my skills directly</label>
+    <label class="opt"><input type="radio" name="q1" value="Agency"><span class="dot"></span>Agency — we deliver projects for clients</label>
+    <label class="opt"><input type="radio" name="q1" value="SaaS / software product"><span class="dot"></span>SaaS / software product</label>
+    <label class="opt"><input type="radio" name="q1" value="E-commerce"><span class="dot"></span>E-commerce — physical or digital products</label>
+    <label class="opt"><input type="radio" name="q1" value="Content creation / media"><span class="dot"></span>Content creation / media</label>
+    <label class="opt"><input type="radio" name="q1" value="Consulting"><span class="dot"></span>Consulting</label>
+    <label class="opt"><input type="radio" name="q1" value="Other"><span class="dot"></span>Other</label></div></div>
+
+  <div class="q" data-q="2"><p class="qlabel">Where are the customers you want to reach?</p><p class="why">Your market decides the language of your content, your SEO territory, the legal angle, and the time zone your automations wake up in.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q2" value="USA"><span class="dot"></span>USA</label>
+    <label class="opt"><input type="radio" name="q2" value="USA + Canada"><span class="dot"></span>USA + Canada</label>
+    <label class="opt"><input type="radio" name="q2" value="UK"><span class="dot"></span>UK</label>
+    <label class="opt"><input type="radio" name="q2" value="Europe"><span class="dot"></span>Europe</label>
+    <label class="opt"><input type="radio" name="q2" value="Worldwide"><span class="dot"></span>Worldwide</label>
+    <label class="opt"><input type="radio" name="q2" value="Specific country (on kickoff call)"><span class="dot"></span>A specific country or region — we'll pin it down on the kickoff call</label></div></div>
+
+  <div class="q" data-q="3"><p class="qlabel">How do you use Claude Code today?</p><p class="why">Every training track is calibrated to where you actually are — no beginner material sold to someone who already lives in the tool.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q3" value="Not using it yet"><span class="dot"></span>I don't use it yet — I only know ChatGPT / Claude web</label>
+    <label class="opt"><input type="radio" name="q3" value="Installed, barely opened"><span class="dot"></span>I installed it and barely opened it</label>
+    <label class="opt"><input type="radio" name="q3" value="Occasionally"><span class="dot"></span>Occasionally, on simple tasks</label>
+    <label class="opt"><input type="radio" name="q3" value="Every day"><span class="dot"></span>Every day — it's part of my routine</label>
+    <label class="opt"><input type="radio" name="q3" value="Every day, advanced"><span class="dot"></span>Every day, and advanced: skills, hooks, agents, custom commands</label></div></div>
+
+  <div class="q" data-q="4"><p class="qlabel">What machine will this run on?</p><p class="why">Image, video and audio pipelines need serious GPU power — your hardware decides what runs locally (cheap) versus in the cloud (flexible).</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q4" value="Windows PC, no GPU"><span class="dot"></span>Windows PC, no dedicated graphics card</label>
+    <label class="opt"><input type="radio" name="q4" value="Windows + NVIDIA GPU"><span class="dot"></span>Windows PC with an NVIDIA graphics card</label>
+    <label class="opt"><input type="radio" name="q4" value="Mac (Apple silicon)"><span class="dot"></span>Mac (Apple silicon)</label>
+    <label class="opt"><input type="radio" name="q4" value="Mac + eGPU"><span class="dot"></span>Mac with an external GPU</label>
+    <label class="opt"><input type="radio" name="q4" value="Cloud server / VPS"><span class="dot"></span>A cloud server / VPS I already rent or plan to rent</label>
+    <label class="opt"><input type="radio" name="q4" value="Not sure / several"><span class="dot"></span>Not sure / several machines</label></div></div>
+</section>
+
+<section id="s2" data-od-id="passive-intelligence" class="reveal" data-sec="2">
+  <div class="sechead"><span class="secnum">2</span><h2>The AI that works while you sleep</h2></div>
+  <p class="secsub">Passive intelligence (this section) watches and briefs you; Section 3 deploys the workers that act. One yes per question — and if yes, one line. That line is the seed of your setup.</p>
+
+  <div class="q" data-q="5"><p class="qlabel">An AI night shift — an agent screens your market overnight and hands you a short morning brief of what actually matters. Interested?</p><p class="why">Your one-liner tells us what your night agent digs into on day one.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q5" value="Yes - night brief"><span class="dot"></span>Yes</label>
+    <label class="opt"><input type="radio" name="q5" value="Not now"><span class="dot"></span>Not now</label></div>
+    <div class="freetext" data-for="q5"><label>After that: what should have been done by the time you open your laptop at 8 a.m.?</label><textarea name="q5t" maxlength="280" placeholder="e.g. every price change my top 5 competitors made yesterday..."></textarea></div></div>
+
+  <div class="q" data-q="6"><p class="qlabel">Automated market watch — 18+ feeds of your market, skimmed and scored for you every single day. Interested?</p><p class="why">"Watch your market" means nothing; "watch my competitor's pricing page" means we can build it next week.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q6" value="Yes - market watch"><span class="dot"></span>Yes</label>
+    <label class="opt"><input type="radio" name="q6" value="Not now"><span class="dot"></span>Not now</label></div>
+    <div class="freetext" data-for="q6"><label>What should it watch first? (competitors, keywords, funding news, regulations...)</label><textarea name="q6t" maxlength="280" placeholder="e.g. my 3 competitors' new pages + AI news in my niche..."></textarea></div></div>
+
+  <div class="q" data-q="7"><p class="qlabel">A business memory — your company's facts, decisions and client knowledge organized once, then remembered across every session, forever. Interested?</p><p class="why">This turns Claude Code into a colleague who already knows your business — and never makes you re-explain.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q7" value="Yes - business memory"><span class="dot"></span>Yes</label>
+    <label class="opt"><input type="radio" name="q7" value="Not now"><span class="dot"></span>Not now</label></div>
+    <div class="freetext" data-for="q7"><label>What's the first thing it should never forget?</label><textarea name="q7t" maxlength="280" placeholder="e.g. my pricing rules and what each client hates..."></textarea></div></div>
+
+  <div class="q" data-q="8"><p class="qlabel">Several AIs in parallel — one writes, one reviews, one tests, no waiting in line. Interested?</p><p class="why">Parallel agents only pay off on repetitive production work — your answer tells us whether it fits your reality.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q8" value="Yes - parallel agents"><span class="dot"></span>Yes</label>
+    <label class="opt"><input type="radio" name="q8" value="Not now"><span class="dot"></span>Not now</label></div>
+    <div class="freetext" data-for="q8"><label>What should they tackle first?</label><textarea name="q8t" maxlength="280" placeholder="e.g. drafting my weekly newsletter while another checks it..."></textarea></div></div>
+</section>
+
+<section id="s3" data-od-id="ready-solutions" class="reveal" data-sec="3">
+  <div class="sechead"><span class="secnum">3</span><h2>Ready-to-deploy solutions</h2></div>
+  <p class="secsub">For each solution, pick your level of help — we set it up for you, we set it up and teach you to run it, or not now. The last two questions just size your volume and spend.</p>
+
+  <div class="q" data-q="9"><p class="qlabel">CCR (Claude Code Router) — connect Claude Code to <b>any LLM in the world</b> instead of paying premium prices for every request.</p><p class="why">In plain words: CCR is a small router that sits between your Claude Code and the AI models. Routine work (reading files, simple edits, tests) is automatically sent to free or cheap models, while expensive top-tier models only handle what truly deserves them. Same tool, same workflow — your monthly bill drops toward zero.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q9" value="Yes - set up for me"><span class="dot"></span>Yes — set it up for me</label>
+    <label class="opt"><input type="radio" name="q9" value="Yes - set up + training"><span class="dot"></span>Yes — set it up and teach me to run it</label>
+    <label class="opt"><input type="radio" name="q9" value="Not now"><span class="dot"></span>Not now</label></div></div>
+
+  <div class="q" data-q="10"><p class="qlabel">Your always-on server — a private server we set up and keep running, where your websites, apps, automations and rented-GPU AIs work 24/7, even when your laptop is off.</p><p class="why">It's the physical home of almost everything else on this list — including the "Rent a GPU server" option below when Local AI needs muscle.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q10" value="Yes - set up for me"><span class="dot"></span>Yes — set it up for me</label>
+    <label class="opt"><input type="radio" name="q10" value="Yes - set up + training"><span class="dot"></span>Yes — set it up and teach me to run it</label>
+    <label class="opt"><input type="radio" name="q10" value="Not now"><span class="dot"></span>Not now</label></div></div>
+
+  <div class="q" data-q="11"><p class="qlabel">SEO + AI visibility — rank on Google and get your business cited inside ChatGPT, Perplexity and Gemini answers, where your buyers increasingly ask first. Audit, structure and content, handled end to end.</p><p class="why">Combined with your market (above), this defines the exact search territory we'd attack first.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q11" value="Yes - set up for me"><span class="dot"></span>Yes — set it up for me</label>
+    <label class="opt"><input type="radio" name="q11" value="Yes - set up + training"><span class="dot"></span>Yes — set it up and teach me to run it</label>
+    <label class="opt"><input type="radio" name="q11" value="Not now"><span class="dot"></span>Not now</label></div></div>
+
+  <div class="q" data-q="12"><p class="qlabel">Video AI — ad spots, trailers, UGC-style clips and motion design, produced by a pipeline you can reuse for every campaign.</p><p class="why">We're pricing either a production line (recurring) or a training track — your answer picks the column.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q12" value="Yes - set up for me"><span class="dot"></span>Yes — set it up for me</label>
+    <label class="opt"><input type="radio" name="q12" value="Yes - set up + training"><span class="dot"></span>Yes — set it up and teach me to run it</label>
+    <label class="opt"><input type="radio" name="q12" value="Not now"><span class="dot"></span>Not now</label></div></div>
+
+  <div class="q" data-q="13"><p class="qlabel">Photo &amp; visuals AI — product shots, brand visuals and website hero images, consistent across your entire catalog.</p><p class="why">Recurring production (we quote the line) versus one-off need (we quote the batch).</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q13" value="Yes - set up for me"><span class="dot"></span>Yes — set it up for me</label>
+    <label class="opt"><input type="radio" name="q13" value="Yes - set up + training"><span class="dot"></span>Yes — set it up and teach me to run it</label>
+    <label class="opt"><input type="radio" name="q13" value="Not now"><span class="dot"></span>Not now</label></div></div>
+
+  <div class="q" data-q="14"><p class="qlabel">Audio AI — realistic voice-over, dubbing and podcast-ready audio in English — plus French if your market spans Europe.</p><p class="why">English covers everyone; French opens the European doors your American competitors leave closed.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q14" value="Yes - set up for me"><span class="dot"></span>Yes — set it up for me</label>
+    <label class="opt"><input type="radio" name="q14" value="Yes - set up + training"><span class="dot"></span>Yes — set it up and teach me to run it</label>
+    <label class="opt"><input type="radio" name="q14" value="Not now"><span class="dot"></span>Not now</label></div></div>
+
+  <div class="q" data-q="15"><p class="qlabel">Website &amp; landing pages — premium, award-grade design, from a simple showcase to a full sales site built to convert.</p><p class="why">Everything else needs a place to live — and it's usually the fastest item to turn into resale.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q15" value="Yes - set up for me"><span class="dot"></span>Yes — set it up for me</label>
+    <label class="opt"><input type="radio" name="q15" value="Yes - set up + training"><span class="dot"></span>Yes — set it up and teach me to run it</label>
+    <label class="opt"><input type="radio" name="q15" value="Not now"><span class="dot"></span>Not now</label></div></div>
+
+  <div class="q" data-q="16"><p class="qlabel">Web agents — automated workers that scrape data, hunt leads, fill forms and audit your competitors while you do the work that bills.</p><p class="why">Lead-gen is the most common first revenue for your profile — this tells us if it belongs in the starter package.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q16" value="Yes - set up for me"><span class="dot"></span>Yes — set it up for me</label>
+    <label class="opt"><input type="radio" name="q16" value="Yes - set up + training"><span class="dot"></span>Yes — set it up and teach me to run it</label>
+    <label class="opt"><input type="radio" name="q16" value="Not now"><span class="dot"></span>Not now</label></div></div>
+
+  <div class="q" data-q="26"><p class="qlabel">Local AI deployment — install and run AI models on <b>your own machine</b> with tools like LM Studio, Ollama or CCR: free after setup, fully private, no meter running.</p><p class="why">We pick the right tool for your hardware, install it, and teach you to drive it — text, image, voice. The one-time setup pays for itself in saved subscriptions.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q26" value="Yes - set up for me"><span class="dot"></span>Yes — set it up for me</label>
+    <label class="opt"><input type="radio" name="q26" value="Yes - set up + training"><span class="dot"></span>Yes — set it up and teach me to run it</label>
+    <label class="opt"><input type="radio" name="q26" value="Not now"><span class="dot"></span>Not now</label></div></div>
+
+  <div class="q" data-q="27"><p class="qlabel">Rent a GPU server — no NVIDIA card at home? We rent one (about $20–$80/mo) and run your local AIs on it, day and night, independent of your laptop.</p><p class="why">The cloud little brother of question 26 (Local AI): same models, no hardware to buy — sized, set up, and kept alive by us.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q27" value="Yes - set up for me"><span class="dot"></span>Yes — set it up for me</label>
+    <label class="opt"><input type="radio" name="q27" value="Yes - set up + training"><span class="dot"></span>Yes — set it up and teach me to run it</label>
+    <label class="opt"><input type="radio" name="q27" value="Not now"><span class="dot"></span>Not now</label></div></div>
+
+  <div class="q" data-q="28"><p class="qlabel">Level up your Claude Code — custom skills, hooks, MCPs and agent definitions that turn your tool into a pro workstation tuned for <b>your</b> workflow.</p><p class="why">Most people use ~10% of Claude Code. This is the 90% — mostly free config, a bit of coaching.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q28" value="Yes - set up for me"><span class="dot"></span>Yes — set it up for me</label>
+    <label class="opt"><input type="radio" name="q28" value="Yes - set up + training"><span class="dot"></span>Yes — set it up and teach me to run it</label>
+    <label class="opt"><input type="radio" name="q28" value="Not now"><span class="dot"></span>Not now</label></div></div>
+
+  <div class="q" data-q="29"><p class="qlabel">Automate one whole business process — pick a chore chain (invoicing, lead follow-up, content calendar, weekly reporting...) and have agents run it end-to-end.</p><p class="why">This is where AI pays for itself fastest: one chore, one agent, hours back every week.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q29" value="Yes - set up for me"><span class="dot"></span>Yes — set it up for me</label>
+    <label class="opt"><input type="radio" name="q29" value="Yes - set up + training"><span class="dot"></span>Yes — set it up and teach me to run it</label>
+    <label class="opt"><input type="radio" name="q29" value="Not now"><span class="dot"></span>Not now</label></div>
+    <div class="freetext" data-for="q29"><label>Which chain would you automate first?</label><textarea name="q29t" maxlength="280" placeholder="e.g. every new lead gets a personal reply + booked call within 1 hour..."></textarea></div></div>
+
+  <div class="q" data-q="30"><p class="qlabel">Roughly how much content do you want to produce per week with AI (videos, images, posts, pages)?</p><p class="why">This single number decides whether you need a production line or a simple setup — and what it costs to run.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q30" value="A few (1-3)"><span class="dot"></span>A few — 1 to 3 pieces</label>
+    <label class="opt"><input type="radio" name="q30" value="Regular (5-20)"><span class="dot"></span>Regular — 5 to 20 pieces</label>
+    <label class="opt"><input type="radio" name="q30" value="High volume (20+)"><span class="dot"></span>High volume — 20+ pieces</label>
+    <label class="opt"><input type="radio" name="q30" value="Not sure yet"><span class="dot"></span>Not sure yet</label></div></div>
+
+  <div class="q" data-q="31"><p class="qlabel">What do you already pay today for AI tools, per month (ChatGPT, Midjourney, ElevenLabs, APIs...)?</p><p class="why">Your baseline — so the savings and the ROI we promise are measured against what you really pay, not a guess.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q31" value="$0 - nothing yet"><span class="dot"></span>$0 — nothing yet</label>
+    <label class="opt"><input type="radio" name="q31" value="Up to $50/mo"><span class="dot"></span>Up to $50/month</label>
+    <label class="opt"><input type="radio" name="q31" value="$50-300/mo"><span class="dot"></span>$50 – $300/month</label>
+    <label class="opt"><input type="radio" name="q31" value="$300+/mo"><span class="dot"></span>$300+/month</label></div></div>
+</section>
+
+<section id="s4" data-od-id="business-goal" class="reveal" data-sec="4">
+  <div class="sechead"><span class="secnum">4</span><h2>Your business goal</h2></div>
+  <p class="secsub">Same tools, very different invoices. Your answers here shape the whole quote.</p>
+
+  <div class="q" data-q="17"><p class="qlabel">For what you said Yes to in Section 3 — which sentence fits best?</p><p class="why">A new service (we quote deliverables), time saved (we quote systems), content output (we quote a production line).</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q17" value="Sell a new service"><span class="dot"></span>They help me sell a brand-new service to my clients</label>
+    <label class="opt"><input type="radio" name="q17" value="Produce my content"><span class="dot"></span>They produce content I own and publish</label>
+    <label class="opt"><input type="radio" name="q17" value="Save me time"><span class="dot"></span>They save me time on work I already do</label>
+    <label class="opt"><input type="radio" name="q17" value="Kill repetitive chores"><span class="dot"></span>They kill repetitive chores</label>
+    <label class="opt"><input type="radio" name="q17" value="Not clear yet"><span class="dot"></span>Honestly, not clear yet — that's exactly what the kickoff call is for</label></div></div>
+
+  <div class="q" data-q="18"><p class="qlabel">Who is your ideal client 12 months from now?</p><p class="why">Client type sets your ceiling — white-label pays this quarter, enterprise pays next year.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q18" value="Small local businesses"><span class="dot"></span>Small local businesses — restaurants, clinics, contractors</label>
+    <label class="opt"><input type="radio" name="q18" value="E-commerce & DTC brands"><span class="dot"></span>E-commerce &amp; DTC brands</label>
+    <label class="opt"><input type="radio" name="q18" value="Creators & influencers"><span class="dot"></span>Creators &amp; influencers</label>
+    <label class="opt"><input type="radio" name="q18" value="Agencies (white-label)"><span class="dot"></span>Agencies — white-label work they resell</label>
+    <label class="opt"><input type="radio" name="q18" value="Mid-size / enterprise"><span class="dot"></span>Mid-size companies &amp; enterprise</label>
+    <label class="opt"><input type="radio" name="q18" value="Not defined yet"><span class="dot"></span>Not defined yet</label></div></div>
+
+  <div class="q" data-q="19"><p class="qlabel">When do you want your first dollars from this?</p><p class="why">A 30-day deadline means we deliver something sellable first; a 90-day horizon lets us build infrastructure that compounds.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q19" value="Within 30 days"><span class="dot"></span>Within 30 days</label>
+    <label class="opt"><input type="radio" name="q19" value="Within 60 days"><span class="dot"></span>Within 60 days</label>
+    <label class="opt"><input type="radio" name="q19" value="Within 90 days"><span class="dot"></span>Within 90 days</label>
+    <label class="opt"><input type="radio" name="q19" value="No hard deadline"><span class="dot"></span>No hard deadline — I'm building foundations the right way</label></div></div>
+
+  <div class="q" data-q="20"><p class="qlabel">For a step-by-step tutorial module (like the RTK guide you already followed), what feels like a fair price?</p><p class="why">Each module is priced by complexity — like the RTK guide, every one is a complete step-by-step you keep forever.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q20" value="About $100 per module"><span class="dot"></span>About $100 per module</label>
+    <label class="opt"><input type="radio" name="q20" value="About $200 per module"><span class="dot"></span>About $200 per module</label>
+    <label class="opt"><input type="radio" name="q20" value="About $300 per module"><span class="dot"></span>About $300 per module</label>
+    <label class="opt"><input type="radio" name="q20" value="Bundle - several modules"><span class="dot"></span>Better as a bundle of several modules</label>
+    <label class="opt"><input type="radio" name="q20" value="Custom quote (JEAN-SKYNET)"><span class="dot"></span>Custom quote — need something bigger, talk to JEAN-SKYNET</label>
+    <label class="opt"><input type="radio" name="q20" value="Not sure yet"><span class="dot"></span>Not sure yet — show me the options</label></div></div>
+
+  <div class="q" data-q="21"><p class="qlabel">One honest question — what is your #1 bottleneck today?</p><p class="why">Everything in your quote gets ranked against this.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q21" value="Not enough time"><span class="dot"></span>Not enough time</label>
+    <label class="opt"><input type="radio" name="q21" value="Not enough skills"><span class="dot"></span>Not enough skills</label>
+    <label class="opt"><input type="radio" name="q21" value="Not enough clients"><span class="dot"></span>Not enough clients</label>
+    <label class="opt"><input type="radio" name="q21" value="Too many repetitive tasks"><span class="dot"></span>Too many repetitive tasks</label>
+    <label class="opt"><input type="radio" name="q21" value="Not clear what to build"><span class="dot"></span>Not clear what I should even build</label></div></div>
+</section>
+
+<section id="s5" data-od-id="investment" class="reveal" data-sec="5">
+  <div class="sechead"><span class="secnum">5</span><h2>Investment &amp; handoff</h2></div>
+  <p class="secsub">So we propose what you'll actually finish — not what merely sounds impressive.</p>
+
+  <div class="q" data-q="22"><p class="qlabel">How do you like to learn new tools?</p><p class="why">Each solution comes as a guided tutorial (like the RTK guide) — a step-by-step you own, priced by complexity ($100–$300 per module). Four ways to run it, below — pick the one you'll actually finish.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q22" value="Guided tutorials, step by step"><span class="dot"></span>Guided tutorials — step-by-step modules I keep, like the RTK guide</label>
+    <label class="opt"><input type="radio" name="q22" value="Done with me, live session"><span class="dot"></span>Done with me — a live session where we set it up together</label>
+    <label class="opt"><input type="radio" name="q22" value="Done for me, just results"><span class="dot"></span>Done for me — install it, I just want results</label>
+    <label class="opt"><input type="radio" name="q22" value="Mix of all three"><span class="dot"></span>A mix of all three, depending on the topic</label></div></div>
+
+  <div class="q" data-q="23"><p class="qlabel">After setup, what monthly budget can this carry for tools, models and servers?</p><p class="why">The running budget decides which deployments stay sustainable — we'd rather build lean than build grand and let it starve.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q23" value="$0 free only"><span class="dot"></span>$0 — free tools only</label>
+    <label class="opt"><input type="radio" name="q23" value="Up to $50/mo"><span class="dot"></span>Up to $50/month</label>
+    <label class="opt"><input type="radio" name="q23" value="$50-300/mo"><span class="dot"></span>$50 – $300/month</label>
+    <label class="opt"><input type="radio" name="q23" value="$300+/mo"><span class="dot"></span>$300+/month</label></div></div>
+
+  <div class="q" data-q="24"><p class="qlabel">Once it's installed, who runs it day to day?</p><p class="why">Your default mode for everything beyond the "teach me" choices you made above — this line shapes your whole quote.</p>
+    <div class="opts"><label class="opt"><input type="radio" name="q24" value="Delegate everything"><span class="dot"></span>Delegate everything — you set it up, run it, and send me the results</label>
+    <label class="opt"><input type="radio" name="q24" value="Install with me"><span class="dot"></span>Install it with me — I'll watch and help so I understand it</label>
+    <label class="opt"><input type="radio" name="q24" value="Teach me"><span class="dot"></span>Teach me — you set it up once, I take the wheel</label>
+    <label class="opt"><input type="radio" name="q24" value="A mix"><span class="dot"></span>A mix — critical systems delegated, the rest I learn</label></div></div>
+</section>
+
+<section id="s6" data-od-id="one-last-question" class="reveal" data-sec="6">
+  <div class="sechead"><span class="secnum">6</span><h2>One last question</h2></div>
+
+  <div class="q" data-q="25"><p class="qlabel">In 3 lines: 90 days from now, what do you want to <span style="color:var(--terracotta)">have</span> that you don't have today?</p><p class="why">A revenue, a skill, a system, a client — anything. This sentence is the opening line of your plan.</p>
+    <textarea name="q25" maxlength="600" placeholder="e.g. one retainer client paying $1,500/mo for AI content, and a system that produces it in 2 hours a week..."></textarea></div>
+</section>
+
+<div class="summary reveal" id="summary">
+  <p class="eyebrow">Your gameplan summary</p>
+  <h2>Here's what you've told us</h2>
+  <p class="sub">Live summary — it updates as you answer. Copy it and send it back to whoever shared this link with you: it's everything we need to draft your plan and your precise quote.</p>
+  <div id="summaryOut" aria-live="polite">Answer the questions above — your summary builds itself here.</div>
+  <button type="button" class="copybtn" id="copyBtn">Copy my answers</button>
+  <p class="counter" id="copyHint"></p>
+</div>
+
+</form>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="rule"></div>
+    <p>Nothing leaves your browser until you copy the summary yourself.<br>No account, no tracking, no personal data required.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var STORE = 'rtk_qcm_v2';
+  var form = document.getElementById('qcm');
+  var summaryOut = document.getElementById('summaryOut');
+  var pfill = document.getElementById('pfill');
+  var pcount = document.getElementById('pcount');
+  var copyBtn = document.getElementById('copyBtn');
+  var copyHint = document.getElementById('copyHint');
+  var TOTAL = 31;
+
+  /* ---------- state ---------- */
+  var state = {}; // {q1:"Agency", q5t:"...", ...}
+  try { state = JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e){ state = {}; }
+
+  function save(){ try { localStorage.setItem(STORE, JSON.stringify(state)); } catch(e){} }
+
+  /* ---------- wiring ---------- */
+  form.querySelectorAll('input[type=radio]').forEach(function(input){
+    var name = input.name;
+    input.addEventListener('change', function(){
+      state[name] = this.value;
+      form.querySelectorAll('label.opt input[name="' + name + '"]').forEach(function(other){
+        other.closest('label.opt').classList.toggle('checked', other.checked);
+      });
+      var ft = document.querySelector('.freetext[data-for="' + name + '"]');
+      if(ft){ ft.classList.toggle('show', this.value.indexOf('Yes') === 0); }
+      save(); update();
+    });
+    // restore
+    if(state[name] === input.value){
+      input.checked = true;
+      input.closest('label.opt').classList.add('checked');
+      var ft2 = document.querySelector('.freetext[data-for="' + name + '"]');
+      if(ft2){ ft2.classList.toggle('show', state[name].indexOf('Yes') === 0); }
+    }
+  });
+  form.querySelectorAll('textarea').forEach(function(ta){
+    if(state[ta.name]) ta.value = state[ta.name];
+    ta.addEventListener('input', function(){
+      if(this.value.trim() === '') delete state[this.name]; else state[this.name] = this.value;
+      save(); update();
+    });
+  });
+
+  /* ---------- summary ---------- */
+  var LABEL = {};
+
+  function yesNo(n, yesLabel){
+    var v = state['q'+n];
+    if(!v) return null;
+    if(v === 'Not now'){
+      var orphan = state['q'+n+'t'];
+      return 'No — not right now' + (orphan ? ' (note kept: "' + orphan + '")' : '');
+    }
+    var extra = state['q'+n+'t'] ? ' — "' + state['q'+n+'t'] + '"' : '';
+    return yesLabel + extra;
+  }
+
+  function line(label, value){
+    if(value === null || value === undefined || value === '') return null;
+    return label + ': ' + value;
+  }
+
+  function buildSummary(){
+    var L = [];
+    L.push('=== MY AI GAMEPLAN — intake answers ===');
+    L.push('');
+    L.push('-- About me --');
+    var g1 = [line('Venture', state.q1), line('Target market', state.q2), line('Claude Code today', state.q3), line('Hardware', state.q4)].filter(Boolean);
+    L.push(g1.length ? g1.join('\n') : '(to answer)');
+    L.push('');
+    L.push('-- Passive intelligence --');
+    var g2 = [line('Night brief', yesNo(5,'Yes')), line('Market watch', yesNo(6,'Yes')), line('Business memory', yesNo(7,'Yes')), line('Parallel agents', yesNo(8,'Yes'))].filter(Boolean);
+    L.push(g2.length ? g2.join('\n') : '(to answer)');
+    L.push('');
+    L.push('-- Solutions I want --');
+    var g3 = [];
+    [9,10,11,12,13,14,15,16,26,27,28,29,30,31].forEach(function(n){
+      var v = state['q'+n];
+      if(!v) return;
+      var labels = {
+        9:'Smart model routing (CCR)', 10:'Always-on server (VPS)', 11:'SEO + AI visibility',
+        12:'Video AI', 13:'Photo & visuals AI', 14:'Audio AI', 15:'Website / landing pages',
+        16:'Web agents (lead-gen)', 26:'Local AI (own machine)', 27:'Rent a GPU server',
+        28:'Level up my Claude Code', 29:'Automate a business process',
+        30:'Weekly production volume', 31:'Current AI spend'
+      };
+      if(v === 'Not now'){ var orph = (n === 29 && state['q29t']) ? ' (note kept: "' + state['q29t'] + '")' : ''; g3.push(labels[n] + ' — not now' + orph); return; }
+      var pretty = {'Yes - set up for me':'Yes — set it up for me','Yes - set up + training':'Yes — set it up and teach me to run it','Up to $50/mo':'Up to $50/month','$50-300/mo':'$50 – $300/month','$300+/mo':'$300+/month','$0 - nothing yet':'$0 — nothing yet','A few (1-3)':'A few — 1 to 3 pieces','Regular (5-20)':'Regular — 5 to 20 pieces','High volume (20+)':'High volume — 20+ pieces'};
+      var extra = (n === 29 && state['q29t']) ? ' — "' + state['q29t'] + '"' : '';
+      g3.push(labels[n] + ' (' + (pretty[v] || v) + ')' + extra);
+    });
+    L.push(g3.length ? g3.join('\n') : '(none answered yet)');
+    L.push('');
+    L.push('-- Business goal --');
+    var g4 = [line('Primary use', state.q17), line('Ideal client', state.q18), line('First revenue', state.q19), line('My price point', state.q20), line('#1 bottleneck', state.q21)].filter(Boolean);
+    L.push(g4.length ? g4.join('\n') : '(to answer)');
+    L.push('');
+    L.push('-- Investment --');
+    var g5 = [line('Learning budget', state.q22), line('Monthly tools budget', state.q23), line('Handoff style', state.q24)].filter(Boolean);
+    L.push(g5.length ? g5.join('\n') : '(to answer)');
+    L.push('');
+    L.push('-- In 90 days I want --');
+    L.push(state.q25 ? state.q25 : '(to answer)');
+    return L.filter(function(x){return x !== null;}).join('\n');
+  }
+
+  function answeredCount(){
+    var n = 0;
+    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,26,27,28,29,30,31].forEach(function(i){
+      if(state['q'+i]) n++;
+    });
+    if(state.q25 && state.q25.trim() !== '') n++;
+    return n;
+  }
+
+  function update(){
+    var n = answeredCount();
+    pfill.style.width = (n/TOTAL*100).toFixed(1) + '%';
+    pcount.textContent = n + ' of ' + TOTAL + ' answered';
+    var s = buildSummary();
+    summaryOut.textContent = (n === 0) ? 'Answer the questions above — your summary builds itself here.' : s;
+    return s;
+  }
+
+  /* ---------- copy (honest: reports failure) ---------- */
+  function fallbackCopy(txt){
+    var ta = document.createElement('textarea');
+    ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try{ ok = document.execCommand('copy'); }catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  copyBtn.addEventListener('click', function(){
+    var txt = buildSummary();
+    function done(ok){
+      var old = copyBtn.textContent;
+      copyBtn.textContent = ok ? 'Copied ✓' : 'Copy failed — select the text manually';
+      copyBtn.classList.toggle('done', ok);
+      setTimeout(function(){ copyBtn.textContent = old; copyBtn.classList.remove('done'); }, 2200);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){ done(true); }, function(){ done(fallbackCopy(txt)); });
+    } else { done(fallbackCopy(txt)); }
+  });
+
+  /* ---------- progress reveal ---------- */
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, {threshold:.08});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  update();
+})();
+</script>
+</body>
+</html>
