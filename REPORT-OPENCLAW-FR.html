@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Votre système OpenClaw — Analyse & plan de construction</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%23B85042'/%3E%3C/svg%3E">
+<meta name="description" content="Analyse stratégique de votre spécification OpenClaw et de vos réponses au formulaire — lue comme un plan de construction, chiffrée en modules tutoriels que vous gardez à vie.  Version interne (français).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#B85042; --forest:#2C5F2D; --sand:#E7E8D1; --ink:#1F2421; --paper:#FBF9F4;
+    --muted:#5A5F58; --surface:#FFFFFF; --ink-soft:#3C423C; --chrome:#2A312D; --gold:#B08D2F;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap,header.hero,footer{max-width:800px;margin:0 auto;padding:0 26px}
+  h1,h2,h3{font-family:'Playfair Display',Georgia,serif}
+  section{padding:52px 0;border-bottom:1px solid var(--sand);scroll-margin-top:12px}
+  section:last-of-type{border-bottom:none}
+  .eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta);margin-bottom:12px}
+  h2{font-size:1.8rem;font-weight:800;line-height:1.2;letter-spacing:-.01em;margin-bottom:16px}
+  h3{font-size:1.15rem;font-weight:700;margin:22px 0 8px}
+  p{margin-bottom:14px}
+  .muted{color:var(--muted)}
+  .note{font-size:.86rem;color:var(--muted);font-style:italic}
+  header.hero{padding:86px 26px 60px;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% -10%, rgba(231,232,209,.9), transparent 70%),var(--paper)}
+  header.hero h1{font-size:clamp(2rem,5.5vw,3.1rem);font-weight:800;line-height:1.13;letter-spacing:-.015em;margin:16px auto 14px;max-width:24ch}
+  header.hero .sub{color:var(--muted);max-width:56ch;margin:0 auto 26px}
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:34px auto;max-width:640px}
+  .fact{background:var(--surface);border:1px solid var(--sand);border-radius:14px;padding:16px 10px}
+  .fact .n{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800;color:var(--terracotta)}
+  .fact .l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-top:4px}
+  .cta{display:inline-block;background:var(--ink);color:var(--paper)!important;text-decoration:none;font-weight:600;padding:14px 30px;border-radius:999px;transition:transform .2s, box-shadow .2s}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(31,36,33,.18)}
+  .cta:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
+  table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem}
+  th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:10px 12px;border-bottom:2px solid var(--sand)}
+  td{padding:12px;border-bottom:1px solid var(--sand);vertical-align:top}
+  .tablewrap{overflow-x:auto}
+  .quote{border-left:3px solid var(--forest);background:rgba(44,95,45,.06);padding:14px 18px;border-radius:0 12px 12px 0;font-size:.93rem;margin:16px 0}
+  .quote .src{display:block;margin-top:6px;font-size:.78rem;color:var(--muted)}
+  .warn{border-left:3px solid var(--gold);background:rgba(176,141,47,.07);padding:14px 18px;border-radius:0 12px 12px 0;font-size:.93rem;margin:16px 0}
+  .mods{display:flex;flex-direction:column;gap:14px;margin:24px 0}
+  .mod{background:var(--surface);border:1px solid var(--sand);border-radius:16px;padding:20px 22px;transition:transform .25s, box-shadow .25s}
+  .mod:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(31,36,33,.09)}
+  .mod .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .mod .mid{font-size:.72rem;font-weight:700;letter-spacing:.12em;color:var(--forest);background:rgba(44,95,45,.08);border-radius:999px;padding:3px 10px}
+  .mod .price{font-family:'Playfair Display',serif;font-weight:800;color:var(--terracotta);font-size:1.3rem}
+  .mod h3{margin:8px 0 6px;font-size:1.1rem}
+  .mod p{font-size:.9rem;color:var(--ink-soft);margin-bottom:6px}
+  .mod .meta{font-size:.76rem;color:var(--muted)}
+  .mod.bundle{border-color:var(--forest);border-width:2px;background:rgba(44,95,45,.03)}
+  .mod.custom{border-color:var(--terracotta);border-width:2px;background:rgba(184,80,66,.03)}
+  .weeks{display:flex;flex-direction:column;gap:0;margin:22px 0}
+  .week{display:flex;gap:16px;padding:14px 0;border-bottom:1px dashed var(--sand)}
+  .week:last-child{border-bottom:none}
+  .week .w{flex:none;width:92px;font-family:'Playfair Display',serif;font-weight:800;color:var(--muted);font-size:1.1rem}
+  .week .d{font-size:.92rem}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1)}
+  .reveal.visible{opacity:1;transform:none}
+  footer{padding:38px 26px 70px;text-align:center;color:var(--muted);font-size:.84rem}
+  footer b{color:var(--ink)}
+  @media print{body{font-size:12px}.cta{display:none}section{break-inside:avoid;padding:24px 0}.reveal{opacity:1;transform:none}.mod:hover{transform:none}}
+  @media (max-width:640px){
+    body{font-size:15px}
+    h2{font-size:1.5rem}
+    .facts{grid-template-columns:repeat(2,1fr)}
+    .week{gap:10px}
+    .week .w{width:72px;font-size:1rem}
+    .mod .row{flex-direction:column;align-items:flex-start;gap:4px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .cta:hover,.mod:hover{transform:none}
+  }
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none}</style></noscript>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Votre système OpenClaw — analyse &amp; plan de construction</p>
+    <h1>Nous avons lu les 85 lignes de votre cahier des charges.<br>Voici comment il devient réel.</h1>
+    <p class="sub">Votre design multi-agents est solide — quatre agents, validation humaine à chaque porte, livraison par phases. Ce document le met en regard de la pile qui fonctionne déjà chez nous, résout la seule tension budgétaire qu'il contient, et chiffre chaque étape en modules tutoriels que vous gardez à vie.</p>
+    <div class="facts">
+      <div class="fact"><div class="n">4</div><div class="l">agents conçus</div></div>
+      <div class="fact"><div class="n">5</div><div class="l">phases de livraison</div></div>
+      <div class="fact"><div class="n">12</div><div class="l">solutions choisies</div></div>
+      <div class="fact"><div class="n">60<span style="font-size:.9rem">j</span></div><div class="l">votre but, notre plan</div></div>
+    </div>
+    <a class="cta" href="#read">L'analyse ↓</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="read" class="reveal">
+  <p class="eyebrow">1 · Qui est ce client</p>
+  <h2>Dix choses que vos propres mots nous ont apprises</h2>
+
+  <h3>1. « Consulting » est un sous-comptage — vous dirigez quatre entreprises en une</h3>
+  <p>Votre spéc dit que le système « soutient l'administration personnelle, le conseil H&amp;S, les services de drones, l'œuvre caritative football sud-africaine, la surveillance de sécurité et la production documentaire professionnelle », et demande des « profils de connaissances séparés et autorisés » par contexte. Nous le prenons au sérieux : ce sont quatre mémoires, et la séparation est <em>votre</em> design — nous la construisons comme spécifiée.</p>
+
+  <h3>2. Le garde-fou humain est votre idée, par écrit</h3>
+  <div class="quote">« Always have a human in loop to ensure agents don't make decisions without human consent » <span class="src">— votre formulaire, multi-agents</span></div>
+  <p>Votre spéc l'opérationnalise (« Send emails / contact leads — Approval », « Book travel / spend money — Approval », « Never automatically install software, rotate credentials, disable accounts or delete data without an authorised policy or approval »). Nous sommes alignés avant le premier appel — c'est du design de confiance, pas un argument de vente.</p>
+
+  <h3>3. Vous voulez trois choses à la fois — et c'est soluble</h3>
+  <p>« Set it up for me » sur 8 solutions sur 12, apprendre « done with me », confier l'inverse « teach me », outils à « $0 free only ». Prises de front, quelqu'un perd. La résolution est dans le séquençage, pas dans une remise : <strong>chaque module est un produit unique qui livre les deux</strong> — nous pilotons l'installation, vous gardez le tutoriel pas à pas à vie. Résultat DFY, compétence DWY.</p>
+
+  <h3>4. Vous avez nommé le produit vous-même : « Not enough skills »</h3>
+  <p>Votre goulot n°1, déclaré alors que vous utilisez Claude Code <em>tous les jours</em>. Un utilisateur quotidien qui se sent encore sous-formé est exactement la cible des tutoriels de transfert de compétence — pas d'un logiciel boîte noire. Et comme votre budget formation est en sessions live, chaque module se rentabilise plus vite.</p>
+
+  <h3>5. Votre définition du succès est la réparabilité, pas la magie</h3>
+  <div class="quote">« A workable AI system that is easy to manage and knowledge to fix when it does wrong » <span class="src">— votre objectif 90 jours, verbatim</span></div>
+  <p>« Knowledge to fix when it does wrong » est le meilleur allié possible du modèle tutoriel. Chaque module se termine par le système qui tourne <em>et</em> une section « quand ça casse ». Vous refusez explicitement la dépendance envers nous — le design le respecte.</p>
+
+  <h3>6. Le cycle des subventions caritatives est votre première victoire mesurable</h3>
+  <p>Votre demande verbatim : « Research for funding proposals for charity in South Africa and share in pdf ». Votre spéc précise : « identifier les subventions football sud-africain, sponsors, deadlines, éligibilité, documents requis ». Les subventions ont des échéances — un tableau de score intégré. Et le flux chaîne deux de vos agents : recherche (A2) vers document (A4).</p>
+
+  <h3>7. Une horloge 60 jours tourne déjà</h3>
+  <p>« First revenue: Within 60 days. » L'ordre des modules est construit pour ça : premier digest semaine 3, premier registre semaine 4, pipeline subventions semaine 6. Ce qui disqualifie volontairement les starts à rentabilité lente — SEO et vidéo arrivent après J+60, exprès.</p>
+
+  <h3>8. La sensibilité au prix porte sur les outils, pas sur l'expertise</h3>
+  <p>« $0 free only » par mois, mais aucun plafond déclaré sur les achats ponctuels. Aujourd'hui vous payez « Up to $50/month ». Le levier est arithmétique : le premier module route cette dépense vers les modèles gratuits — un module à 150 $ qui annule une facture de 50 $/mois se rembourse en environ trois mois.</p>
+
+  <h3>9. Votre spéc est exceptionnellement mûre — c'est une livraison, pas une découverte</h3>
+  <p>Vous avez déjà écrit les tests d'acceptation (« Every task has an ID, owner, status… »), un plan de livraison en 5 phases, une matrice d'approbation, et 5 décisions ouvertes. Notre devis répond à <em>vos</em> phases — il ne les réinvente pas.</p>
+
+  <h3>10. « Not sure / several » machines — le local d'abord, un serveur ensuite</h3>
+  <p>Plusieurs machines conviennent à la pile locale gratuite. L'agent de nuit permanent est ce qui justifiera éventuellement un seul petit serveur — et seulement quand la Phase 1 tourne démontrablement.</p>
+</section>
+
+<section id="spec" class="reveal">
+  <p class="eyebrow">2 · Votre spécification, lue honnêtement</p>
+  <h2>Ce qu'OpenClaw demande — ce qui tourne déjà — l'écart réel</h2>
+  <p class="muted">Nous livrons l'équivalent fonctionnel de votre spéc avec la pile d'agents que nous opérons chaque jour (agents Claude Code, hooks, fichiers mémoire, canaux d'alerte, revue adversaire). « OpenClaw » est le nom que vous donnez au système ; le build ci-dessous le rend vôtre.</p>
+
+  <div class="tablewrap">
+  <table>
+    <tr><th>Votre spéc</th><th>Ce que vous demandez</th><th>Ce qui tourne déjà ici</th><th>L'écart honnête</th></tr>
+    <tr><td><b>§1</b> Quatre agents coordonnés sous un Chief of Staff</td><td>A1 Assistant, A2 Recherche, A3 Sécurité, A4 Design ; alertes sécurité directes au propriétaire</td><td>Un orchestrateur équivalent tourne chaque jour chez nous</td><td>Nous configurons, nous ne réécrivons pas. Le front door 4 agents = le build custom (ci-dessous)</td></tr>
+    <tr><td><b>§2</b> Responsabilités</td><td>Briefing quotidien, registre de recherche, monitoring moindre privilège, documents brandés</td><td>Chaque brique existe en usage de production ici</td><td>La télémétrie continue A3 demande le serveur (M9) ; la QA « brandée » A4 est du vrai design</td></tr>
+    <tr><td><b>§3</b> Workflow standard</td><td>ID tâche → classer → déléguer au minimum d'accès → boucle QA → approuver → archiver</td><td>C'est exactement comme ça que tournent nos propres sessions</td><td>Câbler <em>votre</em> porte d'entrée = le build orchestrateur</td></tr>
+    <tr><td><b>§4</b> Approbation &amp; sécurité</td><td>OAuth scopé en lecture ; approbation pour envoi/dépense/suppression ; test-rollback-audit</td><td>Nos portes de permissions implémentent déjà cette politique</td><td><strong>Le vrai chantier : le Google OAuth scopé pour Gmail/Drive/Calendar.</strong> Lecture seule d'abord, brouillons étiquetés, envoi sur approbation</td></tr>
+    <tr><td><b>§5</b> Données &amp; mémoire</td><td>Taxonomie 6 dossiers, quatre contextes autorisés, pas de mots de passe en mémoire</td><td>Le pattern mémoire fait ses preuves à l'échelle (600+ fiches indexées ici)</td><td>La taxonomie = simple configuration ; la wording RGPD UK = vous signez, on supporte</td></tr>
+    <tr><td><b>§6</b> Tests d'acceptation</td><td>Tâches échouées visibles ; aucune action externe non approuvée ; alertes critiques bypassent A1</td><td>Tout est testable aujourd'hui ; le canal d'alerte indépendant existe</td><td>Signature formelle en M8 ; le chemin de bypass nécessite le serveur ou un canal hébergé</td></tr>
+    <tr><td><b>§7</b> Livraison par phases</td><td>Phases 1-5, orchestration → automatisation</td><td>S'applique 1:1 à l'ordre des modules M1-M10</td><td>Phase 5 (automatisation apprise) est après J+60 — dans le build custom</td></tr>
+    <tr><td><b>§8</b> Décisions ouvertes</td><td>Hébergement, scopes, heure du briefing, plafonds, templates, résidence des données</td><td>Nous répondons hébergement + outils maintenant (tout à 0 $ sauf le serveur)</td><td>Le reste = <em>vos</em> décisions — collectées au checkpoint semaine 4 ; rien ne bloque M1-M3</td></tr>
+  </table>
+  </div>
+
+  <p class="note">Tri de difficulté, vernis zéro : simple — briefing, registres, profils mémoire, taxonomie, digests (tout est opéré ici chaque jour). Difficile — le OAuth scopé (chantier le plus délicat), la télémétrie permanente, un chemin critique indépendant vers votre téléphone, et des documents A4 assez polis pour un comité de subvention.</p>
+</section>
+
+<section id="tension" class="reveal">
+  <p class="eyebrow">3 · La tension budgétaire, résolue</p>
+  <h2>DFY × apprendre avec moi × 0 $ — la pyramide</h2>
+  <p>Chaque étage finance le suivant :</p>
+  <h3>Phase 1 — semaines 1-4 : apprendre sur votre machine, 0 $ d'outils</h3>
+  <p>Nous installons <strong>ensemble</strong> : le routage d'abord (M1) — vos « Up to $50/month » tombent vers 0 $, ce qui rend votre budget « $0 free only » <em>vrai</em> au lieu d'aspirationnel — puis Claude Code pro (M2) et le brief du matin (M3), gratuit et local. Votre objectif 90 jours (« knowledge to fix when it does wrong ») est un livrable de Phase 1, pas une promesse.</p>
+  <h3>Phase 2 — semaines 3-6 : les registres</h3>
+  <p>Moteur de recherche + registre d'opportunités (M4), la mémoire à quatre contextes autorisés (M5), et le pipeline de subventions caritatives (M6) — le cas d'usage que vous avez proposé verbatim. C'est exactement la Phase 2 de votre spéc.</p>
+  <h3>Phase 3+ — semaines 5-8 : documents et vigies</h3>
+  <p>Documents brandés (M7), votre matrice d'approbation forcée dans le code (M8), puis — seulement quand la Phase 1 tourne démontrablement — le serveur permanent (M9) : <strong>~6-12 $/mois, le seul vrai coût mensuel</strong>. Aucun autre frais récurrent n'existe. La GPU louée reste une décision optionnelle dans M10 ; par défaut : pas nécessaire.</p>
+  <div class="warn"><strong>Le build OpenClaw complet</strong> — votre spéc §7 phases 1-5, les quatre agents, une porte d'instruction unique, les scopes OAuth, la télémétrie, les tests d'acceptation signés — est l'<strong>offre custom</strong>. Chiffrée après livraison de M1 + M3 : nous chiffrons contre votre vraie machine, votre vraie boîte mail, votre vrai Drive (vos §8 listent les inconnues). Règle annoncée d'avance : <em>nous chiffrons quand nous pouvons mesurer.</em></div>
+</section>
+
+<section id="modules" class="reveal">
+  <p class="eyebrow">4 · Le plan de formation</p>
+  <h2>Douze modules, chiffrés, séquencés, à vie</h2>
+  <p>Chaque module = un tutoriel pas-à-pas que vous gardez, installé avec vous en session live. Tous les outils sont gratuits sauf mention.</p>
+
+  <div class="mods">
+    <div class="mod"><div class="row"><span class="mid">M1 · SEMAINE 1</span><span class="price">150 $</span></div><h3>Apprivoiser la facture de tokens (routage CCR)</h3><p>Router Claude Code vers les modèles gratuits — la facture récurrente tombe vers zéro. Le payback le plus rapide du plan.</p><p class="meta">≈2h + installation · couvre §8 · vous payez 50 $/mois aujourd'hui : payback ≈ 3 mois</p></div>
+    <div class="mod"><div class="row"><span class="mid">M2 · SEMAINES 1-2</span><span class="price">200 $</span></div><h3>Votre Claude Code, édition Pro</h3><p>Skills, hooks, mémoire — les trois leviers derrière tous les autres modules, visant votre goulot déclaré.</p><p class="meta">≈4h · couvre §2 A1, §5</p></div>
+    <div class="mod"><div class="row"><span class="mid">M3 · SEMAINES 2-3</span><span class="price">250 $</span></div><h3>Le Brief du matin (agent de nuit + digest local)</h3><p>Un agent programmé lit votre calendrier et votre courrier la nuit et vous remet un digest unique — le briefing quotidien défini par votre spéc (§2 A1). Premier digest : semaine 3.</p><p class="meta">≈1 jour + install · couvre §2 A1, §7 Ph.1 · inclut le scope Gmail en lecture, read-only d'abord</p></div>
+    <div class="mod"><div class="row"><span class="mid">M4 · SEMAINES 3-4</span><span class="price">250 $</span></div><h3>Le moteur de recherche (agents web + registre d'opportunités)</h3><p>Des agents web qui alimentent le schéma de registre exact que votre spéc définit : ID, source, date vérifiée, score, deadline, prochaine action, statut.</p><p class="meta">≈1 jour · couvre §2 A2, §6</p></div>
+    <div class="mod"><div class="row"><span class="mid">M5 · SEMAINE 4</span><span class="price">200 $</span></div><h3>La mémoire d'affaires qui n'oublie jamais</h3><p>Quatre profils mémoire à permissions — personnel / conseil / drones / charité — sur la taxonomie de dossiers que vous avez déjà écrite.</p><p class="meta">≈3-4h · couvre §2 A1, §5</p></div>
+    <div class="mod"><div class="row"><span class="mid">M6 · SEMAINES 5-6</span><span class="price">300 $</span></div><h3>Le pipeline de subventions caritatives (football SA)</h3><p>Découverte de subventions → registre → vérification d'éligibilité → brief en PDF, les deadlines comme tableau de score. Votre premier flux porteur de revenus.</p><p class="meta">≈1,5 jour · couvre §2 A2, §7 Ph.2 · premier brief PDF : semaine 6</p></div>
+    <div class="mod"><div class="row"><span class="mid">M7 · SEMAINE 6</span><span class="price">250 $</span></div><h3>L'usine à documents (Word / PPT / PDF brandés)</h3><p>Documents templatisés et QA — originaux éditables + PDF finaux, contrôles orthographe/maquette/accessibilité, comme l'exige votre A4.</p><p class="meta">≈1 jour · couvre §2 A4, §6, §7 Ph.3</p></div>
+    <div class="mod"><div class="row"><span class="mid">M8 · SEMAINE 6</span><span class="price">300 $</span></div><h3>Sécurité &amp; garde-fous human-in-the-loop</h3><p>Votre matrice d'approbation, forcée dans le code : files d'approbation, coffre à secrets, journaux d'audit, révocation, le canal d'alerte indépendant. Vos tests d'acceptation, écrits et exécutés.</p><p class="meta">≈1,5 jour · couvre §4, §2 A3, §6 · module le plus sensible</p></div>
+    <div class="mod"><div class="row"><span class="mid">M9 · SEMAINE 7</span><span class="price">150 $</span></div><h3>Votre serveur permanent (VPS)</h3><p>L'agent de nuit passe en 24/7. <b>~6-12 $/mois de coût réel</b> — le seul frais récurrent de tout ce plan, écrit ici, une seule fois.</p><p class="meta">≈3h · couvre §7 Phase 4</p></div>
+    <div class="mod"><div class="row"><span class="mid">M10 · SEMAINES 7-8</span><span class="price">200 $</span></div><h3>IA locale (Ollama / LM Studio) + la décision GPU</h3><p>Faire tourner des modèles gratuits sur votre propre matériel, plus un cadre de décision pour savoir quand une GPU louée vaut le coup. Par défaut : pas nécessaire.</p><p class="meta">≈4h · couvre §8</p></div>
+    <div class="mod"><div class="row"><span class="mid">M11 · APRÈS J+60</span><span class="price">300 $</span></div><h3>SEO + visibilité IA (marché UK)</h3><p>Être trouvé par les moteurs et par les réponses IA. Volontairement hors des 60 jours — ça exige une offre d'abord (« client idéal : non défini » est votre réponse honnête, et c'est très bien).</p><p class="meta">≈1 jour · volet business</p></div>
+    <div class="mod"><div class="row"><span class="mid">M12 · À LA DEMANDE</span><span class="price">100-300 $</span></div><h3>Vidéo / Photo / Audio IA</h3><p>Production média, chiffrée par complexité à la commande. Hors du chemin 60 jours.</p><p class="meta">à la demande</p></div>
+    <div class="mod bundle"><div class="row"><span class="mid">BUNDLE</span><span class="price">800 $ <s style="font-size:.8rem;color:var(--muted)">1 100 $</s></span></div><h3>OpenClaw Core — M1 + M2 + M3 + M5 + M8</h3><p>Le socle : routage, skills, le briefing, la mémoire à quatre contextes, votre matrice d'approbation — vos deux demandes verbatim plus les deux facilitateurs de tout le reste. La sécurité dans le bundle = jamais le module que vous sautez.</p><p class="meta">économise 300 $ · le démarrage recommandé</p></div>
+    <div class="mod custom"><div class="row"><span class="mid">CUSTOM</span><span class="price">chiffré plus tard</span></div><h3>Le build OpenClaw complet — sur-mesure JEAN-SKYNET</h3><p>Votre spéc §7 phases 1-5 en un seul build accompagné : les quatre agents, une porte unique, le design des scopes OAuth, la télémétrie, les tests d'acceptation signés. Chiffré après livraison de M1 + M3 — on chiffre sur réalité mesurée, pas sur un questionnaire.</p><p class="meta">durée fixée au chiffrage</p></div>
+  </div>
+
+  <h3>Le total 60 jours</h3>
+  <p>Stack minimal pour votre objectif 90 jours, à l'unité : <strong>M1+M2+M3+M4+M5 = 1 050 $</strong>. Même argent, meilleure forme : <strong>bundle Core 800 $ + M4 250 $ = 1 050 $ — six modules dont M8 (valeur 300 $) au lieu de cinq.</strong> Récurrent : <strong>0 $ d'outils jusqu'à la semaine 6 — le serveur est facturé dès sa mise en route (semaine 7)</strong> ; à partir de la semaine 7 le serveur est « le seul vrai coût mensuel, ~6-12 $/mois ». Ensemble complet 8 semaines (M1-M10) = 2 250 $ à l'unité, 1 950 $ avec le bundle.</p>
+</section>
+
+<section id="risks" class="reveal">
+  <p class="eyebrow">5 · Les risques</p>
+  <h2>Nommés avant que vous les trouviez</h2>
+  <h3>R1 — Le OAuth est la vraie montagne</h3>
+  <p>L'accès scopé Gmail/Drive/Calendar est le chantier le plus délicat. Parade : lecture seule d'abord, brouillons étiquetés, envoi sur approbation, tokens révocables — votre §6 le demande exactement. Du mou est prévu en M3/M8 plutôt qu'une date promise.</p>
+  <h3>R2 — Quatre entreprises, quatre mémoires, un seul cerveau</h3>
+  <p>La contamination croisée — un prix de drone dans une lettre de subvention, des données caritatives dans un dossier de conseil — est la panne silencieuse la plus probable. M5 construit les quatre profils autorisés <em>avant</em> que la recherche intensive démarre, sur votre propre taxonomie.</p>
+  <h3>R3 — Le piège du 0 $</h3>
+  <p>« $0 free only » tient jusqu'à la semaine 6. Le serveur est le seul coût mensuel réel (~6-12 $/mois) ; une facture surprise plus tard coûte plus de confiance que la vérité n'en coûte aujourd'hui — alors la voilà.</p>
+  <h3>R4 — Nous planifions contre des inconnues</h3>
+  <p>Volume « pas encore sûr », client idéal non défini, matériel incertain. Le plan optimise votre usage principal déclaré (« Save me time ») et se re-contrôle au checkpoint de la semaine 4 avant d'engager M6-M10.</p>
+  <h3>R5 — La friction d'approbation peut manger le temps gagné</h3>
+  <p>Votre politique est riche en approbations et votre but est le temps. Si chaque action vous dérange dans la journée, le garde-fou devient le fardeau. Remède par votre propre design : les approbations groupées dans le brief du matin, oui/non en un tap — le human-in-loop coûte des minutes, pas des interruptions.</p>
+</section>
+
+<section id="roadmap" class="reveal">
+  <p class="eyebrow">6 · Le chemin 60 jours</p>
+  <h2>Semaine par semaine</h2>
+  <div class="weeks">
+    <div class="week"><div class="w">Sem. 1</div><div class="d">Facture de tokens → ~0 $ (M1, routage CCR en place) ; les fondations skills/hooks/mémoire démarrent (M2 commence)</div></div>
+    <div class="week"><div class="w">Sem. 2</div><div class="d">Les skills Claude Code pro vivent sur votre machine ; vous avez patché votre premier hook vous-même (M2 fini, M3 commence)</div></div>
+    <div class="week"><div class="w">Sem. 3</div><div class="d">Le premier digest du matin arrive — calendrier + courrier prioritaire, local et gratuit (M3 fini, M4 commence)</div></div>
+    <div class="week"><div class="w">Sem. 4</div><div class="d">Moteur de recherche + registre d'opportunités (votre schéma §2) ; la mémoire à quatre contextes se dresse (M4, M5). <b>Checkpoint :</b> vos décisions §8 sont recueillies ; le build custom entre en chiffrage</div></div>
+    <div class="week"><div class="w">Sem. 5</div><div class="d">Construction du pipeline de subventions : découverte des subventions football SA dans le registre (M6)</div></div>
+    <div class="week"><div class="w">Sem. 6</div><div class="d">Premier brief de subvention partagé en PDF (le cas caritatif de votre spéc) ; usine à documents avec templates brandés ; matrice d'approbation forcée dans les hooks (M6, M7, M8)</div></div>
+    <div class="week"><div class="w">Sem. 7</div><div class="d">L'agent de nuit passe sur le serveur permanent — premier et seul coût récurrent (~6-12 $/mois), accepté en connaissance ; chemin d'alerte sécurité indépendant testé (M9)</div></div>
+    <div class="week"><div class="w">Sem. 8</div><div class="d">IA locale + décision GPU (défaut : pas nécessaire) ; revue 60 jours contre votre objectif 90 jours ; le devis du build complet, chiffré sur réalité mesurée (M10 + revue)</div></div>
+  </div>
+  <div class="quote"><strong>Jour 60, contre vos propres demandes :</strong> brief quotidien qui tourne · registres et pipeline caritatif vivants · mémoire en quatre contextes séparés · documents brandés et QA · garde-fous forçant votre politique d'approbation · hôte 24/7 optionnel — et chaque pièce s'accompagne du tutoriel qui vous permet de la réparer vous-même. C'est la seule définition du succès que vous ayez écrite.</div>
+  <h3>Ce dont nous avons besoin de vous pour démarrer</h3>
+  <p>L'heure et le canal de votre briefing (§8) · quelles adresses/dossiers chaque agent peut lire · une machine pour l'installation Phase 1. Tout le reste démarre sans ces réponses.</p>
+  <p style="margin-top:22px"><a class="cta" href="#modules">Retour aux modules ↑</a></p>
+</section>
+
+</main>
+
+<footer>
+  <p><b>Construit à partir de vos mots.</b> Chaque affirmation remonte à votre spécification (85 lignes, 15 oct 2026) ou à vos réponses au formulaire.<br>
+  Répondez avec la liste de modules voulue — même un seul — et la semaine 1 démarre.</p>
+</footer>
+
+<script>
+(function(){
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, {threshold:.08});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+  }
+})();
+</script>
+</body>
+</html>

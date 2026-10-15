@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your OpenClaw System — Analysis &amp; Build Plan</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%23B85042'/%3E%3C/svg%3E">
+<meta name="description" content="Strategy analysis of your OpenClaw multi-agent specification and your AI Gameplan answers — Read as a build plan, priced in keep-forever tutorial modules.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#B85042; --forest:#2C5F2D; --sand:#E7E8D1; --ink:#1F2421; --paper:#FBF9F4;
+    --muted:#5A5F58; --surface:#FFFFFF; --ink-soft:#3C423C; --chrome:#2A312D; --gold:#B08D2F;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap,header.hero,footer{max-width:800px;margin:0 auto;padding:0 26px}
+  h1,h2,h3,.logo{font-family:'Playfair Display',Georgia,serif}
+  section{padding:52px 0;border-bottom:1px solid var(--sand);scroll-margin-top:12px}
+  section:last-of-type{border-bottom:none}
+  .eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta);margin-bottom:12px}
+  h2{font-size:1.8rem;font-weight:800;line-height:1.2;letter-spacing:-.01em;margin-bottom:16px}
+  h3{font-size:1.15rem;font-weight:700;margin:22px 0 8px}
+  p{margin-bottom:14px}
+  .muted{color:var(--muted)}
+  .note{font-size:.86rem;color:var(--muted);font-style:italic}
+  /* HERO */
+  header.hero{padding:86px 26px 60px;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% -10%, rgba(231,232,209,.9), transparent 70%),var(--paper)}
+  header.hero h1{font-size:clamp(2rem,5.5vw,3.1rem);font-weight:800;line-height:1.13;letter-spacing:-.015em;margin:16px auto 14px;max-width:22ch}
+  header.hero .sub{color:var(--muted);max-width:56ch;margin:0 auto 26px}
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:34px 0;max-width:640px;margin-left:auto;margin-right:auto}
+  .fact{background:var(--surface);border:1px solid var(--sand);border-radius:14px;padding:16px 10px}
+  .fact .n{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800;color:var(--terracotta)}
+  .fact .l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-top:4px}
+  .cta{display:inline-block;background:var(--ink);color:var(--paper)!important;text-decoration:none;font-weight:600;padding:14px 30px;border-radius:999px;transition:transform .2s, box-shadow .2s}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(31,36,33,.18)}
+  .cta:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
+  /* TABLES */
+  table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem}
+  th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:10px 12px;border-bottom:2px solid var(--sand)}
+  td{padding:12px;border-bottom:1px solid var(--sand);vertical-align:top}
+  td .price{font-family:'Playfair Display',serif;font-weight:800;color:var(--terracotta);font-size:1.05rem;white-space:nowrap}
+  /* CALLOUTS */
+  .quote{border-left:3px solid var(--forest);background:rgba(44,95,45,.06);padding:14px 18px;border-radius:0 12px 12px 0;font-size:.93rem;margin:16px 0}
+  .quote .src{display:block;margin-top:6px;font-size:.78rem;color:var(--muted)}
+  .warn{border-left:3px solid var(--gold);background:rgba(176,141,47,.07);padding:14px 18px;border-radius:0 12px 12px 0;font-size:.93rem;margin:16px 0}
+  /* MODULE CARDS */
+  .mods{display:flex;flex-direction:column;gap:14px;margin:24px 0}
+  .mod{background:var(--surface);border:1px solid var(--sand);border-radius:16px;padding:20px 22px;transition:transform .25s, box-shadow .25s}
+  .mod:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(31,36,33,.09)}
+  .mod .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .mod .mid{font-size:.72rem;font-weight:700;letter-spacing:.12em;color:var(--forest);background:rgba(44,95,45,.08);border-radius:999px;padding:3px 10px}
+  .mod .price{font-family:'Playfair Display',serif;font-weight:800;color:var(--terracotta);font-size:1.3rem}
+  .mod h3{margin:8px 0 6px;font-size:1.1rem}
+  .mod p{font-size:.9rem;color:var(--ink-soft);margin-bottom:6px}
+  .mod .meta{font-size:.76rem;color:var(--muted)}
+  .mod.bundle{border-color:var(--forest);border-width:2px;background:rgba(44,95,45,.03)}
+  .mod.custom{border-color:var(--terracotta);border-width:2px;background:rgba(184,80,66,.03)}
+  /* ROADMAP */
+  .weeks{display:flex;flex-direction:column;gap:0;margin:22px 0}
+  .week{display:flex;gap:16px;padding:14px 0;border-bottom:1px dashed var(--sand)}
+  .week:last-child{border-bottom:none}
+  .week .w{flex:none;width:86px;font-family:'Playfair Display',serif;font-weight:800;color:var(--muted);font-size:1.15rem}
+  .week .d{font-size:.92rem}
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1)}
+  .reveal.visible{opacity:1;transform:none}
+  footer{padding:38px 26px 70px;text-align:center;color:var(--muted);font-size:.84rem}
+  footer b{color:var(--ink)}
+  @media print{
+    body{font-size:12px}
+    .cta{display:none}
+    section{break-inside:avoid;padding:24px 0}
+    .reveal{opacity:1;transform:none}
+    .mod:hover{transform:none}
+  }
+  @media (max-width:640px){
+    body{font-size:15px}
+    h2{font-size:1.5rem}
+    .facts{grid-template-columns:repeat(2,1fr)}
+    .week{gap:10px}
+    .week .w{width:64px;font-size:1rem}
+    .mod .row{flex-direction:column;align-items:flex-start;gap:4px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .cta:hover,.mod:hover{transform:none}
+  }
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none}</style></noscript>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Your OpenClaw system — analysis &amp; build plan</p>
+    <h1>We read all 85 lines of your specification.<br>Here is how it becomes real.</h1>
+    <p class="sub">Your multi-agent design is well thought out — four agents, human approval at every gate, phased delivery. This document maps it to a working stack, resolves the one budget tension in it, and prices every step as a tutorial module you keep forever.</p>
+    <div class="facts">
+      <div class="fact"><div class="n">4</div><div class="l">agents designed</div></div>
+      <div class="fact"><div class="n">5</div><div class="l">delivery phases</div></div>
+      <div class="fact"><div class="n">12</div><div class="l">solutions you chose</div></div>
+      <div class="fact"><div class="n">60<span style="font-size:.9rem">d</span></div><div class="l">your goal, our plan</div></div>
+    </div>
+    <a class="cta" href="#read">The analysis ↓</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="read" class="reveal">
+  <p class="eyebrow">1 · Who you are</p>
+  <h2>Ten things we learned from your own words</h2>
+
+  <h3>1. "Consulting" is an undercount — you run four businesses in one</h3>
+  <p>Your spec says the system "supports personal administration, health and safety consultancy, drone services, South African football charity work, security monitoring and professional document production", and asks for "separate permissioned knowledge profiles" for each. We take this seriously: that is four memory contexts, and the separation is <em>your</em> design — we build it as specified.</p>
+
+  <h3>2. The human guardrail is your idea, in writing</h3>
+  <div class="quote">"Always have a human in loop to ensure agents don't make decisions without human consent" <span class="src">— your gameplan, parallel agents</span></div>
+  <p>Your spec operationalizes it ("Send emails / contact leads — Approval", "Book travel / spend money — Approval", "Never automatically install software, rotate credentials, disable accounts or delete data without an authorised policy or approval"). We are aligned before the first call — this is trust design, not a sales pitch.</p>
+
+  <h3>3. You want three things at once — and that's solvable</h3>
+  <p>"Set it up for me" on 8 of 12 solutions, learn "done with me, live", hands off "teach me", tools at "$0 free only". Run head-on, somebody loses. The resolution is sequencing, not a discount: <strong>each module is one product that delivers both</strong> — we drive the install, you keep the step-by-step tutorial forever. DFY outcome, DWY skill.</p>
+
+  <h3>4. You named the product yourself: "Not enough skills"</h3>
+  <p>Your #1 bottleneck, declared while using Claude Code <em>every day</em>. A daily user who still feels under-skilled is exactly who skill-transfer tutorials are for — not black-box software. And since your learning budget is live sessions, every module's payback accelerates.</p>
+
+  <h3>5. Your definition of success is repairability, not magic</h3>
+  <div class="quote">"A workable AI system that is easy to manage and knowledge to fix when it does wrong" <span class="src">— your 90-day goal, verbatim</span></div>
+  <p>"Knowledge to fix when it does wrong" is the strongest possible ally of the tutorial model. Every module ends with the system running <em>and</em> a "when it breaks" section. You are explicitly refusing dependency on us — we respect that in the design.</p>
+
+  <h3>6. The charity grant cycle is your first measurable win</h3>
+  <p>Your verbatim ask: "Research for funding proposals for charity in South Africa and share in pdf". Your spec sharpens it: "identify South African football-development grants, sponsors, deadlines, eligibility and required documents". Grants have deadlines — a built-in scoreboard. It also chains two of your agents in one flow: research (A2) feeding a document (A4).</p>
+
+  <h3>7. A 60-day revenue clock is already ticking</h3>
+  <p>"First revenue: Within 60 days." The module order below is built for it: first digest week 3, first register week 4, grant pipeline week 6. It also disqualifies slow-payback starts — SEO and video come after day 60, on purpose.</p>
+
+  <h3>8. Price sensitivity is about tools, not expertise</h3>
+  <p>"$0 free only" monthly, but no stated cap on one-time purchases. Today you pay "Up to $50/month". The wedge is arithmetic: the first module routes that spend to free models — a $150 module that cancels a $50/month bill pays for itself in about three months.</p>
+
+  <h3>9. Your spec is unusually mature — this is a delivery job, not discovery</h3>
+  <p>You already wrote acceptance tests ("Every task has an ID, owner, status…"), a 5-phase delivery plan, an approval matrix, and 5 open decisions. Our quote answers <em>your</em> phases — it does not re-invent them.</p>
+
+  <h3>10. "Not sure / several" machines — local-first fits, one server follows</h3>
+  <p>Several machines suit the free local stack. The always-on night agent is what eventually justifies one small server — and only once Phase 1 demonstrably runs.</p>
+</section>
+
+<section id="spec" class="reveal">
+  <p class="eyebrow">2 · Your specification, read honestly</p>
+  <h2>What OpenClaw asks — what already runs — the real gap</h2>
+  <p class="muted">We deliver the functional equivalent of your spec with the agent stack we operate daily (Claude Code agents, hooks, memory files, alert channels, adversarial review). "OpenClaw" is your name for the system; the build below makes it yours.</p>
+
+  <div class="tablewrap">
+  <table>
+    <tr><th>Your spec</th><th>What you ask</th><th>What already runs here</th><th>The honest gap</th></tr>
+    <tr><td><b>§1</b> Four coordinated agents under one Chief of Staff</td><td>A1 Assistant, A2 Research, A3 Security, A4 Design; security alerts go straight to the owner</td><td>An equivalent orchestrator runs daily in-house</td><td>We configure, not rewrite. The full 4-agent front door = the custom build (below)</td></tr>
+    <tr><td><b>§2</b> Agent responsibilities</td><td>Daily briefing, research register, least-privilege monitoring, branded documents</td><td>Each exists in production use here</td><td>A3 continuous telemetry needs the server (M9); A4 "branded" QA is real design work</td></tr>
+    <tr><td><b>§3</b> Standard workflow</td><td>Task ID → classify → delegate with minimum access → QA loop → approve → archive</td><td>This is how our own sessions already run</td><td>Wiring <em>your</em> front door to it = the orchestrator build</td></tr>
+    <tr><td><b>§4</b> Approval &amp; safety</td><td>Scoped OAuth for read; approval for send/spend/delete; test-rollback-audit</td><td>Our permission gates implement this policy today</td><td><strong>The real build item: scoped Google OAuth for Gmail/Drive/Calendar.</strong> Read-only first, drafts labeled, send only on approval</td></tr>
+    <tr><td><b>§5</b> Data &amp; memory</td><td>6-folder taxonomy, four permissioned contexts, no passwords in memory</td><td>Memory-store proven at scale (600+ indexed notes here)</td><td>Taxonomy = simple setup; UK data-protection wording = you sign, we support</td></tr>
+    <tr><td><b>§6</b> Acceptance tests</td><td>Failed tasks visible; no unapproved external action; critical alerts bypass A1</td><td>All testable today; independent alert path exists</td><td>Formally signed off in M8; the bypass path needs the server or a hosted channel</td></tr>
+    <tr><td><b>§7</b> Phased delivery</td><td>Phases 1-5, orchestration → automation</td><td>Maps 1:1 onto module order M1-M10</td><td>Phase 5 (learned automation) is beyond 60 days — inside the custom build</td></tr>
+    <tr><td><b>§8</b> Open decisions</td><td>Hosting, scopes, briefing time, budget ceilings, templates, residency</td><td>We answer hosting + tools now (all $0 but the server)</td><td>The rest are <em>your</em> calls — collected at the week-4 checkpoint; none blocks M1-M3</td></tr>
+  </table>
+  </div>
+
+  <p class="note">Difficulty triage, no varnish: simple — briefing, registers, memory profiles, folder taxonomy, digests (all operated here daily). Hard — scoped OAuth (most delicate build item), always-on telemetry, an independent critical path to your phone, and A4 documents polished enough to send to a grant committee.</p>
+</section>
+
+<section id="tension" class="reveal">
+  <p class="eyebrow">3 · The budget tension, resolved</p>
+  <h2>DFY × learn-with-me × $0 — the pyramid way</h2>
+  <p>Each level pays for the next:</p>
+  <h3>Phase 1 — weeks 1-4: learn on your machine, $0 tools</h3>
+  <p>We install <strong>together</strong>: model routing first — CCR, Claude Code Router — (M1) — your "Up to $50/month" drops toward $0, which makes your "$0 free only" budget <em>true</em> instead of aspirational — then Claude Code pro (M2) and the morning brief (M3), free and local. Your 90-day goal ("knowledge to fix when it does wrong") is a Phase 1 deliverable, not a promise.</p>
+  <h3>Phase 2 — weeks 3-6: the registers</h3>
+  <p>Research engine + opportunities register (M4), the four-permissioned-context memory (M5), and the charity grant pipeline (M6) — the use case you proposed verbatim. This is exactly your spec's Phase 2.</p>
+  <h3>Phase 3+ — weeks 5-8: documents and watchtowers</h3>
+  <p>Branded documents (M7), your approval matrix enforced in code (M8), then — only once Phase 1 demonstrably runs — the always-on server — VPS, Virtual Private Server — (M9): <strong>~$6-12/month, the one real monthly cost</strong>. No other recurring fee exists. GPU rental stays an optional decision inside M10; default: not needed.</p>
+  <div class="warn"><strong>The full OpenClaw build</strong> — your spec phases 1-5, all four agents, one instruction front door, OAuth scopes, telemetry, signed acceptance tests — is the <strong>custom offer</strong>. Quoted after M1 + M3 are delivered: we scope against your real machine, real inbox, real drive (your own §8 lists the unknowns). Rule up front: <em>we quote when we can measure.</em></div>
+</section>
+
+<section id="modules" class="reveal">
+  <p class="eyebrow">4 · The training plan</p>
+  <h2>Twelve modules, priced, sequenced, yours forever</h2>
+  <p>Every module = a step-by-step tutorial you keep, installed done-with-you in a live session. All tools free unless stated.</p>
+
+  <div class="mods">
+    <div class="mod"><div class="row"><span class="mid">M1 · WEEK 1</span><span class="price">$150</span></div><h3>Tame Your Token Bill (CCR model routing)</h3><p>Route Claude Code across free models — your recurring bill drops toward zero. The fastest payback in this plan.</p><p class="meta">≈2h + setup · covers §8 hosting/budget · you pay $50/mo today: payback ≈ 3 months</p></div>
+    <div class="mod"><div class="row"><span class="mid">M2 · WEEKS 1-2</span><span class="price">$200</span></div><h3>Your Claude Code, Pro Edition</h3><p>Skills, hooks, memory — the three levers behind every other module, aimed at your declared bottleneck.</p><p class="meta">≈4h · covers §2 A1, §5</p></div>
+    <div class="mod"><div class="row"><span class="mid">M3 · WEEKS 2-3</span><span class="price">$250</span></div><h3>The Morning Brief (night agent + local digest)</h3><p>A scheduled agent reads your calendar and mail overnight and hands you one digest — the daily briefing your spec defines (§2 A1). First digest: week 3.</p><p class="meta">≈1 day + setup · covers §2 A1, §7 Phase 1 · includes the delicate Gmail read-scope, read-only first</p></div>
+    <div class="mod"><div class="row"><span class="mid">M4 · WEEKS 3-4</span><span class="price">$250</span></div><h3>The Research Engine (web agents + opportunities register)</h3><p>Web research agents feeding the exact register schema your spec defines: ID, source, date verified, fit score, deadline, next step, status.</p><p class="meta">≈1 day · covers §2 A2, §6</p></div>
+    <div class="mod"><div class="row"><span class="mid">M5 · WEEK 4</span><span class="price">$200</span></div><h3>Business Memory That Never Forgets</h3><p>Four permissioned memory profiles — personal / consultancy / drones / charity — on the folder taxonomy you already specified.</p><p class="meta">≈3-4h · covers §2 A1, §5</p></div>
+    <div class="mod"><div class="row"><span class="mid">M6 · WEEKS 5-6</span><span class="price">$300</span></div><h3>The Charity Grant Pipeline (SA football)</h3><p>Grant discovery → register → eligibility check → PDF brief, deadlines as the scoreboard. Your first revenue-relevant flow.</p><p class="meta">≈1.5 days · covers §2 A2, §7 Phase 2 · first grant brief as PDF: week 6</p></div>
+    <div class="mod"><div class="row"><span class="mid">M7 · WEEK 6</span><span class="price">$250</span></div><h3>The Document Factory (branded Word / PPT / PDF)</h3><p>Templated, QA'd documents — editable originals plus final PDFs, spelling/layout/accessibility gates, as your A4 requires.</p><p class="meta">≈1 day · covers §2 A4, §6, §7 Phase 3</p></div>
+    <div class="mod"><div class="row"><span class="mid">M8 · WEEK 6</span><span class="price">$300</span></div><h3>Security &amp; Human-in-the-Loop Guardrails</h3><p>Your approval matrix, enforced in code: approval queues, secret storage, audit logs, revocation, the independent alert path. Your acceptance tests, written and run.</p><p class="meta">≈1.5 days · covers §4, §2 A3, §6 · highest-stakes module</p></div>
+    <div class="mod"><div class="row"><span class="mid">M9 · WEEK 7</span><span class="price">$150</span></div><h3>Your Always-On Server (VPS)</h3><p>The night agent moves to 24/7. <b>~$6-12/mo real cost</b> — the one recurring fee in this whole plan, stated here, once.</p><p class="meta">≈3h · covers §7 Phase 4</p></div>
+    <div class="mod"><div class="row"><span class="mid">M10 · WEEKS 7-8</span><span class="price">$200</span></div><h3>Local AI (Ollama / LM Studio) + the GPU Decision</h3><p>Run models free on your own hardware, plus a decision framework for when a rented GPU is worth it. Default: not needed.</p><p class="meta">≈4h · covers §8</p></div>
+    <div class="mod"><div class="row"><span class="mid">M11 · AFTER DAY 60</span><span class="price">$300</span></div><h3>SEO + AI Visibility (UK)</h3><p>Getting found by search and AI answers. Kept off the 60-day clock deliberately — it needs an offer first ("Ideal client: Not defined yet" is your honest answer, and that's fine).</p><p class="meta">≈1 day · business side</p></div>
+    <div class="mod"><div class="row"><span class="mid">M12 · ON DEMAND</span><span class="price">$100-$300</span></div><h3>Video / Photo / Audio AI</h3><p>Media production, priced per module complexity at order. Not in the 60-day path.</p><p class="meta">ad hoc</p></div>
+    <div class="mod bundle"><div class="row"><span class="mid">BUNDLE</span><span class="price">$800 <s style="font-size:.8rem;color:var(--muted)">$1,100</s></span></div><h3>OpenClaw Core — M1 + M2 + M3 + M5 + M8</h3><p>The ground floor: routing, skills, the briefing, the four-context memory, and your approval matrix — your two verbatim asks plus the two enablers of everything else. Security inside the bundle means it's never the module you skip.</p><p class="meta">saves $300 · the recommended start</p></div>
+    <div class="mod custom"><div class="row"><span class="mid">CUSTOM</span><span class="price">scoped later</span></div><h3>The Full OpenClaw Build — JEAN-SKYNET custom</h3><p>Your spec §7 phases 1-5 as one done-with-you build: all four agents, one front door, OAuth scope design, telemetry, acceptance tests signed. Quoted after M1 + M3 are delivered — scope against measured reality, not a questionnaire.</p><p class="meta">duration fixed at scoping</p></div>
+  </div>
+
+  <h3>The 60-day total</h3>
+  <p>Minimal stack for your 90-day goal, à la carte: <strong>M1+M2+M3+M4+M5 = $1,050</strong>. Same money, better shape: <strong>Core bundle $800 + M4 $250 = $1,050 — six modules including M8 ($300 value) instead of five.</strong> Recurring: <strong>$0 tools through week 6 — the server bills only from switch-on (week 7)</strong>; from week 7 the server is "the one real monthly cost, ~$6-12/mo". Full 8-week set (M1-M10) = $2,250 à la carte, $1,950 with the bundle.</p>
+</section>
+
+<section id="risks" class="reveal">
+  <p class="eyebrow">5 · Risks</p>
+  <h2>Named before you find them</h2>
+  <h3>R1 — OAuth is the real mountain</h3>
+  <p>Gmail/Drive/Calendar scoped access is the most delicate build item. Mitigation: read-only first, drafts labeled, send only on approval, tokens revocable — your §6 asks for exactly that. Slack is scheduled in M3/M8 rather than promising a date.</p>
+  <h3>R2 — Four businesses, four memories, one brain</h3>
+  <p>Cross-contamination — drone pricing in a grant letter, charity data in a consultancy file — is the likeliest silent failure. M5 builds the four permissioned profiles <em>before</em> heavy research starts, on your own taxonomy.</p>
+  <h3>R3 — The $0 trap</h3>
+  <p>"$0 free only" holds through weeks 1-6. The server is the one real monthly cost (~$6-12/mo); one surprise invoice later costs more trust than the truth costs now — so here it is.</p>
+  <h3>R4 — We are planning against unknowns</h3>
+  <p>Volume "Not sure yet", ideal client undefined, hardware uncertain. The plan optimizes your stated primary use ("Save me time") and re-checks at the week-4 checkpoint before M6-M10 are committed.</p>
+  <h3>R5 — Approval friction can eat the time it saves</h3>
+  <p>Your policy is approval-heavy and your goal is time. If every action pings you mid-day, the guardrail becomes the burden. Remedied by your own design: batch approvals into the morning brief with one-tap yes/no — the human-in-loop costs minutes, not interruptions.</p>
+</section>
+
+<section id="roadmap" class="reveal">
+  <p class="eyebrow">6 · The 60-day path</p>
+  <h2>Week by week</h2>
+  <div class="weeks">
+    <div class="week"><div class="w">Week 1</div><div class="d">Token bill → ~$0 (M1, CCR routing live); skills/hooks/memory foundations begin (M2 starts)</div></div>
+    <div class="week"><div class="w">Week 2</div><div class="d">Claude Code pro skills live on your machine; you've patched your first hook yourself (M2 done, M3 starts)</div></div>
+    <div class="week"><div class="w">Week 3</div><div class="d">First morning digest arrives — calendar + priority mail, local and free (M3 done, M4 starts)</div></div>
+    <div class="week"><div class="w">Week 4</div><div class="d">Research engine + opportunities register (your §2 schema); four-context memory stands up (M4, M5). <b>Checkpoint:</b> your §8 decisions get collected; the custom build enters scoping</div></div>
+    <div class="week"><div class="w">Week 5</div><div class="d">Grant pipeline build starts: SA football grant discovery into the register (M6)</div></div>
+    <div class="week"><div class="w">Week 6</div><div class="d">First grant brief shared as PDF (your spec's charity use case); document factory with branded templates; approval matrix enforced in hooks (M6, M7, M8)</div></div>
+    <div class="week"><div class="w">Week 7</div><div class="d">Night agent moves to the always-on server — the first and only recurring cost (~$6-12/mo), accepted knowingly; independent security alert path tested (M9)</div></div>
+    <div class="week"><div class="w">Week 8</div><div class="d">Local AI + GPU decision (default: not needed); 60-day review against your 90-day goal; the full-build custom quote, scoped on measured reality (M10 + review)</div></div>
+  </div>
+  <div class="quote"><strong>Day 60, against your own asks:</strong> daily brief running · registers and charity pipeline live · memory in four separated contexts · branded, QA'd documents · guardrails enforcing your approval policy · optional 24/7 host — and every piece ships with the tutorial that lets you fix it yourself. That is the only definition of success you wrote down.</div>
+  <h3>What we need from you to start</h3>
+  <p>Your briefing time and channel (§8) · which addresses/folders each agent may read · one machine for the Phase 1 install. Everything else starts without those answers.</p>
+  <p style="margin-top:22px"><a class="cta" href="#modules">Back to the modules ↑</a></p>
+</section>
+
+</main>
+
+<footer>
+  <p><b>Built from your words.</b> Every claim traces to your specification (85 lines, dated 15 Oct 2026) or your gameplan answers.<br>
+  Reply with the module list you want — even one — and week 1 starts.</p>
+</footer>
+
+<script>
+(function(){
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, {threshold:.08});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+  }
+})();
+</script>
+</body>
+</html>
