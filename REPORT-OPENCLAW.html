@@ -152,23 +152,74 @@
 <section id="spec" class="reveal">
   <p class="eyebrow">2 · Your specification, read honestly</p>
   <h2>What OpenClaw asks — what already runs — the real gap</h2>
-  <p class="muted">We deliver the functional equivalent of your spec with the agent stack we operate daily (Claude Code agents, hooks, memory files, alert channels, adversarial review). "OpenClaw" is your name for the system; the build below makes it yours.</p>
+  <p class="muted">We deliver the functional equivalent of your spec with the agent stack we operate daily. "OpenClaw" is your name for the system — and your choice. See "Your OpenClaw — two honest roads" below: both roads stay on the table.</p>
 
   <div class="tablewrap">
   <table>
     <tr><th>Your spec</th><th>What you ask</th><th>What already runs here</th><th>The honest gap</th></tr>
-    <tr><td><b>§1</b> Four coordinated agents under one Chief of Staff</td><td>A1 Assistant, A2 Research, A3 Security, A4 Design; security alerts go straight to the owner</td><td>An equivalent orchestrator runs daily in-house</td><td>We configure, not rewrite. The full 4-agent front door = the custom build (below)</td></tr>
-    <tr><td><b>§2</b> Agent responsibilities</td><td>Daily briefing, research register, least-privilege monitoring, branded documents</td><td>Each exists in production use here</td><td>A3 continuous telemetry needs the server (M9); A4 "branded" QA is real design work</td></tr>
-    <tr><td><b>§3</b> Standard workflow</td><td>Task ID → classify → delegate with minimum access → QA loop → approve → archive</td><td>This is how our own sessions already run</td><td>Wiring <em>your</em> front door to it = the orchestrator build</td></tr>
-    <tr><td><b>§4</b> Approval &amp; safety</td><td>Scoped OAuth for read; approval for send/spend/delete; test-rollback-audit</td><td>Our permission gates implement this policy today</td><td><strong>The real build item: scoped Google OAuth for Gmail/Drive/Calendar.</strong> Read-only first, drafts labeled, send only on approval</td></tr>
-    <tr><td><b>§5</b> Data &amp; memory</td><td>6-folder taxonomy, four permissioned contexts, no passwords in memory</td><td>Memory-store proven at scale (600+ indexed notes here)</td><td>Taxonomy = simple setup; UK data-protection wording = you sign, we support</td></tr>
-    <tr><td><b>§6</b> Acceptance tests</td><td>Failed tasks visible; no unapproved external action; critical alerts bypass A1</td><td>All testable today; independent alert path exists</td><td>Formally signed off in M8; the bypass path needs the server or a hosted channel</td></tr>
+    <tr><td><b>§1</b> Four coordinated agents under one Chief of Staff</td><td>A1 Assistant, A2 Research, A3 Security, A4 Design; security alerts go straight to the owner</td><td><b>HERMÈS</b> — our always-on orchestration cockpit (agent-to-agent channel, scheduled watch tasks, scored triage, grouped morning approvals, its own message inbox) — runs our company's equivalent of this exact role every day</td><td>We build yours to your spec — either on the OpenClaw framework you chose, or on our proven stack. Your call (below)</td></tr>
+    <tr><td><b>§2</b> Agent responsibilities</td><td>Daily briefing, research register, least-privilege monitoring, branded documents</td><td><b>NEXUS V3</b> — our server (18+ scored market feeds, registers, execution logs, SEO tooling wired to Google Search Console) plus document pipelines in production use</td><td>A3 continuous telemetry needs the server (M9); A4 "branded" QA is real design work</td></tr>
+    <tr><td><b>§3</b> Standard workflow</td><td>Task ID → classify → delegate with minimum access → QA loop → approve → archive</td><td>This is how our own sessions already run — plan, verify, adversarial review (two independent reviewers), archive</td><td>Wiring <em>your</em> front door to it = the orchestrator build</td></tr>
+    <tr><td><b>§4</b> Approval &amp; safety</td><td>Scoped OAuth for read; approval for send/spend/delete; test-rollback-audit</td><td>Our permission gates implement this policy today; secrets live in a vault; operations are version-controlled</td><td><strong>The real build item: scoped Google OAuth for Gmail/Drive/Calendar.</strong> Read-only first, drafts labeled, send only on approval</td></tr>
+    <tr><td><b>§5</b> Data &amp; memory</td><td>6-folder taxonomy, four permissioned contexts, no passwords in memory</td><td>A 600+ indexed-note memory system our agents query in milliseconds, with per-context separation</td><td>Taxonomy = simple setup; UK data-protection wording = you sign, we support</td></tr>
+    <tr><td><b>§6</b> Acceptance tests</td><td>Failed tasks visible; no unapproved external action; critical alerts bypass A1</td><td>All testable today; the independent alert path exists (a channel separate from the agent loop, straight to the owner)</td><td>Formally signed off in M8; the bypass path needs the server or a hosted channel</td></tr>
     <tr><td><b>§7</b> Phased delivery</td><td>Phases 1-5, orchestration → automation</td><td>Maps 1:1 onto module order M1-M10</td><td>Phase 5 (learned automation) is beyond 60 days — inside the custom build</td></tr>
     <tr><td><b>§8</b> Open decisions</td><td>Hosting, scopes, briefing time, budget ceilings, templates, residency</td><td>We answer hosting + tools now (all $0 but the server)</td><td>The rest are <em>your</em> calls — collected at the week-4 checkpoint; none blocks M1-M3</td></tr>
   </table>
   </div>
 
-  <p class="note">Difficulty triage, no varnish: simple — briefing, registers, memory profiles, folder taxonomy, digests (all operated here daily). Hard — scoped OAuth (most delicate build item), always-on telemetry, an independent critical path to your phone, and A4 documents polished enough to send to a grant committee.</p>
+  <p class="note">Bonus machinery you inherit: <b>RTK</b>, our terminal filter — <span style="white-space:nowrap">7.4M tokens saved across 73,500+ real commands</span>, about 41% of all command tokens and 69% of output tokens (rtk gain, 16 Oct 2026). Difficulty triage, no varnish: simple — briefing, registers, memory profiles, folder taxonomy, digests (all operated here daily). Hard — scoped OAuth (most delicate build item), always-on telemetry, an independent critical path to your phone, and A4 documents polished enough to send to a grant committee.</p>
+</section>
+
+<section id="livingit" class="reveal">
+  <p class="eyebrow">· We live inside it</p>
+  <h2>The same architecture runs our own company today</h2>
+  <p>Everything your spec describes has a working counterpart in our own daily operation — HERMÈS orchestrates and briefs us the way your A1 should, NEXUS holds the registers, feeds and logs the way your A2-A3 should, and Claude Code (hardened by the tutorial you already followed) executes the way your agents should. Why this matters: <strong>you are not hiring hope — every module below teaches you to run machinery that already runs our own company.</strong></p>
+
+  <h3 style="margin-top:26px">Your OpenClaw — two honest roads, you pick</h3>
+  <p>"OpenClaw" is both <em>your</em> name for the system <em>and</em> a real, mature open-source project (MIT license, 390k+ stars on GitHub, stewarded by a foundation — your assistant on your own devices, connected to WhatsApp/Telegram/Slack and 20+ channels, with Claude, Codex or local models as swappable plugins). We read its documentation with care. So the fork is real, and both roads lead to your spec:</p>
+  <p><b>Road A — WE DEPLOY OPENCLAW, only OpenClaw.</b> You want the framework itself, on your own devices — we set it up end-to-end: install, gateway and channels configuration (your WhatsApp for the SA charity, email for the consultancy…), model providers wired the free-first way, your four permissioned contexts, your approval matrix. We do the plumbing and teach you to steer it (modules below unchanged — they teach the method, and OpenClaw's own skills ecosystem slots right in: 5,300+ community skills exist).</p>
+  <p><b>Road B — REPLACE OpenClaw with HERMÈS.</b> Let us deploy our own cockpit — the orchestration layer that already runs our company daily (briefing, group approvals, score-based triage, independent alert path, scheduled tasks) — configured on <em>your</em> server to <em>your</em> spec. Same result shape as your spec's A1, proven in production; that is the custom build offered at the end. <b>The strongest system we know how to build</b> — but entirely your call.</p>
+  <p style="color:var(--muted);font-size:.92rem">Our only stated preference (because you asked): HERMÈS is what we run and trust daily. But Road A is a first-class citizen — it's your machine, your channels, and OpenClaw's "state, memory, and credentials live on your hardware" philosophy matches your spec §5 point for point. We scope either after seeing M1 and M3 run.</p>
+</section>
+
+<section id="budget" class="reveal">
+  <p class="eyebrow">· The honest budget — how "free" actually works</p>
+  <h2>The hybrid reality: free-first, not free-forever</h2>
+  <p>Our own system runs <b>free most of the time</b> thanks to automatic routing across free frontier-adjacent models (community-served models like LongCat, GLM, DeepSeek — plus fully local ones via Ollama). When a task demands it, it switches to a paid model for that one job. This is not a promise — it is how our own company operates today.</p>
+  <p><b>What this means for your "$0 free only" budget — said honestly:</b></p>
+  <ul style="margin:0 0 14px 22px">
+    <li>Free models are sometimes <b>slower</b> or occasionally <b>saturated</b> — timing is not guaranteed.</li>
+    <li>Quality <b>varies</b> by model and by day; the routing picks the best available, and M1 teaches you to steer it.</li>
+    <li>A high-stakes job (a grant letter, a client document) may warrant a paid model <b>once</b> — costing cents or a few dollars, never a subscription.</li>
+  </ul>
+  <p><strong>We do not sell the dream of "0 everywhere, always."</strong> We deliver a system that <em>seeks the free route first</em> and knows when to switch. That is the honest version — and the only one we know how to build.</p>
+
+  <h3 style="margin-top:26px">The price gap, in numbers — measured today</h3>
+  <p>Why the free-first routing is not a gimmick, but arithmetic. Official published prices per million tokens (DeepSeek measured from their pricing page today; Claude from Anthropic's official pricing page):</p>
+  <div class="tablewrap">
+  <table>
+    <tr><th>Model</th><th>Class</th><th>Input / 1M</th><th>Output / 1M</th><th>Best at</th></tr>
+    <tr><td><b>DeepSeek V4.1 Flash</b></td><td>cheap frontier-grade (CN)</td><td><b>$0.15</b> (off-peak; $0.30 peak) — <b>$0.003</b> on cache hit ($0.006 peak)</td><td><b>$0.60</b> (off-peak; $1.20 peak)</td><td>bulk work: research passes, register fills, first drafts, summarizing — our own architect runs on it</td></tr>
+    <tr><td>Xiaomi MiMo 2.6 (Pro tier, free route)</td><td>free-tier served</td><td>≈ $0 (community/free serving)</td><td>≈ $0</td><td>second-opinion passes, mechanical edits, background tasks</td></tr>
+    <tr><td>LongCat 2.0 (free route)</td><td>free-tier served</td><td>$0 on our agent routes</td><td>$0</td><td>sub-agent delegation — our own sub-agents default to it</td></tr>
+    <tr><td>Claude Sonnet 5.5 (reference US frontier)</td><td>US frontier</td><td>$2.00</td><td>$10.00</td><td>final drafting, nuanced judgment calls, code that must be right</td></tr>
+  </table>
+  </div>
+  <p><b>Read the table as a buyer:</b> the same research pass that costs <b>$10 of Claude output</b> costs <b>$0.60 on DeepSeek Flash</b> (off-peak) — a <b>16× difference on the exact tasks that fill registers and briefs</b>. That is why our system routes the bulk to cheap/free fronts and reserves the US frontier tier for the moments that deserve it: your bill drops <em>because the cheap work goes to cheap models</em>, not because we skimped. (Price sources: deepseek.com pricing page and claude.com/pricing, measured 15-16 Oct 2026. MiMo/LongCat are served through community/free routes whose availability varies — see the honesty notes above.)</p>
+</section>
+
+<section id="pacing" class="reveal">
+  <p class="eyebrow">· The real timeline — three speeds</p>
+  <h2>How fast this goes depends on your availability</h2>
+  <p>The module content and prices never change — only the density does. Our base calendar assumes a part-time pace. Three real speeds for the same M1-M10 path:</p>
+  <table>
+    <tr><th>Your pace</th><th>Availability</th><th>The full M1-M10 path becomes</th></tr>
+    <tr><td>Part-time (the base calendar)</td><td>~4 h/week</td><td>the 8 weeks shown in the roadmap below</td></tr>
+    <tr><td>Steady</td><td>2-3 h/day</td><td><b>≈ 3 weeks</b></td></tr>
+    <tr><td>Full-time</td><td>full days</td><td><b>≈ 1 week</b></td></tr>
+  </table>
+  <p>Note: module durations ("≈1 day", "≈3-4 h") cover the guided session with us plus your own practice — the totals above are built on that convention. The Google OAuth authorizations keep their margin in every pace — that delay is Google's, and it does not compress.</p>
 </section>
 
 <section id="tension" class="reveal">
