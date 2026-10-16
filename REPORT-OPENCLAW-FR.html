@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Votre système OpenClaw — Analyse et plan de construction</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%23B85042'/%3E%3C/svg%3E">
-<meta name="description" content="Analyse stratégique de votre cahier des charges OpenClaw et de vos réponses au formulaire — lue comme un plan de construction, chiffrée en modules tutoriels que vous gardez à vie. Version interne (français).">
+<meta name="description" content="Analyse stratégique de votre cahier des charges OpenClaw multi-agents et de vos réponses au questionnaire d'orientation. Un plan de construction de 6 à 8 semaines, chiffré en modules tutoriels que vous gardez à vie.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
   html{scroll-behavior:smooth}
   body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
   .wrap,header.hero,footer{max-width:800px;margin:0 auto;padding:0 26px}
-  h1,h2,h3{font-family:'Playfair Display',Georgia,serif}
+  h1,h2,h3,.logo{font-family:'Playfair Display',Georgia,serif}
   section{padding:52px 0;border-bottom:1px solid var(--sand);scroll-margin-top:12px}
   section:last-of-type{border-bottom:none}
   .eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta);margin-bottom:12px}
@@ -27,23 +27,28 @@
   p{margin-bottom:14px}
   .muted{color:var(--muted)}
   .note{font-size:.86rem;color:var(--muted);font-style:italic}
+  /* HERO */
   header.hero{padding:86px 26px 60px;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% -10%, rgba(231,232,209,.9), transparent 70%),var(--paper)}
-  header.hero h1{font-size:clamp(2rem,5.5vw,3.1rem);font-weight:800;line-height:1.13;letter-spacing:-.015em;margin:16px auto 14px;max-width:24ch}
+  header.hero h1{font-size:clamp(2rem,5.5vw,3.1rem);font-weight:800;line-height:1.13;letter-spacing:-.015em;margin:16px auto 14px;max-width:22ch}
   header.hero .sub{color:var(--muted);max-width:56ch;margin:0 auto 26px}
-  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:34px auto;max-width:640px}
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:34px 0;max-width:640px;margin-left:auto;margin-right:auto}
   .fact{background:var(--surface);border:1px solid var(--sand);border-radius:14px;padding:16px 10px}
   .fact .n{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800;color:var(--terracotta)}
   .fact .l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-top:4px}
   .cta{display:inline-block;background:var(--ink);color:var(--paper)!important;text-decoration:none;font-weight:600;padding:14px 30px;border-radius:999px;transition:transform .2s, box-shadow .2s}
   .cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(31,36,33,.18)}
   .cta:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
+  /* TABLES */
   table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem}
+  .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
   th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:10px 12px;border-bottom:2px solid var(--sand)}
   td{padding:12px;border-bottom:1px solid var(--sand);vertical-align:top}
-  .tablewrap{overflow-x:auto}
+  td .price{font-family:'Playfair Display',serif;font-weight:800;color:var(--terracotta);font-size:1.05rem;white-space:nowrap}
+  /* CALLOUTS */
   .quote{border-left:3px solid var(--forest);background:rgba(44,95,45,.06);padding:14px 18px;border-radius:0 12px 12px 0;font-size:.93rem;margin:16px 0}
   .quote .src{display:block;margin-top:6px;font-size:.78rem;color:var(--muted)}
   .warn{border-left:3px solid var(--gold);background:rgba(176,141,47,.07);padding:14px 18px;border-radius:0 12px 12px 0;font-size:.93rem;margin:16px 0}
+  /* MODULE CARDS */
   .mods{display:flex;flex-direction:column;gap:14px;margin:24px 0}
   .mod{background:var(--surface);border:1px solid var(--sand);border-radius:16px;padding:20px 22px;transition:transform .25s, box-shadow .25s}
   .mod:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(31,36,33,.09)}
@@ -55,22 +60,30 @@
   .mod .meta{font-size:.76rem;color:var(--muted)}
   .mod.bundle{border-color:var(--forest);border-width:2px;background:rgba(44,95,45,.03)}
   .mod.custom{border-color:var(--terracotta);border-width:2px;background:rgba(184,80,66,.03)}
+  /* ROADMAP */
   .weeks{display:flex;flex-direction:column;gap:0;margin:22px 0}
   .week{display:flex;gap:16px;padding:14px 0;border-bottom:1px dashed var(--sand)}
   .week:last-child{border-bottom:none}
-  .week .w{flex:none;width:92px;font-family:'Playfair Display',serif;font-weight:800;color:var(--muted);font-size:1.1rem}
+  .week .w{flex:none;width:86px;font-family:'Playfair Display',serif;font-weight:800;color:var(--muted);font-size:1.15rem}
   .week .d{font-size:.92rem}
+  /* REVEAL */
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1)}
   .reveal.visible{opacity:1;transform:none}
   footer{padding:38px 26px 70px;text-align:center;color:var(--muted);font-size:.84rem}
   footer b{color:var(--ink)}
-  @media print{body{font-size:12px}.cta{display:none}section{break-inside:avoid;padding:24px 0}.reveal{opacity:1;transform:none}.mod:hover{transform:none}}
+  @media print{
+    body{font-size:12px}
+    .cta{display:none}
+    section{break-inside:avoid;padding:24px 0}
+    .reveal{opacity:1;transform:none}
+    .mod:hover{transform:none}
+  }
   @media (max-width:640px){
     body{font-size:15px}
     h2{font-size:1.5rem}
     .facts{grid-template-columns:repeat(2,1fr)}
     .week{gap:10px}
-    .week .w{width:72px;font-size:1rem}
+    .week .w{width:64px;font-size:1rem}
     .mod .row{flex-direction:column;align-items:flex-start;gap:4px}
   }
   @media (prefers-reduced-motion: reduce){
@@ -85,293 +98,303 @@
 
 <header class="hero">
   <div class="wrap">
-    <p class="eyebrow">Votre système OpenClaw — analyse et plan de construction</p>
-    <h1>Nous avons lu les 85 lignes de votre cahier des charges.<br>Voici comment il prend vie.</h1>
-    <p class="sub">Votre architecture multi-agents est solide : quatre agents, la validation humaine aux étapes sensibles — et une livraison qui avance par phases. Ce document la met en regard de la pile qui travaille déjà chez nous, résout la seule tension budgétaire qu'elle contient, et chiffre chaque étape en modules tutoriels que vous gardez à vie.</p>
+    <p class="eyebrow">Votre système OpenClaw · analyse et plan de construction</p>
+    <h1>Nous avons lu les 85 lignes de votre cahier des charges.<br>Voici comment il devient réel.</h1>
+    <p class="sub">Votre architecture multi-agents est une conception solide&nbsp;: quatre agents, la validation humaine à chaque porte, une livraison par phases. Ce document la fait correspondre à une chaîne de traitement qui fonctionne, tranche la seule tension budgétaire qu'elle contient, et chiffre chaque étape en module tutoriel que vous gardez à vie. Notre calendrier de construction couvre 6 à 8 semaines — et tient dans votre objectif des 60 jours.</p>
     <div class="facts">
       <div class="fact"><div class="n">4</div><div class="l">agents conçus</div></div>
       <div class="fact"><div class="n">5</div><div class="l">phases de livraison</div></div>
-      <div class="fact"><div class="n">12</div><div class="l">solutions choisies</div></div>
-      <div class="fact"><div class="n">60<span style="font-size:.9rem">j</span></div><div class="l">votre but, notre plan</div></div>
+      <div class="fact"><div class="n">12</div><div class="l">solutions que vous avez choisies</div></div>
+      <div class="fact"><div class="n">6-8<span style="font-size:.9rem">sem.</span></div><div class="l">notre calendrier, dans vos 60 jours</div></div>
     </div>
     <a class="cta" href="#read">L'analyse ↓</a>
   </div>
 </header>
 
 <main class="wrap">
-
 <section id="read" class="reveal">
-  <p class="eyebrow">1 · Qui est ce client</p>
-  <h2>Dix choses que ses propres mots nous ont apprises</h2>
+  <p class="quote"><strong>En clair&nbsp;:</strong> vos 85 lignes de cahier des charges et vos réponses au questionnaire nous ont appris dix choses. Elles décident l'ordre de tout ce qui suit&nbsp;: ce qui se construit d'abord, ce que coûte l'exploitation, et ce que nous vous dirons sans détour avant que vous ne payiez quoi que ce soit.</p>
+  <p class="eyebrow">1 · Qui vous êtes</p>
+  <h2>Dix choses apprises de vos propres mots</h2>
 
-  <h3>1. « Consulting » est un sous-comptage — vous dirigez quatre entreprises en une</h3>
-  <p>Votre cahier des charges indique que le système « soutient l'administration personnelle, le conseil en santé-sécurité, les services de drones, l'œuvre caritative de football sud-africain, la surveillance de sécurité et la production documentaire professionnelle », et demande des « profils de connaissances séparés et autorisés » par contexte. Nous le prenons au sérieux : ce sont quatre mémoires distinctes, et cette séparation vient de <em>votre</em> architecture — nous la construisons telle quelle.</p>
+  <h3>1. «&nbsp;Conseil&nbsp;» est un sous-comptage&nbsp;: vous dirigez quatre entreprises en une</h3>
+  <p>Votre cahier des charges indique que le système «&nbsp;soutient l'administration personnelle, le conseil en santé-sécurité, les services de drones, l'œuvre caritative de football sud-africain, la surveillance de sécurité et la production documentaire professionnelle&nbsp;», et demande des «&nbsp;profils de connaissances séparés et autorisés&nbsp;» pour chacun. Nous le prenons au sérieux&nbsp;: ce sont quatre contextes de mémoire distincts, et cette séparation est <em>votre</em> conception. Nous la construisons telle quelle.</p>
 
-  <h3>2. Le garde-fou humain est votre idée, par écrit</h3>
-  <div class="quote">« Always have a human in loop to ensure agents don't make decisions without human consent » <span class="src">— votre formulaire, section multi-agents</span></div>
-  <p>Votre cahier des charges le met en pratique : « Send emails / contact leads — Approval », « Book travel / spend money — Approval », « Never automatically install software, rotate credentials, disable accounts or delete data without an authorised policy or approval ». Nous sommes alignés avant le premier appel : la confiance se construit, elle ne se vend pas.</p>
+  <h3>2. Le garde-fou humain est votre idée, consignée par écrit</h3>
+  <div class="quote">«&nbsp;Always have a human in loop to ensure agents don't make decisions without human consent&nbsp;» <span class="src">(votre questionnaire d'orientation, section agents parallèles)</span></div>
+  <p>Votre cahier des charges le met en pratique&nbsp;: envoyer un courriel ou contacter un prospect exige une approbation&nbsp;; réserver un voyage ou dépenser de l'argent exige une approbation&nbsp;; et «&nbsp;never automatically install software, rotate credentials, disable accounts or delete data without an authorised policy or approval&nbsp;». Nous sommes alignés avant le premier appel. Cela s'appelle la conception de la confiance.</p>
 
   <h3>3. Vous demandez trois choses à la fois — et c'est soluble</h3>
-  <p>« Set it up for me » sur 8 solutions sur 12, apprendre « done with me », puis « teach me » pour la suite, outils à « $0 free only ». Prises de front, ces trois demandes se contredisent. La résolution tient au séquençage, pas à une remise : <strong>chaque module est un produit unique qui livre les deux</strong> — nous pilotons l'installation avec vous, et vous gardez le tutoriel pas à pas à vie. Le résultat « fait pour vous », la compétence « apprise avec vous ».</p>
+  <p>«&nbsp;Set it up for me&nbsp;» figure sur 8 de vos 12 solutions choisies. Vous voulez aussi apprendre en direct, les mains dessus, et votre budget outils indique «&nbsp;$0 free only&nbsp;». Prises de front, ces demandes s'entre-déchirent. La résolution tient au séquençage&nbsp;: chaque module est un produit unique qui livre les deux. Nous pilotons l'installation&nbsp;; vous gardez le tutoriel pas à pas à vie. Le résultat arrive «&nbsp;fait pour vous&nbsp;»&nbsp;; la compétence arrive «&nbsp;apprise avec vous&nbsp;».</p>
 
-  <h3>4. Vous avez vous-même nommé le produit : « Not enough skills »</h3>
-  <p>Votre goulot d'étranglement n°1, déclaré alors que vous utilisez Claude Code <em>tous les jours</em>. Un utilisateur quotidien qui se sent encore sous-formé est exactement la cible des tutoriels de transfert de compétence — pas d'un logiciel boîte noire. Et comme votre budget formation est en sessions guidées en direct, chaque module se rentabilise plus vite.</p>
+  <h3>4. Vous avez nommé le produit vous-même&nbsp;: «&nbsp;Not enough skills&nbsp;»</h3>
+  <p>Votre goulot d'étranglement n°1, déclaré alors que vous utilisez Claude Code <em>tous les jours</em>. Un utilisateur quotidien qui se sent encore sous-formé est exactement la cible des tutoriels de transfert de compétence. Et puisque votre budget formation est en sessions en direct, la rentabilité de chaque module s'accélère.</p>
 
   <h3>5. Votre définition du succès, c'est la réparabilité — pas la magie</h3>
-  <div class="quote">« A workable AI system that is easy to manage and knowledge to fix when it does wrong » <span class="src">— votre objectif à 90 jours, mot pour mot</span></div>
-  <p>« Savoir réparer quand ça se trompe » est le meilleur allié possible du modèle tutoriel. Chaque module se termine par le système qui tourne <em>et</em> une section « quand ça casse ». Vous refusez explicitement la dépendance envers nous — le design le respecte.</p>
+  <div class="quote">«&nbsp;A workable AI system that is easy to manage and knowledge to fix when it does wrong&nbsp;» <span class="src">(votre objectif à 90 jours, mot pour mot)</span></div>
+  <p>«&nbsp;Savoir réparer quand ça se trompe&nbsp;» est le meilleur allié possible du modèle tutoriel. Chaque module se termine par le système qui tourne <em>et</em> une section «&nbsp;quand ça casse&nbsp;». Vous refusez explicitement la dépendance envers nous. La conception le respecte.</p>
 
   <h3>6. Le cycle des subventions caritatives est votre première victoire mesurable</h3>
-  <p>Votre demande, mot pour mot : « Research for funding proposals for charity in South Africa and share in pdf ». Votre cahier des charges précise : « identifier les subventions de développement du football sud-africain, les sponsors, les échéances, l'éligibilité et les documents requis ». Les subventions ont des échéances — un tableau de score intégré. Et le flux enchaîne deux de vos agents : la recherche (A2 = votre agent de recherche) vers le document (A4 = votre agent documentaire).</p>
+  <p>Votre demande, mot pour mot&nbsp;: «&nbsp;Research for funding proposals for charity in South Africa and share in pdf&nbsp;». Votre cahier des charges la précise&nbsp;: «&nbsp;identifier les subventions de développement du football sud-africain, les sponsors, les échéances, l'éligibilité et les documents requis&nbsp;». Les subventions ont des échéances — un tableau de score intégré. Le flux enchaîne aussi deux de vos agents en un seul circuit&nbsp;: la recherche (A2, votre agent de recherche) alimente un document (A4, votre agent documentaire).</p>
 
   <h3>7. Une horloge de 60 jours tourne déjà</h3>
-  <p>« First revenue: Within 60 days. » L'ordre des modules est construit pour ça : première synthèse matinale semaine 3, premier registre semaine 4 (un registre = un tableau de suivi : une ligne par opportunité trouvée — source, date vérifiée, échéance, prochaine action, statut), chaîne de subventions semaine 6. Ce qui disqualifie volontairement les départs à rentabilité lente — référencement et vidéo arrivent après le 60ᵉ jour, exprès.</p>
+  <p>«&nbsp;First revenue: within 60 days.&nbsp;» L'ordre des modules est construit pour ça&nbsp;: première synthèse matinale en semaine 3 (une synthèse est le résumé du matin, une page), premier registre en semaine 4 (un registre est le tableau de suivi qui la porte&nbsp;: une ligne par opportunité trouvée, avec source, date vérifiée, échéance, prochaine action, statut), chaîne de subventions en semaine 6. Le revenu lui-même reste votre objectif&nbsp;; le nôtre, c'est le pipeline et le registre qui l'alimentent. Le référencement et la vidéo viennent après le 60ᵉ jour, à dessein.</p>
 
   <h3>8. Votre sensibilité au prix porte sur les outils, pas sur l'expertise</h3>
-  <p>« $0 free only » par mois, mais aucun plafond déclaré sur les achats ponctuels. Aujourd'hui vous payez « Up to $50/month ». Le levier est arithmétique : le premier module redirige cette dépense vers les modèles gratuits — un module à 150 $ qui annule une facture de 50 $ par mois se rembourse en environ trois mois.</p>
+  <p>«&nbsp;$0 free only&nbsp;» par mois, mais aucun plafond déclaré sur les achats ponctuels. Aujourd'hui vous payez «&nbsp;up to $50/month&nbsp;». Le levier est arithmétique&nbsp;: le premier module redirige cette dépense vers les modèles gratuits. Un module à 150 $ qui annule une facture de 50 $ par mois se rembourse en environ trois mois.</p>
 
-  <h3>9. Votre cahier des charges est mûr — une livraison, pas une ébauche</h3>
-  <p>Vous avez déjà écrit les tests d'acceptation (« Every task has an ID, owner, status… »), un plan de livraison en 5 phases, une matrice d'approbation, et 5 décisions en attente. Notre devis répond à <em>vos</em> phases — il ne les réinvente pas.</p>
+  <h3>9. Votre cahier des charges fait le travail d'une phase de cadrage pour nous</h3>
+  <p>Vous avez déjà écrit les tests d'acceptation («&nbsp;Every task has an ID, owner, status…&nbsp;»), un plan de livraison en 5 phases, une matrice d'approbation et 5 décisions en attente. Notre devis répond à <em>vos</em> phases&nbsp;; il ne les réinvente pas.</p>
 
-  <h3>10. « Not sure / several » machines — le local d'abord, un serveur ensuite</h3>
-  <p>Plusieurs machines conviennent à la pile locale gratuite. L'agent de nuit permanent est ce qui justifiera éventuellement un seul petit serveur — et seulement quand la Phase 1 aura fait ses preuves.</p>
+  <h3>10. Machines «&nbsp;pas sûr&nbsp;/&nbsp;plusieurs&nbsp;»&nbsp;: le local d'abord, un serveur ensuite</h3>
+  <p>Plusieurs machines conviennent à la pile locale gratuite. L'agent de nuit permanent est ce qui justifiera éventuellement un seul petit serveur — et seulement quand la phase 1 aura fait ses preuves.</p>
 </section>
-
 <section id="spec" class="reveal">
-  <p class="quote"><strong>En clair :</strong> votre cahier des charges, en huit points, correspond à des systèmes que nous faisons tourner chaque jour — briefings, registres de recherche, garde-fous, mémoire partagée. L'essentiel existe déjà, en marche. Le seul vrai chantier neuf : laisser un agent lire votre courrier et votre agenda Google en sécurité — lecture seule d'abord, envoi seulement avec votre accord. À vous de choisir le cadre : OpenClaw ou le nôtre.</p>
-  <p class="eyebrow">2 · Votre cahier des charges, lu sans fard</p>
-  <h2>Ce qu'OpenClaw demande — ce qui tourne déjà — l'écart réel</h2>
-  <p class="muted">Nous livrons l'équivalent fonctionnel de votre cahier des charges avec la pile d'agents que nous exploitons chaque jour (agents Claude Code, crochets, fichiers mémoire, canaux d'alerte, relecture contradictoire). « OpenClaw » est le nom que vous donnez au système ; l'installation décrite ci-dessous le rend vôtre.</p>
+  <p class="quote"><strong>En un mot&nbsp;:</strong> votre cahier des charges en huit points correspond à des systèmes que nous faisons tourner chaque jour&nbsp;: briefings, registres de recherche, garde-fous, mémoire partagée. L'essentiel existe déjà ici, en marche. Le seul vrai chantier neuf&nbsp;: laisser un agent lire votre messagerie et votre agenda Google en toute sécurité. Nous commençons par la lecture, jamais l'envoi&nbsp;; l'envoi vient seulement avec votre accord. À vous de choisir le cadre&nbsp;: OpenClaw ou le nôtre (§4).</p>
+  <p class="eyebrow">2 · Votre cahier des charges, lu de près</p>
+  <h2>Ce que votre cahier des charges demande, ce qui tourne déjà ici, ce qui manque réellement</h2>
+  <p class="muted">Nous livrons l'équivalent fonctionnel de votre cahier des charges avec la chaîne de traitement d'agents que nous exploitons chaque jour. «&nbsp;OpenClaw&nbsp;» est le nom que vous donnez au système — c'est aussi celui d'un véritable cadre open source que vous préféreriez peut-être. Les deux routes sont posées au §4.</p>
 
-  <div class="tablewrap">
-  <table>
-    <tr><th>Votre cahier des charges</th><th>Votre demande</th><th>Ce qui existe déjà chez nous</th><th>L'écart, en toute honnêteté</th></tr>
-    <tr><td><b>§1</b> Quatre agents coordonnés sous un chef d'orchestre</td><td>A1 Assistant, A2 Recherche, A3 Sécurité, A4 Design ; alertes de sécurité directes au propriétaire</td><td>Un orchestrateur équivalent tourne chaque jour chez nous</td><td>Nous configurons, nous ne réécrivons pas. La porte unique des 4 agents = la réalisation sur mesure (ci-dessous)</td></tr>
-    <tr><td><b>§2</b> Responsabilités</td><td>Briefing quotidien, registre de recherche, surveillance limitée au strict nécessaire (l'agent ne voit que les dossiers dont sa tâche a besoin), documents à votre marque</td><td>Chaque brique existe ici en usage de production</td><td>La surveillance continue A3 demande le serveur (M9) ; la qualité « à votre marque » du volet A4 est du vrai travail de conception</td></tr>
-    <tr><td><b>§3</b> Flux de travail standard</td><td>ID de tâche → classer → déléguer au minimum d'accès → boucle de contrôle → approuver → archiver</td><td>C'est exactement ainsi que tournent nos propres sessions</td><td>Câbler <em>votre</em> porte d'entrée sur ce circuit = l'orchestrateur lui-même</td></tr>
-    <tr><td><b>§4</b> Approbation et sécurité</td><td>Autorisations Google délimitées en lecture ; approbation pour tout envoi/dépense/suppression ; test-annulation-audit</td><td>Nos portes de permissions appliquent déjà cette politique</td><td><strong>Le vrai chantier : les autorisations Google délimitées pour Gmail/Drive/Calendar.</strong> Lecture seule d'abord, brouillons étiquetés, envoi sur approbation</td></tr>
-    <tr><td><b>§5</b> Données et mémoire</td><td>Taxonomie de 6 dossiers, quatre contextes autorisés, aucun mot de passe en mémoire</td><td>Le système de mémoire a fait ses preuves à l'échelle (600+ fiches indexées ici)</td><td>La taxonomie = une simple configuration ; la rédaction de consentement UK GDPR compliance (RGPD UK) = vous signez, nous appuyons</td></tr>
-    <tr><td><b>§6</b> Tests d'acceptation</td><td>Tâches échouées visibles ; aucune action externe non approuvée ; les alertes critiques contournent A1</td><td>Tout est testable aujourd'hui ; le canal d'alerte indépendant existe</td><td>Signature formelle en M8 ; le chemin de contournement exige le serveur ou un canal hébergé</td></tr>
-    <tr><td><b>§7</b> Livraison par phases</td><td>Phases 1-5, de l'orchestration à l'automatisation</td><td>Se mappe exactement sur l'ordre des modules M1-M10</td><td>Phase 5 (apprentissage automatisé) est après le 60ᵉ jour — dans la réalisation sur mesure</td></tr>
-    <tr><td><b>§8</b> Décisions en attente</td><td>Hébergement, autorisations, heure du briefing, plafonds, modèles de documents, résidence des données</td><td>Nous répondons hébergement + outils dès maintenant (tout à 0 $ sauf le serveur)</td><td>Le reste = <em>vos</em> décisions — recueillies au point d'étape de la semaine 4 ; rien ne bloque M1-M3</td></tr>
-  </table>
-  </div>
+  <div class="tablewrap"><table>
+    <tr><th>Votre cahier des charges</th><th>Votre demande</th><th>Ce qui tourne déjà ici</th><th>L'écart, honnêtement</th></tr>
+    <tr><td><b>§1</b> Quatre agents coordonnés sous un chef d'orchestre</td><td>A1 Assistant, A2 Recherche, A3 Sécurité, A4 Design&nbsp;; les alertes de sécurité vont droit au propriétaire</td><td><b>HERMÈS</b>, notre poste de pilotage d'orchestration en marche permanente&nbsp;: canal agent-à-agent, tâches de veille programmées, tri des informations noté par qualité, approbations du matin groupées, sa propre boîte de réception. Il tient chaque jour le rôle équivalent, chez nous, au service de notre entreprise</td><td>Nous construisons le vôtre selon votre cahier des charges, soit sur le cadre OpenClaw que vous avez choisi, soit sur notre chaîne de traitement. À vous de trancher (§4)</td></tr>
+    <tr><td><b>§2</b> Responsabilités des agents</td><td>Briefing quotidien, registre de recherche, surveillance au strict nécessaire, documents à votre marque</td><td><b>NEXUS V3</b>, notre serveur&nbsp;: 18+ flux de marché notés par qualité, registres, journaux d'exécution, chaîne de traitement du référencement câblée à la Google Search Console, plus des chaînes documentaires en usage de production</td><td>La télémétrie continue de l'A3 exige le serveur (M9). Le contrôle qualité «&nbsp;à votre marque&nbsp;» de l'A4 est un vrai travail de conception</td></tr>
+    <tr><td><b>§3</b> Flux de travail standard</td><td>ID de tâche, classement, délégation au minimum d'accès, boucle de contrôle, approbation, archivage</td><td>C'est exactement ainsi que tournent nos propres sessions&nbsp;: plan, vérification, relecture contradictoire par deux relecteurs indépendants, archivage</td><td>Câbler <em>votre</em> porte d'entrée sur ce circuit — c'est cela, la construction de l'orchestrateur</td></tr>
+    <tr><td><b>§4</b> Approbation et sécurité</td><td>OAuth délimité en lecture <span class="note">(OAuth&nbsp;= l'écran d'autorisation sécurisé de Google&nbsp;: vous cochez exactement ce que l'agent a le droit de faire, par exemple lire la messagerie et lire l'agenda, et vous pouvez le révoquer à tout moment)</span>&nbsp;; approbation pour envoi/dépense/suppression&nbsp;; test-annulation-audit</td><td>Nos portes de permission appliquent cette politique dès aujourd'hui. Les secrets vivent dans un coffre (jamais dans un fichier mémoire). Les opérations sont sous gestion de versions</td><td><strong>Le vrai chantier&nbsp;: l'OAuth Google délimité pour Gmail/Drive/Calendar.</strong> D'abord en lecture seule, brouillons étiquetés, envoi seulement sur approbation</td></tr>
+    <tr><td><b>§5</b> Données et mémoire</td><td>Taxonomie à 6 dossiers, quatre contextes autorisés, aucun mot de passe en mémoire</td><td>Un système de mémoire de 600+ fiches indexées que nos agents interrogent en quelques millisecondes, avec la séparation par contexte</td><td>La taxonomie est une simple configuration. La rédaction RGPD britannique (les règles britanniques de protection des données)&nbsp;: vous signez, nous appuyons</td></tr>
+    <tr><td><b>§6</b> Tests d'acceptation</td><td>Les tâches échouées restent visibles&nbsp;; aucune action externe non approuvée&nbsp;; les alertes critiques contournent l'A1</td><td>Tout est testable aujourd'hui. Un chemin de poussée d'alerte vers le propriétaire existe et est testé. Une voie d'alerte entièrement indépendante qui survit à une panne de passerelle figure au plan de construction, pas encore en marche</td><td>Signature formelle en M8. Le chemin de contournement exige le serveur ou un canal hébergé</td></tr>
+    <tr><td><b>§7</b> Livraison par phases</td><td>Phases 1-5, de l'orchestration à l'automatisation</td><td>Se mappe un à un sur l'ordre des modules M1-M10</td><td>La phase 5 (automatisation apprise) dépasse les 60 jours — elle vit dans la construction sur mesure</td></tr>
+    <tr><td><b>§8</b> Décisions ouvertes</td><td>Hébergement, portées d'autorisation, heure du briefing, plafonds budgétaires, modèles, résidence des données</td><td>Nous répondons hébergement + outils dès maintenant (tout à 0 $ sauf le serveur)</td><td>Le reste sont <em>vos</em> décisions, recueillies au point d'étape de la semaine 4. Aucune ne bloque M1-M3</td></tr>
+  </table></div>
 
-  <p class="note">Où c'est simple, où ça devient un chantier. Simple : briefing, registres, profils mémoire, taxonomie, synthèses — tout roule ici chaque jour. Chantier : les autorisations Google délimitées (le plus minutieux), la surveillance permanente, un chemin d'alerte critique indépendant vers votre téléphone, et des documents A4 présentables devant un comité de subventions.</p>
+  <p class="note">Bonus&nbsp;: les machines dont vous héritez. <b>RTK</b>, notre filtre de terminal&nbsp;: <span style="white-space:nowrap">7,4 M de jetons économisés sur 73 500+ commandes réelles</span>, soit environ 41&nbsp;% des jetons de commande et 69&nbsp;% des jetons de sortie (rtk gain, 16 oct. 2026). Tri des difficultés, sans vernis. Simple&nbsp;: briefing, registres, profils mémoire, taxonomie des dossiers, synthèses — tout roule ici chaque jour. Difficile&nbsp;: l'OAuth délimité (le chantier le plus délicat), la télémétrie permanente, un chemin critique indépendant jusqu'à votre téléphone, et des documents A4 assez soignés pour partir devant un comité de subventions.</p>
 </section>
+<section id="livingit" class="reveal">
+  <p class="quote"><strong>Concrètement&nbsp;:</strong> ces machines font vivre notre propre entreprise chaque jour. C'est précisément pourquoi nous pouvons vous les offrir&nbsp;: ce qui suit est une courte visite de ce qui fonctionne déjà, où chaque ligne porte sa propre mesure.</p>
+  <p class="eyebrow">3 · Nous vivons dedans</p>
+  <h2>La même architecture fait tourner notre propre entreprise aujourd'hui</h2>
+  <p>Rien dans votre cahier des charges ne nous est neuf. HERMÈS nous briefe chaque matin comme votre A1 devrait vous briefing. NEXUS tient les registres, les flux et les journaux comme vos A2 et A3 le feraient. Claude Code fait le travail de terrain, durci par le tutoriel que vous avez déjà suivi. Les modules ci-dessous vous apprennent à piloter des machines qui font déjà tourner notre maison chaque jour. Vous achetez de la pratique, pas de l'espoir.</p>
 
-<section id="tension" class="reveal">
-  <p class="eyebrow">3 · La tension budgétaire, résolue</p>
-  <h2>« Fait pour vous » × apprendre avec nous × 0 $ — la pyramide</h2>
-  <p class="quote"><strong>En un mot :</strong> ces machines font vivre notre propre entreprise. Pour le « cerveau », deux routes : OpenClaw, l'assistant libre et gratuit qui vit sur vos appareils et parle WhatsApp ; ou HERMÈS, le poste de pilotage que nous exploitons déjà et réparons nous-mêmes. Les prix sont identiques sur les deux routes ; le choix se fera après les leçons M1 et M3.</p>
-
-  <p>Chaque étage finance le suivant :</p>
-  <h3>Phase 1 — semaines 1 à 4 : apprendre sur votre machine, 0 $ d'outils</h3>
-  <p>Nous installons <strong>ensemble</strong> : le routage d'abord (M1) — vos « Up to $50/month » tombent vers 0 $, ce qui rend votre budget « $0 free only » <em>vrai</em> au lieu d'aspirationnel — puis Claude Code niveau expert (M2) et le briefing du matin (M3), gratuit et local. Votre objectif à 90 jours (« knowledge to fix when it does wrong ») est un livrable de la Phase 1, pas une promesse.</p>
-  <h3>Phase 2 — semaines 3 à 6 : les registres</h3>
-  <p>Moteur de recherche + registre des opportunités (M4), la mémoire à quatre contextes autorisés (M5), et la chaîne des subventions caritatives (M6) — le cas d'usage que vous nous avez envoyé tel quel. C'est exactement la Phase 2 de votre cahier des charges.</p>
-  <h3>Phase 3 et au-delà — semaines 5 à 8 : documents et vigies</h3>
-  <p>Documents à votre marque (M7), votre matrice d'approbation gravée dans le code (M8), puis — seulement quand la Phase 1 aura tourné une semaine sans accroc — le serveur permanent (M9) : <strong>environ 6 à 12 $ par mois, le seul vrai coût mensuel</strong>. Aucun autre frais récurrent n'existe. La location de GPU reste une décision optionnelle dans M10 ; par défaut : pas nécessaire.</p>
-  <div class="warn"><strong>La construction OpenClaw complète</strong> — votre §7 phases 1 à 5, les quatre agents, une porte d'instruction unique, les autorisations Google délimitées, la surveillance, les tests d'acceptation signés — constitue l'<strong>offre sur mesure</strong>. Chiffrée après la livraison de M1 + M3 : nous chiffrons d'après votre vraie machine, votre vraie boîte mail, votre vrai Drive (votre §8 dresse lui-même la liste des inconnues). Règle annoncée d'avance : <em>nous chiffrons quand nous pouvons mesurer.</em></div>
-
-  <h3 style="margin-top:26px">Nous vivons dedans — la même architecture fait tourner notre propre entreprise</h3>
-  <p>Ce que votre cahier des charges décrit a un équivalent qui tourne <em>chez nous, chaque jour</em> — pas comme promesse, comme routine :</p>
-  <div class="tablewrap">
-  <table>
-    <tr><th>Votre spécification demande</th><th>Ce qui tourne déjà de notre côté</th></tr>
-    <tr><td><b>A1</b> — un chef d'orchestre : brief quotidien, délégation, contrôle qualité, file d'approbations</td><td><b>HERMÈS</b> (Hermes Agent v0.21.5, capable de déployer des bots dockerisés sur notre tableau de tâches) — notre cockpit d'orchestration en fonctionnement permanent, hébergé sur notre serveur : canal agent-à-agent, tâches de veille programmées, tri des informations notées par qualité, approbations groupées du matin, et sa boîte de messages qui accueille chaque nouvelle session</td></tr>
-    <tr><td><b>A2</b> — recherche avec registres et filtres anti-doublons</td><td><b>NEXUS</b> — notre serveur : 18+ flux de marché lus et notés chaque jour, registres d'opportunités, journaux d'exécution, outil de référencement relié à la Google Search Console en direct (MCP/SSE)</td></tr>
-    <tr><td><b>A3</b> — surveillance limitée au strict nécessaire (l'agent ne voit que les dossiers dont sa tâche a besoin), accès révocables, audit</td><td>Des portes de permissions à chaque écriture, secrets au coffre, opérations versionnées — et une relecture contradictoire de notre travail par deux relecteurs indépendants. S'y ajoute RTK, un filtre de terminal : 7,4 M de jetons économisés sur 73 500+ commandes réelles, soit 41 % des jetons de commande et 69 % des jetons de sortie (rtk gain, 16 oct. 2026).</td></tr>
-    <tr><td><b>A4</b> — production de documents Word / PowerPoint / PDF à votre marque</td><td>Des chaînes documentaires en production pour les livrables clients — avec contrôles qualité, pas de simple génération</td></tr>
-    <tr><td><b>Mémoire</b> — profils de connaissances séparés et autorisés</td><td>Un système de mémoire de plus de 600 fiches indexées que nos agents interrogent en quelques millisecondes, avec la séparation par contexte que vous avez demandée</td></tr>
-  </table>
-  </div>
-  <p>Ce que cela change pour vous : <strong>vous n'embauchez pas un espoir — chaque module ci-dessous vous apprend à faire tourner une machine qui fait déjà tourner la nôtre.</strong></p>
-
-  <h3 style="margin-top:26px">Votre OpenClaw — deux routes qui se valent, vous tranchez</h3>
-  <p>« OpenClaw » est à la fois <em>votre</em> nom pour ce système <em>et</em> un projet libre bien réel : licence MIT, entretenu par une fondation, et plus de 390 000 étoiles sur GitHub. Il vit sur vos propres appareils, se branche sur WhatsApp, Telegram, Slack et une vingtaine d'autres canaux, et greffe Claude, Codex ou des modèles locaux, au choix. Nous avons lu sa documentation avec attention. Le carrefour est donc réel, et les deux routes mènent à votre cahier des charges :</p>
-  <p><b>Route A — NOUS DÉPLOYONS OPENCLAW, uniquement OpenClaw.</b> Le cadre lui-même, sur vos propres appareils, vous tient à cœur — nous le mettons en place de bout en bout : installation, passerelle, canaux (votre WhatsApp pour la charité sud-africaine, le courriel pour le conseil…), modèles branchés « gratuit d'abord », vos quatre contextes autorisés, votre matrice d'approbation. Nous faisons la plomberie et vous apprenez à le piloter. La doc officielle confirme le reste : installation en une ligne, et surtout deux commandes toutes faites, `openclaw doctor` et `openclaw triage`, qui diagnostiquent le système quand il déraille — votre « savoir réparer quand ça se trompe », livré d'usine. Chacun de vos quatre contextes métier reçoit sa propre instance isolée (répertoires d'état séparés). Et l'écosystème de compétences d'OpenClaw s'emboîte directement : 5 300 à 5 400+ compétences communautaires, plus le marché officiel ClawHub. Des applications natives existent pour macOS, iOS, Android, Windows et Linux — le WhatsApp de votre charité devient un assistant dans votre poche (les modules ci-dessous restent inchangés : ils enseignent la méthode).</p>
-  <p><b>Route B — REMPLACER OpenClaw par HERMÈS.</b> Laissez-nous déployer notre propre cockpit — la couche d'orchestration qui fait déjà fonctionner notre entreprise chaque jour (briefing, approbations groupées, tri noté par qualité, chemin d'alerte indépendant, tâches programmées) — configurée sur <em>votre</em> serveur selon <em>votre</em> cahier des charges. HERMÈS, signé Nous Research, apprend de ce qu'il fait : il se fabrique des compétences en cours de route, garde la mémoire de vos échanges, et son planificateur intégré pilote rapports quotidiens et tâches de nuit en langage naturel. Une seule passerelle le relie à plus de 25 canaux de messagerie. La sécurité « tout refuser par défaut » est documentée d'origine ; l'appariement par approbation est notre mode opératoire. Deux détails que nous aimons : l'éditeur annonce lui-même un plancher à 5 $ (un simple VPS), et il documente une migration depuis OpenClaw (mémoire, compétences et réglages) — non testée par nous : un chantier, pas une case cochée. Même forme de résultat que le A1 de votre cahier des charges, prouvée en production ; c'est la réalisation sur mesure proposée à la fin. <b>C'est le système le plus fort que nous sachions construire</b> — mais la décision vous appartient entièrement.</p>
-  <p style="color:var(--muted);font-size:.92rem">Notre seule préférence déclarée (parce que vous l'avez demandée) : HERMÈS est ce que nous faisons tourner et en quoi nous avons confiance chaque jour. Mais la route A est un choix de premier rang — c'est votre machine, vos canaux, et la philosophie d'OpenClaw (« l'état, la mémoire et les identifiants restent sur votre matériel ») rejoint point par point votre §5. Nous chiffrons l'une ou l'autre après avoir vu M1 et M3 tourner.</p>
-  <p style="color:var(--muted);font-size:.92rem">Le comparatif détaillé des deux routes se trouve dans la section <b>« HERMÈS contre OpenClaw — face à face »</b>, vers la fin du document.</p>
-
-  <h3 style="margin-top:26px">Et autour de l'orchestrateur — le reste de notre atelier</h3>
-  <p>Une couche d'orchestration ne vaut rien sans son équipage. Les systèmes ci-dessous sont <b>installés, mesurés, et nôtres</b> — chacun avec sa preuve, et chacun un module que votre plan peut inclure :</p>
-  <div class="tablewrap">
-  <table>
-    <tr><th>Module</th><th>Le produit</th><th>Preuve d'exploitation</th><th>Couvert dans</th></tr>
-    <tr><td><b>NEXUS</b> (serveur)</td><td>Serveur Docker : flux, registres, journaux, outil de référencement relié à la Google Search Console</td><td>Search Console reliée en direct (MCP/SSE), signée par notre contrôle qualité interne (10/10, 13 oct.)</td><td>M9 + sur mesure</td></tr>
-    <tr><td><b>ELMO</b> (suivi de visibilité IA)</td><td>Suit la manière dont les moteurs IA citent et comparent les marques — requêtes, part de citations, concurrents</td><td>Déployé sur notre serveur le 14 oct. — 4 conteneurs sains, double accès vérifié</td><td>Territoire M11</td></tr>
-    <tr><td><b>OpenSEO</b> (plateforme d'audit SEO)</td><td>Plateforme d'audit auto-hébergée</td><td>Notre instance en ligne sur un second serveur le 15 oct. — session et audit réels exécutés le jour même</td><td>Territoire M11</td></tr>
-    <tr><td><b>KREA2</b> (image)</td><td>Génération et édition d'images de niveau production — visuels de marque, visuels produits, éditions qui préservent l'identité</td><td>Travail client quotidien ; éditions mesurées à 6-13 % d'écart de pixels avec la source — l'identité reste, la scène change</td><td>M12</td></tr>
-    <tr><td><b>MiniMax H3</b> (vidéo)</td><td>Vidéo lisible et humaine à partir d'images fixes + direction : une pub à lancer, une bande-annonce, un clip façon UGC</td><td>Dix compétences de prompting, chacune passant sa propre suite de preuve (67 tests verts sur la plus stricte)</td><td>M12</td></tr>
-    <tr><td><b>Wan 3.0</b> (vidéo)</td><td>Image fixe → plan en mouvement pour l'animation de sites, compressée pour le web ; l'affiche = première image, zéro à-coup</td><td>Déployé pour des sites clients en ligne (oct. 2026)</td><td>M12</td></tr>
-    <tr><td><b>TRELLIS</b> (3D)</td><td>Photo → modèle 3D texturé, entièrement en local, 0 $ par modèle</td><td>Fonctionne sur notre propre poste aujourd'hui</td><td>À la demande</td></tr>
-    <tr><td><b>Voix locales et transcription</b></td><td>Synthèse vocale et transcription sur nos propres GPU</td><td>Dix voix françaises validées le 28 sept. ; pile locale mesurée</td><td>M12</td></tr>
-  </table>
-  </div>
-  <p class="note">Les modules média M12 se chiffrent à la demande, 100 à 300 $ chacun. Si un outil ne figure pas dans votre plan, il existe quand même — demandez-le, nous le chiffrons.</p>
+  <h3 style="margin-top:26px">Autour du poste de pilotage&nbsp;: le reste de notre banc</h3>
+  <p>Une couche d'orchestration ne vaut rien sans son équipage. Les systèmes ci-dessous sont <b>installés, mesurés, et nôtres</b>, chacun avec sa preuve, chacun un module que votre plan peut inclure&nbsp;:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Système</th><th>Ce qu'il fait</th><th>Preuve d'exploitation</th><th>Couvert dans</th></tr>
+    <tr><td><b>HERMÈS</b> (orchestrateur)</td><td>Poste de pilotage qui briefe, délègue, aiguille les approbations, surveille les horaires (v0.21.5, détaillé au §4, route B)</td><td>Briefe notre entreprise chaque jour&nbsp;; file d'approbation, pont agent-à-agent et canal Telegram opérationnels (pont en direct le 4 oct. 2026)</td><td>M3-M9 + sur mesure</td></tr>
+    <tr><td><b>NEXUS V3</b> (serveur)</td><td>Serveur Docker&nbsp;: flux, registres, journaux, chaîne de traitement du référencement câblée à la Google Search Console</td><td>Search Console câblée par une vraie connexion à protocole, signée par notre relecture qualité interne (10/10, 13 oct. 2026)</td><td>M9 + sur mesure</td></tr>
+    <tr><td><b>ELMO</b> (suivi de visibilité IA)</td><td>Suit la manière dont les moteurs IA citent et comparent les marques&nbsp;: requêtes, part de citations, concurrents</td><td>Déployé sur notre serveur le 14 oct. 2026&nbsp;; 4 conteneurs sains, double accès vérifié</td><td>Territoire du M11</td></tr>
+    <tr><td><b>OpenSEO</b> (plateforme d'audit SEO)</td><td>Plateforme d'audit auto-hébergée</td><td>Notre instance en ligne sur un second serveur le 15 oct. 2026&nbsp;; une vraie session et un vrai audit exécutés le jour même</td><td>Territoire du M11</td></tr>
+    <tr><td><b>KREA2</b> (image)</td><td>Génération et édition d'images de niveau production&nbsp;: visuels de marque, visuels produits, éditions qui préservent l'identité</td><td>Travail client quotidien&nbsp;; éditions mesurées à 6-13&nbsp;% d'écart de pixels avec la source — l'identité reste quand la scène change</td><td>M12</td></tr>
+    <tr><td><b>MiniMax H3</b> (vidéo)</td><td>Vidéo lisible et humaine à partir d'images fixes plus une direction&nbsp;: publicités, bandes-annonces, clips façon UGC</td><td>Dix compétences de prompt, chacune passant sa propre suite de preuve (67 tests verts sur la plus stricte)</td><td>M12</td></tr>
+    <tr><td><b>Wan 3.0</b> (vidéo)</td><td>De l'image fixe au plan en mouvement pour l'animation de sites, compressée pour le web&nbsp;; l'affiche égale la première image, zéro à-coup visuel</td><td>Déployé pour des sites clients en ligne (oct. 2026)</td><td>M12</td></tr>
+    <tr><td><b>TRELLIS</b> (3D)</td><td>De la photo au modèle 3D texturé, entièrement en local, 0 $ par modèle</td><td>Tourne sur notre propre poste de travail aujourd'hui</td><td>À la demande</td></tr>
+    <tr><td><b>Voix locales et transcription</b></td><td>Synthèse vocale et transcription sur nos propres GPU</td><td>Dix voix françaises validées le 28 sept. 2026&nbsp;; pile locale mesurée</td><td>M12</td></tr>
+  </table></div>
+  <p class="note">Les modules média M12 se chiffrent à la demande, 100 à 300 $ chacun. Si un outil ne figure pas dans votre plan, il existe quand même&nbsp;: demandez-le, et nous le chiffrons.</p>
 </section>
+<section id="roads" class="reveal">
+  <p class="quote"><strong>L'image&nbsp;:</strong> pensez à deux voitures qui vont au même endroit. OpenClaw est gratuite, se branche sur WhatsApp et vingt autres applications, mais c'est vous le mécanicien. HERMÈS est notre propre voiture, conduite chaque jour par nous et réparée en quelques heures. Choisissez au départ. Changer ensuite est possible mais coûte une reconstruction — aussi notre conseil est-il&nbsp;: choisir une fois et rester.</p>
+  <p class="eyebrow">4 · Votre OpenClaw, deux routes</p>
+  <h2>Route A ou route B&nbsp;: choisir une fois, y vivre</h2>
+  <p>«&nbsp;OpenClaw&nbsp;» est à la fois <em>votre</em> nom pour le système <em>et</em> un vrai projet open source mûr&nbsp;: un assistant qui vit sur vos propres appareils, sous licence MIT, entretenu par une fondation américaine indépendante (501(c)(3), une organisation à but non lucratif exonérée d'impôt), affichant <b>392&nbsp;K+ étoiles sur GitHub</b> (dépôt visité le 16 oct. 2026). Son dépôt l'énonce sans détour&nbsp;: <b>«&nbsp;OpenAI is a donor, not an owner&nbsp;»</b> («&nbsp;OpenAI est un donateur, pas un propriétaire&nbsp;»). Il tourne sur Node 24.16+ ou 26.1+. Son écosystème compte <b>5&nbsp;300 à 5&nbsp;400+ compétences communautaires</b> plus le marché officiel ClawHub (mesuré le 16 oct. 2026). Les deux routes mènent à votre cahier des charges.</p>
 
-<section id="verdict" class="reveal">
-  <p class="quote"><strong>L'image :</strong> imaginez deux voitures pour le même trajet. OpenClaw est gratuite, se branche sur WhatsApp et vingt autres applications, mais c'est vous le mécanicien. HERMÈS est la nôtre — moins voyante, conduite chaque jour par nous, réparée en quelques heures. Les deux peuvent même cohabiter. Modules et prix ne bougent pas ; le choix vous revient.</p>
-  <p class="eyebrow">7 · Le comparatif demandé</p>
-  <h2>HERMÈS contre OpenClaw — face à face, sans vernis</h2>
-  <p>Deux couches d'orchestration. L'une est notre outil quotidien ; l'autre, la communauté la plébiscite avec 392 000 étoiles. Le comparatif tel que nous le voyons — y compris ce qu'OpenClaw fait mieux :</p>
-  <div class="tablewrap">
-  <table>
-    <tr><th>Dimension</th><th>HERMÈS (notre outil)</th><th>OpenClaw (open source)</th></tr>
-    <tr><td>Ce que c'est</td><td>Notre orchestrateur de production — le cockpit qui fait tourner notre propre entreprise</td><td>Le cadre d'assistant personnel open source le plus populaire, entretenu par une fondation (501(c)(3), licence MIT)</td></tr>
-    <tr><td>Où il vit</td><td><b>Hybride</b> : en local sur votre PC (comme Claude Code) ou sur un serveur pour un vrai fonctionnement 24 h/24 — nos règles s'appliquent dans les deux cas (images épinglées, secrets au coffre). Les briefs 24/7 exigent le serveur ; tout le reste tourne en local.</td><td>Votre machine — « l'état, la mémoire et les identifiants restent sur votre matériel »</td></tr>
-    <tr><td>Canaux</td><td>Protocole agent-à-agent, tâches programmées, boîte de messages, chemin d'alerte indépendant</td><td>WhatsApp, Telegram, Slack, Discord, iMessage, Teams et plus de 20 autres — au-delà de nous ; plus de 5 300 compétences communautaires</td></tr>
-    <tr><td>Liberté de modèle</td><td>Tout modèle, aiguillé « gratuit d'abord » (tout l'argument de ce document) — et un runtime optionnel peut confier des tours au serveur d'application Codex, qui les exécute dans ChatGPT avec votre abonnement, puis rappelle HERMÈS pour les outils</td><td>Tout modèle aussi — Claude, Codex, modèles locaux en greffons interchangeables</td></tr>
-    <tr><td>Approbations et audit</td><td>Construites selon nos exigences §4-6 : files d'approbation, jetons révocables, pistes d'audit — exploitées chaque jour</td><td>Appariement des expéditeurs par codes d'approbation ; modèle de sécurité documenté ; c'est <em>vous</em> qui auditez — c'est votre installation</td></tr>
-    <tr><td>Qui le maintient</td><td>Nous — nous le réparons en quelques heures, parce qu'il est à nous</td><td>Une fondation et une vaste communauté — mais c'est <em>vous</em> qui possédez le déploiement, les mises à jour et les pannes</td></tr>
-    <tr><td>Travail multi-agents</td><td>Un tableau de tâches durable (Kanban) partagé entre agents nommés — chaque ouvrier est un processus complet avec sa propre identité, des points de contrôle avant limite de budget, des coupe-circuits en cas d'échecs répétés ; plus la délégation de sous-agents et une boucle d'objectifs persistants qui itère jusqu'au but atteint</td><td>Multi-agents via les greffons communautaires et l'écosystème de compétences</td></tr>
-    <tr><td>Coût</td><td>Notre temps seulement — aucune licence</td><td>0 $ de licence ; votre temps de maintenance</td></tr>
-    <tr><td>Meilleur quand</td><td>Vous voulez un cockpit éprouvé, maintenu par ses constructeurs, sur un serveur que nous gardons en santé</td><td>Vous voulez le cadre lui-même, la possession totale des données, le zoo de canaux — et être l'opérateur</td></tr>
-  </table>
+  <h3>Route A&nbsp;: nous déployons OpenClaw, uniquement OpenClaw</h3>
+  <p>Vous voulez le cadre lui-même, sur vos propres appareils. Nous l'installons de bout en bout, en suivant la procédure officielle&nbsp;: installation en une ligne (install.sh / install.ps1, ou npm avec --allow-scripts=openclaw), assistant de démarrage, puis <code>openclaw gateway status</code> (la passerelle est le connecteur toujours actif entre vos applications de messagerie et les agents) et le tableau de bord Control UI. Deux commandes intégrées servent directement votre objectif à 90 jours&nbsp;: <code>openclaw doctor</code> et <code>openclaw triage</code> diagnostiquent le système quand quelque chose se casse — exactement votre «&nbsp;savoir réparer quand ça se trompe&nbsp;». Chacun de vos quatre contextes métier reçoit sa propre instance isolée avec des répertoires d'état séparés, si bien que l'activité drones et l'œuvre caritative ne partagent jamais une mémoire. Les canaux (WhatsApp pour la charité sud-africaine, courriel pour le conseil) se configurent par instance. Les fournisseurs de modèles (Claude, Codex, ou modèles locaux en greffons interchangeables) se câblent selon la règle «&nbsp;gratuit d'abord&nbsp;», et votre matrice d'approbation se pose dans les portes décrites au §2. Des applications natives existent pour macOS, iOS, Android, Windows et Linux&nbsp;: le WhatsApp de votre charité devient un assistant natif du téléphone. La philosophie même d'OpenClaw, «&nbsp;l'état, la mémoire et les identifiants restent sur votre matériel&nbsp;», rejoint votre §5 presque ligne à ligne.</p>
+
+  <h3>Route B&nbsp;: HERMÈS, le poste de pilotage que nous faisons déjà tourner</h3>
+  <p>Ou bien nous installons notre propre poste de pilotage d'orchestration sur votre serveur, configuré selon votre cahier des charges. HERMÈS est Hermes Agent <b>v0.21.5</b> de Nous Research, auto-améliorant de conception&nbsp;: d'après la documentation de l'éditeur, il «&nbsp;crée des compétences à partir de l'expérience&nbsp;», conserve une mémoire persistante indexée pour la recherche en quelques millisecondes, tient des rapports quotidiens et des tâches nocturnes à partir d'horaires en langage naturel (écrivez «&nbsp;chaque matin à 7&nbsp;heures&nbsp;» et il programme), et rejoint <b>25+ canaux de messagerie par une seule passerelle</b>. Dans notre propre exploitation, 4 canaux sont actifs aujourd'hui (Telegram, protocole agent, API, console locale)&nbsp;; Telegram est actif chez nous et ne coûte aucun frais d'API. La sécurité est «&nbsp;refus par défaut&nbsp;» d'origine&nbsp;: rien ne s'exécute sans qu'une règle l'autorise, ce qui s'accorde naturellement avec votre matrice d'approbation. L'éditeur annonce qu'un VPS à 5 $ suffit. Une réserve que nous posons dès maintenant&nbsp;: un chemin de migration depuis OpenClaw existe (mémoire, compétences et réglages), mais il est documenté par l'éditeur et NON testé par nous. Nous le comptons comme un chantier, pas comme un plan.</p>
+
+  <h3>Notre recommandation, dite une fois pour toutes</h3>
+  <p><b>Choisissez votre route au départ et restez-y.</b> Vous nous avez demandé notre préférence&nbsp;: HERMÈS est ce que nous faisons tourner et en quoi nous avons confiance chaque jour, c'est le système le plus fort que nous sachions construire, et c'est le même que livrerait la construction sur mesure JEAN-SKYNET (§8). La route A reste néanmoins un citoyen de premier rang&nbsp;: c'est votre machine, vos canaux, et sa philosophie de possession des données est la plus proche de votre §5. Nous chiffrons l'une ou l'autre après avoir vu M1 et M3 tourner.</p>
+  <p><b>Ce que nous ne recommandons pas&nbsp;:</b> démarrer sur une route en prévoyant de changer. L'import d'OpenClaw vers HERMÈS est documenté par l'éditeur et non testé par nous&nbsp;; une migration en pleine construction re-toucherait chaque porte, chaque mémoire et chaque canal — une intégration supplémentaire dont vous n'avez pas besoin. Si les réalités changent après M1+M3, nous revoyons alors le choix, mesures en main.</p>
+
+  <div class="quote"><strong>Côte à côte, pour mémoire.</strong>
+    <div class="tablewrap"><table style="margin-bottom:4px">
+      <tr><th>Dimension</th><th>HERMÈS (le nôtre)</th><th>OpenClaw (open source)</th></tr>
+      <tr><td>Ce que c'est</td><td>Notre orchestrateur de production (Hermes Agent v0.21.5), ajusté et exploité par nous</td><td>Cadre d'assistant personnel open source, 392&nbsp;K+ étoiles GitHub, MIT, entretenu par une fondation</td></tr>
+      <tr><td>Où il vit</td><td>Hybride&nbsp;: votre PC comme Claude Code, ou un serveur pour un vrai 24 h/24. Les briefings 24/7 exigent le serveur</td><td>Votre machine&nbsp;: «&nbsp;l'état, la mémoire et les identifiants restent sur votre matériel&nbsp;»</td></tr>
+      <tr><td>Canaux</td><td>25+ pris en charge (4 actifs dans notre exploitation&nbsp;: Telegram, protocole agent, API, locale)&nbsp;; le reste — Discord, Slack, WhatsApp, Signal, courriel, iMessage, Teams, SMS, Matrix — est de la configuration, pas de la construction. Plus les tâches programmées, une boîte de réception, une boucle d'apprentissage qui transforme vos corrections en compétences (docs de l'éditeur + auto-audit Hermes, 16 oct. 2026)</td><td>WhatsApp, Telegram, Slack, Discord, iMessage, Teams et 20+ autres d'origine&nbsp;; 5&nbsp;300 à 5&nbsp;400+ compétences communautaires</td></tr>
+      <tr><td>Liberté de modèle</td><td>Tout modèle, aiguillé «&nbsp;gratuit d'abord&nbsp;» — tout l'argument de ce document</td><td>Tout modèle aussi&nbsp;: Claude, Codex, modèles locaux en greffons interchangeables</td></tr>
+      <tr><td>Portes d'approbation et audit</td><td>Construites selon vos exigences §4-6&nbsp;: files d'approbation, jetons révocables, pistes d'audit, exploitées chaque jour par nous</td><td>Appariement des expéditeurs par codes d'approbation&nbsp;; modèle de sécurité documenté&nbsp;; l'audit, c'est vous — c'est votre installation</td></tr>
+      <tr><td>Travail multi-agents</td><td>Un tableau de tâches durable (kanban&nbsp;: un tableau à colonnes où chaque carte de tâche passe de «&nbsp;à faire&nbsp;» à «&nbsp;fait&nbsp;») entre agents nommés, chaque ouvrier étant un processus complet doté de sa propre identité&nbsp;; plus la délégation de sous-agents et une boucle d'objectifs persistants</td><td>Multi-agents via les greffons communautaires et l'écosystème de compétences</td></tr>
+      <tr><td>Coût</td><td>Notre temps seulement, aucune licence</td><td>0 $ de licence, votre temps de maintenance</td></tr>
+      <tr><td>Potentiel quand</td><td>Vous voulez un poste de pilotage éprouvé, entretenu par ses constructeurs, sur un serveur que nous gardons en santé</td><td>Vous voulez le cadre lui-même, la possession totale des données, le zoo de canaux — et vous acceptez d'être l'opérateur</td></tr>
+    </table></div>
   </div>
-  <p><b>Notre lecture, en une ligne :</b> OpenClaw est un bon véhicule — sa philosophie de possession des données, c'est votre §5, et si vous le choisissez, nous le déployons de bout en bout (route A). HERMÈS est la même destination avec un chauffeur qui la conduit pour vivre (route B). Modules et prix sont identiques sur les deux routes — et les routes peuvent même coexister : OpenClaw en visage face aux canaux, HERMÈS en cerveau d'arrière-boutique.</p>
 </section>
-
 <section id="budget" class="reveal">
-  <p class="quote"><strong>En clair :</strong> le « tout gratuit » n'est pas magique. Le système essaie d'abord un modèle gratuit, comme on prend le bus avant le taxi. Le quotidien reste gratuit ; une lettre importante coûte parfois quelques centimes — jamais un abonnement. Sur le papier, la même grosse tâche coûte 0,60 $ sur le modèle économique contre 10 $ sur le modèle premium : seize fois moins.</p>
-  <p class="eyebrow">8 · Le budget, ligne à ligne</p>
-  <h2>La réalité hybride : gratuit d'abord, jamais gratuit pour tout</h2>
-  <p class="note">Un <b>jeton</b> est un petit morceau de texte (les trois quarts d'un mot environ) — l'IA lit et écrit des jetons, et vous payez par jeton. (Plus loin, « jetons révocables » parle de clés d'accès, pas de texte.)</p>
-  <p>Notre propre système tourne <b>gratuitement la plupart du temps</b> : un aiguillage automatique l'envoie vers des modèles gratuits proches des meilleurs du moment — LongCat, GLM, DeepSeek, plus nos modèles locaux via Ollama. Quand une tâche l'exige, il bascule vers un modèle payant, le temps de ce seul travail. Ce n'est pas une promesse : c'est notre fonctionnement réel, aujourd'hui.</p>
-  <p><b>Pour votre budget à 0 $ :</b></p>
+  <p class="quote"><strong>Pour tout dire&nbsp;:</strong> «&nbsp;gratuit&nbsp;» n'est pas de la magie. Le système essaie toujours d'abord un modèle gratuit, comme on prend le bus avant le taxi. Le travail quotidien reste gratuit&nbsp;; une lettre importante peut coûter quelques centimes, jamais un abonnement. Deux petits coûts réels démarrent à la phase 4&nbsp;: un serveur à 6-12 $ par mois, et une réserve d'API payante de 5-10 $ par mois pour le rare travail lourd.</p>
+  <p class="eyebrow">5 · La réalité budgétaire</p>
+  <h2>Comment «&nbsp;0 $&nbsp;» tient, ligne à ligne&nbsp;: gratuit d'abord, pas gratuit pour toujours</h2>
+  <p class="note">Un <b>jeton</b> est un petit morceau de texte, environ les trois quarts d'un mot. Les IA lisent et écrivent des jetons, et vous payez par jeton. Quand «&nbsp;jetons révocables&nbsp;» apparaît plus loin, «&nbsp;jeton&nbsp;» désigne une clé d'accès, pas un morceau de texte.</p>
+
+  <p>Notre propre système tourne gratuitement la plupart du temps. Il s'aiguille automatiquement vers des modèles gratuits presque aussi forts que la frontière du moment (ceux servis par la communauté comme LongCat, GLM, DeepSeek, plus des modèles entièrement locaux via Ollama). Quand une tâche l'exige vraiment, le système bascule vers un modèle payant, le temps de ce seul travail. Nous faisons tourner notre entreprise ainsi aujourd'hui. L'aiguillage n'est pas une promesse&nbsp;; c'est notre quotidien.</p>
+
+  <h3>Ce que «&nbsp;0 $&nbsp;» veut dire ici, précisément</h3>
+  <p><b>0 $</b> en <em>abonnements logiciels récurrents</em>&nbsp;: votre facture actuelle de type Claude Pro est la cible. Ce n'est ni zéro infrastructure ni zéro consommation. Deux vrais postes, dits ici et maintenant&nbsp;:</p>
   <ul style="margin:0 0 14px 22px">
-    <li>Les modèles gratuits sont parfois <b>plus lents</b> ou occasionnellement <b>saturés</b> — la ponctualité n'est pas garantie.</li>
-    <li>La qualité <b>varie</b> selon le modèle et selon le jour ; l'aiguillage choisit automatiquement le meilleur disponible, et M1 vous apprend à le piloter.</li>
-    <li>Un travail à haut enjeu (une lettre de subvention, un document client) peut justifier un modèle payant <b>une fois</b> — quelques centimes ou dollars, jamais un abonnement.</li>
+    <li><b>Serveur à partir de la phase 4&nbsp;:</b> dès que l'agent de nuit permanent existe, son hébergeur coûte <b>6-12 $/mois</b> à partir de la semaine 7. Avant cette semaine, 0 $.</li>
+    <li><b>Réserve d'API payante&nbsp;:</b> <b>5-10 $/mois</b> budgétés pour le rare travail lourd sur un modèle payant (une lettre de subvention, un document client). Facturé à la consommation&nbsp;; la plupart des mois, il restera inutilisé.</li>
   </ul>
-  <p><strong>Nous ne vendons pas le rêve du « 0 partout, toujours ».</strong> Nous livrons un système qui <em>cherche d'abord la route gratuite</em> et sait quand basculer. C'est la version que nous savons tenir.</p>
+  <p>Et trois réserves sur les modèles gratuits eux-mêmes&nbsp;:</p>
+  <ul style="margin:0 0 14px 22px">
+    <li>Les modèles gratuits sont parfois <b>plus lents</b> ou occasionnellement <b>saturés</b>&nbsp;; la ponctualité n'est pas garantie.</li>
+    <li>La qualité <b>varie</b> selon le modèle et selon le jour&nbsp;; l'aiguillage choisit le meilleur disponible, et le M1 vous apprend à le piloter.</li>
+    <li>Un travail à haut enjeu (une lettre de subvention, un document client) peut justifier un modèle payant pour ce seul appel&nbsp;; c'est ce que budgète la réserve ci-dessus.</li>
+  </ul>
+  <p>Nous ne vendons pas «&nbsp;0 partout, toujours&nbsp;». Ce que nous construisons cherche d'abord la route gratuite et bascule quand il le faut. C'est la version que nous pouvons soutenir, parce que c'est celle que nous vivons.</p>
 
-  <h3 style="margin-top:26px">L'écart de prix, en chiffres — mesuré aujourd'hui</h3>
-  <p>Pourquoi l'aiguillage « gratuit d'abord » n'est pas un gadget mais de l'arithmétique. Prix publics officiels par million de jetons (DeepSeek mesuré sur leur page tarifaire ce jour ; Claude sur la page officielle d'Anthropic) :</p>
-  <div class="tablewrap">
-  <table>
+  <h3 style="margin-top:26px">L'écart de prix, en chiffres, mesuré aujourd'hui</h3>
+  <p>Pourquoi l'aiguillage «&nbsp;gratuit d'abord&nbsp;» est de l'arithmétique, pas un gadget. Prix publics officiels par million de jetons («&nbsp;1M&nbsp;»&nbsp;= un million de jetons&nbsp;; «&nbsp;décrochage de cache&nbsp;»&nbsp;= le modèle réutilise ce qu'il a déjà lu de votre conversation, si bien que vous payez une infime fraction au lieu du plein tarif de relecture)&nbsp;:</p>
+  <div class="tablewrap"><table>
     <tr><th>Modèle</th><th>Classe</th><th>Entrée / 1M</th><th>Sortie / 1M</th><th>Fort pour</th></tr>
-    <tr><td><b>DeepSeek V4.1 Flash</b></td><td>frontière économique (Chine)</td><td><b>0,15 $</b> (heures creuses ; 0,30 $ en pointe) — <b>0,003 $</b> quand la lecture sort du cache = l'IA réutilise ce qu'elle a déjà lu de votre conversation, sans repayer la relecture (0,006 $ en pointe)</td><td><b>0,60 $</b> (creuses ; 1,20 $ en pointe)</td><td>le travail en volume : recherches, remplissage de registres, premiers jets, synthèses — notre propre architecte tourne dessus</td></tr>
-    <tr><td>Xiaomi MiMo 2.6 (offre Pro, route gratuite)</td><td>servi en gratuit</td><td>≈ 0 $ (routes communautaires/gratuites)</td><td>≈ 0 $</td><td>les secondes opinions, les retouches mécaniques, le travail en arrière-plan</td></tr>
-    <tr><td>LongCat 2.0 (route gratuite)</td><td>servi en gratuit</td><td>0 $ sur nos routes d'agents</td><td>0 $</td><td>la délégation aux sous-agents — nos propres sous-agents y vont par défaut</td></tr>
-    <tr><td>Claude Sonnet 5.5 (référence frontière US)</td><td>frontière américaine</td><td>2,00 $</td><td>10,00 $</td><td>la rédaction finale, le jugement fin, le code qui doit être juste</td></tr>
-  </table>
-  </div>
-  <p><b>Lisez ce tableau en acheteur :</b> la même passe de recherche qui coûte <b>10 $ de sortie chez Claude</b> coûte <b>0,60 $ sur DeepSeek Flash</b> en heures creuses — un écart de <b>16× sur exactement les tâches qui remplissent les registres et les briefs</b>. C'est pourquoi notre système envoie le gros du travail vers les paliers gratuits et réserve la couche frontière américaine aux moments qui la méritent : votre facture baisse <em>parce que le travail facile va aux modèles économiques</em>, pas parce que nous avons bâclé. (Sources : pages tarifaires deepseek.com et claude.com, mesurées les 15-16 oct. 2026. MiMo/LongCat passent par des routes communautaires/gratuites dont la disponibilité varie — voir les notes d'honnêteté ci-dessus.)</p>
+    <tr><td><b>DeepSeek V4.1 Flash</b></td><td>frontière économique (Chine)</td><td><b>0,15 $</b> (creuses&nbsp;; 0,30 $ en pointe) · <b>0,003 $</b> sur décrochage de cache (0,006 $ en pointe), mesuré le 16 oct. 2026 sur leur page tarifaire</td><td><b>0,60 $</b> (creuses&nbsp;; 1,20 $ en pointe)</td><td>le travail en volume&nbsp;: passes de recherche, remplissage de registres, premiers jets, synthèses. Notre propre architecte tourne dessus</td></tr>
+    <tr><td><b>GPT-6 Luna</b> (OpenAI, oct. 2026)</td><td>petit format américain</td><td><b>0,05 à 0,10 $</b></td><td><b>0,25 à 0,50 $</b></td><td>les tâches quotidiennes rapides quand un modèle hébergé aux États-Unis est exigé</td></tr>
+    <tr><td><b>GPT-6.1 Sol</b> (OpenAI, oct. 2026)</td><td>frontière américaine intermédiaire</td><td><b>1,00 à 2,00 $</b></td><td><b>5,00 à 10,00 $</b></td><td>le travail sérieux sur frontière américaine à prix moyen</td></tr>
+    <tr><td><b>GPT-6 Astra</b> (OpenAI, oct. 2026)</td><td>frontière américaine haute</td><td><b>5,00 à 10,00 $</b></td><td><b>25,00 à 50,00 $</b></td><td>le palier OpenAI le plus fort du moment</td></tr>
+    <tr><td>Xiaomi MiMo 2.6 (palier Pro, route gratuite)</td><td>servi en gratuit</td><td>≈ 0 $ (service communautaire)</td><td>≈ 0 $</td><td>les secondes opinions, les retouches mécaniques, les tâches d'arrière-plan</td></tr>
+    <tr><td>LongCat 2.0 (route gratuite)</td><td>servi en gratuit</td><td>0 $ sur nos routes d'agents</td><td>0 $</td><td>la délégation aux sous-agents&nbsp;; nos propres sous-agents y vont par défaut</td></tr>
+    <tr><td><b>Claude Sonnet 5.5</b> (référence frontière US)</td><td>frontière américaine</td><td>2,00 $ (claude.com/pricing, 15 oct. 2026)</td><td>10,00 $</td><td>la rédaction finale, le jugement nuancé, le code qui doit être juste</td></tr>
+  </table></div>
+  <p><b>Lisez ce tableau en acheteur&nbsp;:</b> la même passe de recherche qui coûte <b>10 $ de sortie chez Claude</b> coûte <b>0,60 $ sur DeepSeek Flash</b> (heures creuses)&nbsp;: un <b>écart de 16× sur exactement les tâches qui remplissent registres et briefings</b>. Notre système envoie le gros du travail vers les paliers économiques et gratuits et réserve le palier frontière américain aux moments qui le méritent. Votre facture baisse parce que le travail bon marché va aux modèles bon marché. (Sources des prix&nbsp;: deepseek.com, developers.openai.com, claude.com/pricing — toutes pages officielles, mesurées les 15-16 oct. 2026. MiMo et LongCat passent par des routes communautaires/gratuites dont la disponibilité varie&nbsp;; voir les réserves ci-dessus.)</p>
 </section>
-
 <section id="pacing" class="reveal">
-  <p class="quote"><strong>Concrètement :</strong> mêmes leçons, mêmes prix — seul le calendrier bouge. À raison de 4 heures par semaine, comptez 8 semaines ; 2 à 3 heures par jour, 3 semaines ; journées complètes, 1 semaine. Une seule chose qu'aucune vitesse ne raccourcit : le délai que Google impose avant qu'un assistant puisse lire votre courrier.</p>
-  <p class="eyebrow">9 · Les vrais délais — trois régimes</p>
-  <h2>La vitesse dépend de votre disponibilité</h2>
-  <p>Le contenu et les prix des modules ne changent jamais — seule la densité change. Notre calendrier de base suppose un rythme à temps partiel. Trois vitesses réelles pour le même chemin M1-M10 :</p>
-  <table>
-    <tr><th>Votre rythme</th><th>Disponibilité</th><th>Le chemin complet M1-M10 devient</th></tr>
-    <tr><td>Temps partiel (calendrier de base)</td><td>≈ 4 h/semaine</td><td>les 8 semaines du chemin détaillé plus bas</td></tr>
-    <tr><td>Soutenu</td><td>2-3 h par jour</td><td><b>≈ 3 semaines</b></td></tr>
-    <tr><td>Plein temps</td><td>journées complètes</td><td><b>≈ 1 semaine</b></td></tr>
-  </table>
-  <p>Note : les durées des modules (« ≈1 jour », « ≈3-4 h ») couvrent la session guidée avec nous plus votre pratique personnelle — les totaux ci-dessus reposent sur cette convention. Les autorisations Google conservent leur marge à tous les régimes — ce délai appartient à Google, et il ne se comprime pas.</p>
+  <p class="quote"><strong>D'emblée&nbsp;:</strong> mêmes leçons, mêmes prix. Le calendrier de référence est de 6 à 8 semaines, parce que les services extérieurs prennent leur propre temps&nbsp;: Google ne comprime ses contrôles d'autorisation pour personne. Vos heures hebdomadaires décident où vous atterrissez dans cette fenêtre&nbsp;; elles ne raccourcissent pas les attentes.</p>
+  <p class="eyebrow">6 · Rythme et calendrier</p>
+  <h2>Trois vitesses, un calendrier de 6 à 8 semaines</h2>
+  <p>Le contenu et les prix des modules ne changent jamais&nbsp;; seule la densité change. Pourquoi 6 à 8 semaines et pas moins&nbsp;: les attentes extérieures fixent le plancher. La vérification OAuth de Google (l'écran d'autorisation du §2 §4) prend, à la lecture prudente, de l'ordre de 3 à 8 semaines de temps calendaire, et d'autres vérifications extérieures ajoutent leurs propres pauses. Nous pouvons comprimer notre propre travail&nbsp;; nous ne pouvons pas comprimer celui de Google.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Votre rythme</th><th>Disponibilité</th><th>Ce que cela donne dans le calendrier de 6 à 8 semaines</th></tr>
+    <tr><td>Temps partiel (le plan de base)</td><td>≈ 4 h/semaine</td><td>les 8 semaines montrées dans la feuille de route (§10)</td></tr>
+    <tr><td>Soutenu</td><td>2-3 h/jour</td><td>la construction interne se comprime vers ~3 semaines&nbsp;; les attentes extérieures cadrent toujours la première synthèse (semaine 3) et la semaine du serveur (semaine 7)</td></tr>
+    <tr><td>Plein temps</td><td>journées complètes</td><td>les sessions guidées s'enchaînent&nbsp;: l'effort humain de M1-M10 tient en environ une semaine à plein temps. L'OAuth et les autres vérifications ne se compriment pas&nbsp;: le calendrier total reste en semaines, pas en jours</td></tr>
+  </table></div>
+  <p class="note">La ligne «&nbsp;plein temps&nbsp;» décrit un effort humain comprimé, jamais la date de livraison. Une semaine d'effort à plein temps, c'est ce que le travail lui-même demande&nbsp;; le calendrier qui la contient reste de 6 à 8 semaines, parce qu'attendre les contrôles d'autorisation de Google fait partie de toute réponse sincère. C'est cette règle de cohérence qui fait que le bandeau du §1, cette section et la feuille de route citent la même fenêtre.</p>
+  <h3>Ce que comprend le prix d'un module</h3>
+  <p>Les durées des modules («&nbsp;≈1 jour&nbsp;», «&nbsp;≈3-4 h&nbsp;») couvrent la session guidée avec nous plus votre propre pratique&nbsp;; les totaux du §8 reposent sur cette convention. Les autorisations OAuth de Google gardent leur marge à chaque rythme&nbsp;: ce délai est celui de Google, et il ne se comprime pas.</p>
 </section>
-
+<section id="tension" class="reveal">
+  <p class="quote"><strong>En résumé&nbsp;:</strong> le plan grimpe un escalier. Première leçon&nbsp;: faire fondre votre facture de 50 $ par mois vers zéro. Ensuite&nbsp;: les machines qui vous briefent et recueillent votre recherche. Puis&nbsp;: documents et garde-fous. La petite facture mensuelle du serveur ne démarre qu'à la phase 4, quand la partie permanent est réellement nécessaire.</p>
+  <p class="eyebrow">7 · Le chemin de construction, phase par phase</p>
+  <h2>Chaque étage paie le suivant</h2>
+  <h3>Phase 1 (semaines 1-4)&nbsp;: apprendre sur votre machine, 0 $ d'outils</h3>
+  <p>Nous installons ensemble, en commençant par l'aiguillage des modèles (CCR, le Claude Code Router&nbsp;: M1). Votre «&nbsp;up to $50/month&nbsp;» tombe vers 0 $, ce qui rend votre budget «&nbsp;$0 free only&nbsp;» réel au lieu d'aspirationnel. Puis Claude Code de niveau pro (M2) et le briefing du matin (M3), gratuits et locaux. Votre objectif à 90 jours, «&nbsp;savoir réparer quand ça se trompe&nbsp;», se construit dès la phase 1, pas promis pour plus tard.</p>
+  <h3>Phase 2 (semaines 3-6)&nbsp;: les registres</h3>
+  <p>Moteur de recherche et registre des opportunités (M4), la mémoire à quatre contextes autorisés (M5), et la chaîne des subventions caritatives (M6)&nbsp;: le cas d'usage que vous avez proposé mot pour mot. C'est exactement la phase 2 de votre cahier des charges.</p>
+  <h3>Phase 3 et au-delà (semaines 5-8)&nbsp;: documents, vigies, le serveur</h3>
+  <p>Documents à votre marque (M7), votre matrice d'approbation gravée dans le code (M8), puis — seulement quand la phase 1 aura tourné sans accroc — le serveur permanent (un VPS, serveur privé virtuel&nbsp;: disque et processeur loués qui ne dorment jamais&nbsp;: M9). <strong>~6-12 $/mois, le seul coût d'infrastructure récurrent</strong>, plus la réserve d'API payante de 5-10 $/mois pour les travaux lourds. Aucun autre frais récurrent n'existe. La location de GPU reste une décision optionnelle à l'intérieur du M10&nbsp;; par défaut, elle n'est pas nécessaire.</p>
+  <div class="warn"><strong>La construction OpenClaw complète</strong> — votre cahier des charges phases 1-5, les quatre agents, une porte d'instruction unique, les portées OAuth, la télémétrie, les tests d'acceptation signés — constitue l'<strong>offre sur mesure</strong> (JEAN-SKYNET, §8). Chiffrée après la livraison de M1 + M3&nbsp;: nous chiffrons d'après votre vraie machine, votre vraie boîte de réception, votre vrai Drive. Votre propre §8 dresse la liste des inconnues&nbsp;; notre règle, posée d'avance&nbsp;: <em>nous chiffrons quand nous pouvons mesurer.</em></div>
+</section>
 <section id="modules" class="reveal">
-  <p class="quote"><strong>Pour tout dire :</strong> le chemin de 60 jours compte dix leçons de 150 à 300 $ chacune, et chaque tutoriel reste à vous. Départ conseillé : un lot à 800 $ — cinq leçons, 300 $ économisés. La première coûte 150 $ mais supprime une facture de 50 $ par mois — remboursée en trois mois environ. Six semaines d'outils gratuits ; ensuite un seul serveur à 6-12 $ par mois.</p>
-  <p class="eyebrow">4 · Le plan de formation</p>
-  <h2>Douze modules, chiffrés, séquencés, à vie</h2>
-  <p>Chaque module = un tutoriel pas-à-pas que vous gardez, installé avec vous en session live. Tous les outils sont gratuits sauf mention.</p>
+  <p class="quote"><strong>Autrement dit&nbsp;:</strong> le chemin compte dix leçons, 150 à 300 $ chacune, et chacune laisse un tutoriel que vous gardez. Départ conseillé&nbsp;: un lot à 800 $ de cinq leçons, 300 $ économisés. La première coûte 150 $ mais annule votre facture de 50 $ par mois&nbsp;: remboursée en trois mois environ. Les outils coûtent 0 $ jusqu'à la semaine 6&nbsp;; puis un seul petit serveur à 6-12 $ par mois, plus au plus 5-10 $ par mois pour un appel payant lourd.</p>
+  <p class="eyebrow">8 · Les tarifs&nbsp;: douze modules et un lot</p>
+  <h2>Douze modules, chiffrés, séquencés, à vous pour toujours</h2>
+  <p>Chaque module est un tutoriel pas à pas que vous gardez, installé avec vous en session en direct. Tous les outils gratuits sauf mention contraire.</p>
 
   <div class="mods">
-    <div class="mod"><div class="row"><span class="mid">M1 · SEMAINE 1</span><span class="price">150 $</span></div><h3>Apprivoiser la facture de jetons (routage CCR)</h3><p>Diriger Claude Code vers les modèles gratuits — la facture récurrente tombe vers zéro. Le retour sur investissement le plus rapide du plan.</p><p class="meta">≈2 h + installation · couvre §8 · vous payez 50 $/mois aujourd'hui : rentabilisé en ≈ 3 mois</p></div>
-    <div class="mod"><div class="row"><span class="mid">M2 · SEMAINES 1-2</span><span class="price">200 $</span></div><h3>Votre Claude Code, édition professionnelle</h3><p>Compétences, crochets (« quand X arrive, fais Y » — le style d'automatisme), mémoire — les trois leviers derrière tous les autres modules, visés droit sur votre goulot déclaré.</p><p class="meta">≈4 h · couvre §2 A1, §5</p></div>
-    <div class="mod"><div class="row"><span class="mid">M3 · SEMAINES 2-3</span><span class="price">250 $</span></div><h3>Le briefing du matin (agent de nuit + synthèse locale)</h3><p>Un agent programmé lit votre calendrier et votre courrier pendant la nuit et vous remet une synthèse unique — le briefing quotidien défini par votre cahier des charges (§2 A1). Première synthèse : semaine 3.</p><p class="meta">≈1 jour + installation · couvre §2 A1, §7 Phase 1 · inclut l'accès Gmail en lecture, Lecture seule d'abord</p></div>
-    <div class="mod"><div class="row"><span class="mid">M4 · SEMAINES 3-4</span><span class="price">250 $</span></div><h3>Le moteur de recherche (agents web + registre des opportunités)</h3><p>Des agents web qui alimentent le schéma de registre exact que votre cahier des charges définit : ID, source, date vérifiée, score, échéance, prochaine action, statut.</p><p class="meta">≈1 jour · couvre §2 A2, §6</p></div>
-    <div class="mod"><div class="row"><span class="mid">M5 · SEMAINE 4</span><span class="price">200 $</span></div><h3>La mémoire d'affaires qui n'oublie jamais</h3><p>Quatre profils de mémoire à permissions — personnel / conseil / drones / caritatif — sur la classification de dossiers que vous avez déjà écrite.</p><p class="meta">≈3-4 h · couvre §2 A1, §5</p></div>
-    <div class="mod"><div class="row"><span class="mid">M6 · SEMAINES 5-6</span><span class="price">300 $</span></div><h3>La chaîne des subventions caritatives (football SA)</h3><p>Découverte des subventions → registre → vérification d'éligibilité → note en PDF, les échéances comme tableau de score. Votre premier flux porteur de revenus.</p><p class="meta">≈1,5 jour · couvre §2 A2, §7 Phase 2 · première note en PDF : semaine 6</p></div>
-    <div class="mod"><div class="row"><span class="mid">M7 · SEMAINE 6</span><span class="price">250 $</span></div><h3>L'usine à documents (Word / PowerPoint / PDF à votre marque)</h3><p>Documents produit à partir de gabarits et contrôlés — originaux modifiables + PDF finaux, vérifications d'orthographe, de mise en page et d'accessibilité, comme l'exige votre agent A4.</p><p class="meta">≈1 jour · couvre §2 A4, §6, §7 Phase 3</p></div>
-    <div class="mod"><div class="row"><span class="mid">M8 · SEMAINE 6</span><span class="price">300 $</span></div><h3>Sécurité et garde-fous à validation humaine</h3><p>Votre matrice d'approbation gravée dans le code : files d'attente d'approbation, coffre à secrets, journaux d'audit, révocation, le canal d'alerte indépendant. Vos tests d'acceptation, écrits puis exécutés.</p><p class="meta">≈1,5 jour · couvre §4, §2 A3, §6 · le module le plus sensible</p></div>
-    <div class="mod"><div class="row"><span class="mid">M9 · SEMAINE 7</span><span class="price">150 $</span></div><h3>Votre serveur permanent (VPS)</h3><p>L'agent de nuit passe au 24 h/24, 7 j/7. <b>Environ 6 à 12 $ par mois de coût réel</b> — le seul frais récurrent de tout ce plan, écrit ici, une seule fois.</p><p class="meta">≈3 h · couvre §7 Phase 4</p></div>
-    <div class="mod"><div class="row"><span class="mid">M10 · SEMAINES 7-8</span><span class="price">200 $</span></div><h3>IA locale (Ollama / LM Studio) + la décision GPU</h3><p>Faire tourner des modèles gratuits sur votre propre matériel, plus un cadre de décision pour savoir quand une location de GPU vaut le coup. Par défaut : pas nécessaire.</p><p class="meta">≈4 h · couvre §8</p></div>
-    <div class="mod"><div class="row"><span class="mid">M11 · APRÈS LE 60ᵉ JOUR</span><span class="price">300 $</span></div><h3>Référencement + visibilité dans les IA (marché britannique)</h3><p>Être trouvé par les moteurs de recherche et par les réponses des IA. Volontairement hors des 60 jours — cela exige d'abord une offre (« client idéal : pas encore défini » est votre réponse honnête, et c'est très bien ainsi).</p><p class="meta">≈1 jour · volet commercial</p></div>
-    <div class="mod"><div class="row"><span class="mid">M12 · À LA DEMANDE</span><span class="price">100-300 $</span></div><h3>Vidéo / Photo / Audio IA</h3><p>Production de médias, chiffrée selon la complexité, à la commande. Hors du chemin des 60 jours.</p><p class="meta">à la demande</p></div>
-    <div class="mod bundle"><div class="row"><span class="mid">PACK</span><span class="price">800 $ <s style="font-size:.8rem;color:var(--muted)">1 100 $</s></span></div><h3>OpenClaw Socle — M1 + M2 + M3 + M5 + M8</h3><p>Le rez-de-chaussée : routage, compétences, le briefing, la mémoire à quatre contextes, votre matrice d'approbation — vos deux demandes, reprises telles quelles, plus les deux facilitateurs de tout le reste. La sécurité incluse dans le pack = jamais le module que vous sautez.</p><p class="meta">économie de 300 $ · le démarrage recommandé</p></div>
-    <div class="mod custom"><div class="row"><span class="mid">SUR MESURE</span><span class="price">chiffré plus tard</span></div><h3>La construction OpenClaw complète — sur mesure JEAN-SKYNET</h3><p>Votre cahier des charges §7, phases 1 à 5, en une seule réalisation accompagnée : les quatre agents, une porte unique, le dessin des autorisations Google, la surveillance, les tests d'acceptation signés. Chiffré après la livraison de M1 + M3 — sur réalité mesurée, pas sur un questionnaire.</p><p class="meta">durée arrêtée au moment du chiffrage</p></div>
+    <div class="mod"><div class="row"><span class="mid">M1 · SEMAINE 1</span><span class="price">150 $</span></div><h3>Apprivoiser votre facture de jetons (aiguillage CCR)</h3><p>Aiguiller Claude Code vers les modèles gratuits. Votre facture récurrente tombe vers zéro. Le retour sur investissement le plus rapide de ce plan.</p><p class="meta">≈2 h + installation · couvre §8 hébergement/budget · vous payez 50 $/mois aujourd'hui&nbsp;: rentabilisé en ≈ 3 mois</p></div>
+    <div class="mod"><div class="row"><span class="mid">M2 · SEMAINES 1-2</span><span class="price">200 $</span></div><h3>Votre Claude Code, édition professionnelle</h3><p>Compétences, crochets (de petites règles automatiques à l'intérieur de Claude Code&nbsp;: «&nbsp;quand X arrive, fais Y&nbsp;»), mémoire. Les trois leviers derrière tous les autres modules, pointés sur votre goulot déclaré.</p><p class="meta">≈4 h · couvre §2 A1, §5</p></div>
+    <div class="mod"><div class="row"><span class="mid">M3 · SEMAINES 2-3</span><span class="price">250 $</span></div><h3>Le briefing du matin (agent de nuit + synthèse locale)</h3><p>Un agent programmé lit votre agenda et votre messagerie pendant la nuit et vous remet une synthèse unique&nbsp;: le briefing quotidien que votre cahier des charges définit (§2 A1). Première synthèse&nbsp;: semaine 3, dès que l'écran d'autorisation de Google a débloqué.</p><p class="meta">≈1 jour + installation · couvre §2 A1, §7 phase 1 · inclut la portée de lecture Gmail, la plus délicate, en lecture seule d'abord</p></div>
+    <div class="mod"><div class="row"><span class="mid">M4 · SEMAINES 3-4</span><span class="price">250 $</span></div><h3>Le moteur de recherche (agents web + registre des opportunités)</h3><p>Des agents de recherche web qui alimentent le schéma de registre exact que votre cahier des charges définit&nbsp;: ID, source, date vérifiée, score d'adéquation, échéance, prochaine action, statut.</p><p class="meta">≈1 jour · couvre §2 A2, §6</p></div>
+    <div class="mod"><div class="row"><span class="mid">M5 · SEMAINE 4</span><span class="price">200 $</span></div><h3>La mémoire d'affaires qui n'oublie jamais</h3><p>Quatre profils de mémoire à permissions (personnel / conseil / drones / caritatif) sur la taxonomie de dossiers que vous avez déjà écrite.</p><p class="meta">≈3-4 h · couvre §2 A1, §5</p></div>
+    <div class="mod"><div class="row"><span class="mid">M6 · SEMAINES 5-6</span><span class="price">300 $</span></div><h3>La chaîne des subventions caritatives (football d'Afrique du Sud)</h3><p>Découverte des subventions, registre, contrôle d'éligibilité, note en PDF&nbsp;; les échéances font office de tableau de score. Votre premier flux porteur de revenus.</p><p class="meta">≈1,5 jour · couvre §2 A2, §7 phase 2 · première note de subvention en PDF&nbsp;: semaine 6</p></div>
+    <div class="mod"><div class="row"><span class="mid">M7 · SEMAINE 6</span><span class="price">250 $</span></div><h3>L'usine à documents (Word / PowerPoint / PDF à votre marque)</h3><p>Documents produits sur gabarits et contrôlés&nbsp;: originaux modifiables plus PDF finaux, portes d'orthographe, de mise en page et d'accessibilité, comme votre A4 l'exige.</p><p class="meta">≈1 jour · couvre §2 A4, §6, §7 phase 3</p></div>
+    <div class="mod"><div class="row"><span class="mid">M8 · SEMAINE 6</span><span class="price">300 $</span></div><h3>Sécurité et garde-fous à validation humaine</h3><p>Votre matrice d'approbation gravée dans le code&nbsp;: files d'approbation, coffre à secrets, journaux d'audit, révocation, le chemin d'alerte indépendant. Vos tests d'acceptation, écrits puis exécutés.</p><p class="meta">≈1,5 jour · couvre §4, §2 A3, §6 · le module aux enjeux les plus hauts</p></div>
+    <div class="mod"><div class="row"><span class="mid">M9 · SEMAINE 7</span><span class="price">150 $</span></div><h3>Votre serveur permanent (VPS)</h3><p>L'agent de nuit passe au 24 h/24. <b>~6-12 $/mois de coût réel</b> en plus du prix du module&nbsp;; l'éditeur d'HERMÈS lui-même annonce qu'un VPS à 5 $ suffit. Le seul frais d'infrastructure récurrent de tout ce plan, dit ici, une seule fois.</p><p class="meta">≈3 h · couvre §7 phase 4</p></div>
+    <div class="mod"><div class="row"><span class="mid">M10 · SEMAINES 7-8</span><span class="price">200 $</span></div><h3>IA locale (Ollama / LM Studio) + la décision GPU</h3><p>Faire tourner des modèles gratuits sur votre propre matériel, plus un cadre de décision pour savoir quand une GPU louée vaut le coup. Par défaut&nbsp;: pas nécessaire.</p><p class="meta">≈4 h · couvre §8</p></div>
+    <div class="mod"><div class="row"><span class="mid">M11 · APRÈS LE 60ᵉ JOUR</span><span class="price">300 $</span></div><h3>Référencement + visibilité dans les IA (Royaume-Uni)</h3><p>Être trouvé par les moteurs de recherche et par les réponses des IA, en construisant sur ELMO et OpenSEO, nos propres chaînes déployées (§3). Volontairement hors du compteur des 60 jours&nbsp;: il faut d'abord une offre («&nbsp;client idéal&nbsp;: pas encore défini&nbsp;» est votre propre réponse, et c'est très bien ainsi).</p><p class="meta">≈1 jour · volet commercial</p></div>
+    <div class="mod"><div class="row"><span class="mid">M12 · À LA DEMANDE</span><span class="price">100-300 $</span></div><h3>Vidéo / Photo / Audio IA</h3><p>Production de médias sur notre banc (KREA2, MiniMax H3, Wan 3.0, TRELLIS, voix locales&nbsp;: §3), chiffrée à la commande selon la complexité. Hors du chemin des 60 jours.</p><p class="meta">à la demande</p></div>
+    <div class="mod bundle"><div class="row"><span class="mid">LOT</span><span class="price">800 $ <s style="font-size:.8rem;color:var(--muted)">1&nbsp;100 $</s></span></div><h3>OpenClaw Socle — M1 + M2 + M3 + M5 + M8</h3><p>Le rez-de-chaussée&nbsp;: l'aiguillage, les compétences, le briefing, la mémoire à quatre contextes, et votre matrice d'approbation. Vos deux demandes mot pour mot plus les deux facilitateurs de tout le reste. La sécurité incluse dans le lot, c'est la garantie qu'elle ne sera jamais le module que vous sautez.</p><p class="meta">économie de 300 $ · le départ recommandé</p></div>
+    <div class="mod custom"><div class="row"><span class="mid">SUR MESURE</span><span class="price">chiffré plus tard</span></div><h3>La construction OpenClaw complète — sur mesure JEAN-SKYNET</h3><p>Votre cahier des charges §7, phases 1 à 5, en une seule réalisation accompagnée, sur la route que vous avez choisie (§4)&nbsp;: les quatre agents, une porte d'entrée unique, le dessin des portées OAuth, la télémétrie, les tests d'acceptation signés. Chiffré après la livraison de M1 + M3, sur réalité mesurée plutôt que sur questionnaire.</p><p class="meta">durée arrêtée au moment du chiffrage</p></div>
   </div>
 
-  <h3>La facture des 60 jours</h3>
-  <p>Pile minimale pour votre objectif à 90 jours, à l'unité : <strong>M1+M2+M3+M4+M5 = 1 050 $</strong>. Même argent, meilleure forme : <strong>pack Socle 800 $ + M4 250 $ = 1 050 $ — six modules dont M8 (valeur 300 $) au lieu de cinq.</strong> Récurrent : <strong>0 $ d'outils jusqu'à la semaine 6 — le serveur n'est facturé qu'à sa mise en route (semaine 7)</strong> ; à partir de là, 6 à 12 $ par mois et rien d'autre. L'ensemble des 8 semaines (M1 à M10) = 2 250 $ à l'unité, 1 950 $ avec le pack.</p>
+  <h3>Les totaux à 60 jours</h3>
+  <p>Pile minimale pour votre objectif à 90 jours, à l'unité&nbsp;: <strong>M1+M2+M3+M4+M5 = 1&nbsp;050 $</strong>. Même argent, meilleure forme&nbsp;: <strong>lot Socle 800 $ + M4 250 $ = 1&nbsp;050 $ pour six modules dont M8 (valeur 300 $) au lieu de cinq.</strong> Récurrent&nbsp;: <strong>0 $ d'outils jusqu'à la semaine 6</strong>&nbsp;; le serveur n'est facturé qu'à sa mise en route (semaine 7), à ~6-12 $/mois, plus la réserve d'API payante de 5-10 $/mois pour les travaux lourds. Ensemble complet des 8 semaines (M1-M10)&nbsp;: <strong>2&nbsp;250 $ à l'unité</strong>, <strong>1&nbsp;950 $ avec le lot</strong>.</p>
 </section>
-
 <section id="risks" class="reveal">
-  <p class="quote"><strong>D'emblée :</strong> cinq soucis dits d'emblée. Brancher la messagerie Google en sécurité est le plus délicat — on commence en lecture seule. Les quatre activités ne doivent jamais se mélanger — des tiroirs séparés d'abord. Le « gratuit » s'arrête à une petite facture de serveur, dite maintenant plutôt que plus tard. Tout est revérifié à la semaine 4. La validation reste légère : une touche le matin, pas d'interruptions toute la journée.</p>
-  <p class="eyebrow">5 · Les risques</p>
+  <p class="quote"><strong>En chiffres&nbsp;:</strong> six soucis honnêtes. Brancher la messagerie Google en sécurité est la partie la plus dure&nbsp;: nous commençons en lecture seule. Les quatre entreprises ne doivent jamais partager de secrets&nbsp;: nous construisons d'abord des tiroirs séparés. Le «&nbsp;gratuit&nbsp;» s'arrête à une petite facture de serveur, dite maintenant et non plus tard. Nous planifions face à des inconnues et recontrôlons à la semaine 4. Les approbations coûtent un geste par matin, pas des interruptions toute la journée. Et l'indépendance réelle à notre égard est une compétence&nbsp;: elle demande de la pratique, et une main extérieure peut encore être utile sur les gros incidents.</p>
+  <p class="eyebrow">9 · Les risques</p>
   <h2>Nommés avant que vous les trouviez</h2>
-  <h3>R1 — Les autorisations Google sont la vraie montagne</h3>
-  <p>L'accès délimité à Gmail/Drive/Calendar est le chantier le plus délicat. Parade : lecture seule d'abord, brouillons étiquetés, envoi sur approbation, jetons révocables — votre §6 le demande exactement. De la marge est prévue dans M3/M8 plutôt qu'une date promise.</p>
-  <h3>R2 — Quatre entreprises, quatre mémoires, un seul cerveau</h3>
-  <p>La contamination croisée — un prix de drone dans une lettre de subvention, des données caritatives dans un dossier de conseil — est la panne silencieuse la plus probable. M5 construit les quatre profils autorisés <em>avant</em> que la recherche intensive démarre, sur votre propre classification.</p>
-  <h3>R3 — Le piège du 0 $</h3>
-  <p>« $0 free only » tient jusqu'à la semaine 6. Rien d'autre ne se paie chaque mois — sauf le serveur : 6 à 12 $ ; une facture surprise plus tard coûterait plus de confiance que la vérité n'en coûte aujourd'hui — alors la voilà.</p>
-  <h3>R4 — Nous planifions face à des inconnues</h3>
-  <p>Volume « pas encore sûr », client idéal non défini, matériel incertain. Le plan optimise votre usage principal déclaré (« Save me time ») et se recontrôle au point d'étape de la semaine 4 avant d'engager M6 à M10.</p>
-  <h3>R5 — La friction des approbations peut manger le temps gagné</h3>
-  <p>Votre politique multiplie les approbations et votre but est le temps. Si chaque action vous sollicite dans la journée, le garde-fou devient le fardeau. Remède par votre propre design : les approbations groupées dans le briefing du matin, oui/non en un geste — la validation humaine coûte des minutes, pas des interruptions.</p>
+  <h3>R1&nbsp;: l'OAuth est la vraie montagne</h3>
+  <p>L'accès délimité à Gmail/Drive/Calendar est le chantier le plus délicat, et sa vérification prend du temps calendaire (§6). Parade&nbsp;: lecture seule d'abord, brouillons étiquetés, envoi seulement sur approbation, jetons révocables. Votre §6 demande exactement cela. La marge est programmée dans M3/M8 plutôt qu'une date promise.</p>
+  <h3>R2&nbsp;: quatre entreprises, quatre mémoires, un seul cerveau</h3>
+  <p>La contamination croisée (un prix de drone dans une lettre de subvention, des données caritatives dans un dossier de conseil) est la panne silencieuse la plus probable. Le M5 construit les quatre profils autorisés <em>avant</em> que la recherche intensive démarre, sur votre propre taxonomie.</p>
+  <h3>R3&nbsp;: le piège du «&nbsp;0 $&nbsp;»</h3>
+  <p>«&nbsp;$0 free only&nbsp;» tient pour les abonnements logiciels pendant les semaines 1 à 6. À partir de la semaine 7, le serveur facture ~6-12 $/mois, et une réserve d'API payante de 5-10 $/mois couvre les travaux lourds. Une facture surprise plus tard coûterait plus de confiance que la vérité n'en coûte aujourd'hui — alors la voilà.</p>
+  <h3>R4&nbsp;: nous planifions face à des inconnues</h3>
+  <p>Volume «&nbsp;pas encore sûr&nbsp;», client idéal non défini, matériel incertain. Le plan optimise votre usage principal déclaré («&nbsp;save me time&nbsp;») et se recontrôle au point d'étape de la semaine 4, avant d'engager M6-M10.</p>
+  <h3>R5&nbsp;: l'autonomie — la promesse, et aussi le risque principal</h3>
+  <p>Votre objectif à 90 jours, c'est «&nbsp;savoir réparer quand ça se trompe&nbsp;»&nbsp;: l'indépendance à notre égard. Nous construisons pour cela&nbsp;: sessions guidées, tutoriels à vie, diagnostics intégrés (<code>openclaw doctor</code> et <code>openclaw triage</code> sur la route A, l'auto-audit d'HERMÈS sur la route B). Nous disons aussi franchement la moitié difficile&nbsp;: cette indépendance n'arrive pas toute seule. L'hygiène Docker, serveur et diagnostics demande une vraie discipline pour devenir l'habitude d'un non-développeur, et sur les incidents d'intégration majeurs une aide extérieure peut rester nécessaire. Nous le disons maintenant plutôt que de le découvrir au deuxième mois.</p>
+  <h3>R6&nbsp;: la friction des approbations</h3>
+  <p>Votre politique multiplie les approbations et votre but est le temps. Si chaque action vous sollicite en pleine journée, le garde-fou devient le fardeau. Remède par votre propre conception&nbsp;: les approbations groupées dans le briefing du matin, oui/non en un geste. La validation humaine coûte des minutes, pas des interruptions.</p>
 </section>
-
 <section id="roadmap" class="reveal">
-  <p class="quote"><strong>En résumé :</strong> huit semaines bien rangées. Semaine 1 : votre facture mensuelle tombe à presque zéro. Semaine 3 : premier résumé matinal. Semaine 6 : votre première lettre de subvention en PDF. Semaine 7 : l'assistant s'installe sur un serveur toujours allumé — le seul coût mensuel. Semaine 8 : le bilan. Pour démarrer, il faut trois choses : votre créneau, des boîtes mail autorisées, votre ordinateur.</p>
-  <p class="eyebrow">6 · Le chemin 60 jours</p>
-  <h2>Semaine par semaine</h2>
+  <p class="quote"><strong>Pour mémoire&nbsp;:</strong> 6 à 8 semaines, honnêtement. En gros&nbsp;: semaine 1, votre facture mensuelle approche zéro&nbsp;; semaine 3, le premier résumé matinal&nbsp;; semaine 6, votre première lettre de subvention en PDF&nbsp;; semaine 7, l'assistant passe sur un serveur permanent — le seul coût mensuel&nbsp;; semaine 8, le bilan. Les écrans d'autorisation de Google prennent leur propre temps dans cette fenêtre. Pour démarrer, il nous faut trois choses&nbsp;: votre créneau de réunion, les boîtes de réception que nous pouvons lire, et un ordinateur.</p>
+  <p class="eyebrow">10 · Le chemin des 60 jours, semaine par semaine</p>
+  <h2>Six à huit semaines, au rythme du monde réel</h2>
   <div class="weeks">
-    <div class="week"><div class="w">Sem. 1</div><div class="d">Facture de jetons → ~0 $ (M1, routage intelligent en place) ; les fondations compétences/crochets/mémoire démarrent (M2 commence)</div></div>
-    <div class="week"><div class="w">Sem. 2</div><div class="d">Les compétences Claude Code de niveau expert vivent sur votre machine ; vous avez ajusté votre premier crochet vous-même (M2 fini, M3 commence)</div></div>
-    <div class="week"><div class="w">Sem. 3</div><div class="d">La première synthèse matinale arrive — calendrier + courrier prioritaire, en local et gratuitement (M3 fini, M4 commence)</div></div>
-    <div class="week"><div class="w">Sem. 4</div><div class="d">Moteur de recherche + registre des opportunités (votre schéma §2) ; la mémoire à quatre contextes se met en place (M4, M5). <b>Point d'étape :</b> vos décisions §8 sont recueillies ; la réalisation sur mesure entre en chiffrage</div></div>
-    <div class="week"><div class="w">Sem. 5</div><div class="d">Construction de la chaîne de subventions : découverte des subventions football sud-africain dans le registre (M6)</div></div>
-    <div class="week"><div class="w">Sem. 6</div><div class="d">Première note de subvention partagée en PDF (le cas caritatif de votre cahier des charges) ; usine à documents avec vos gabarits de marque ; matrice d'approbation appliquée par des déclencheurs automatiques (M6, M7, M8)</div></div>
-    <div class="week"><div class="w">Sem. 7</div><div class="d">L'agent de nuit passe sur le serveur permanent — premier et seul coût récurrent (6 à 12 $/mois), accepté en connaissance de cause ; chemin d'alerte de sécurité indépendant testé (M9)</div></div>
-    <div class="week"><div class="w">Sem. 8</div><div class="d">IA locale + décision GPU (par défaut : pas nécessaire) ; bilan des 60 jours face à votre objectif des 90 jours ; le devis de la construction complète, chiffré sur réalité mesurée (M10 + bilan)</div></div>
+    <div class="week"><div class="w">Sem. 1</div><div class="d">Facture de jetons → ~0 $ (M1, aiguillage CCR en place)&nbsp;; les fondations compétences/crochets/mémoire démarrent (M2 commence). La demande OAuth Google part cette semaine&nbsp;: elle déclenche l'horloge extérieure</div></div>
+    <div class="week"><div class="w">Sem. 2</div><div class="d">Les compétences pro de Claude Code vivent sur votre machine&nbsp;; vous avez ajusté votre premier crochet vous-même (M2 terminé, M3 commence)</div></div>
+    <div class="week"><div class="w">Sem. 3</div><div class="d">Première synthèse matinale, agenda + messagerie prioritaire, en local et gratuitement (M3)&nbsp;: l'approbation OAuth est arrivée vite sur cette branche&nbsp;; si elle arrive plus tard, la synthèse se décale avec elle et le M4 absorbe l'écart</div></div>
+    <div class="week"><div class="w">Sem. 4</div><div class="d">Moteur de recherche + registre des opportunités (votre schéma §2)&nbsp;; la mémoire à quatre contextes se dresse (M4, M5). <b>Point d'étape&nbsp;:</b> vos décisions §8 sont recueillies&nbsp;; la construction sur mesure entre en chiffrage&nbsp;; feuille de route recontrôlée contre le calendrier OAuth</div></div>
+    <div class="week"><div class="w">Sem. 5</div><div class="d">La construction de la chaîne de subventions démarre&nbsp;: découverte des subventions football d'Afrique du Sud vers le registre (M6)</div></div>
+    <div class="week"><div class="w">Sem. 6</div><div class="d">Première note de subvention partagée en PDF (le cas caritatif de votre cahier des charges)&nbsp;; usine à documents avec vos gabarits de marque&nbsp;; matrice d'approbation appliquée dans les crochets (M6, M7, M8)</div></div>
+    <div class="week"><div class="w">Sem. 7</div><div class="d">L'agent de nuit passe sur le serveur permanent. Le premier et seul coût d'infrastructure récurrent (~6-12 $/mois), accepté en connaissance de cause&nbsp;; chemin d'alerte de sécurité indépendant testé (M9)</div></div>
+    <div class="week"><div class="w">Sem. 8</div><div class="d">IA locale + décision GPU (par défaut&nbsp;: pas nécessaire)&nbsp;; bilan des 60 jours face à votre objectif à 90 jours&nbsp;; le devis de la construction complète, chiffré sur réalité mesurée (M10 + bilan)</div></div>
   </div>
-  <div class="quote"><strong>Jour 60, face à vos propres demandes :</strong> briefing quotidien qui tourne · registres et chaîne caritative vivants · mémoire en quatre contextes séparés · documents à votre marque et contrôlés · garde-fous appliquant votre politique d'approbation · serveur permanent en option — et chaque pièce s'accompagne du tutoriel qui vous permet de la réparer vous-même. C'est la seule définition du succès que vous ayez écrite.</div>
+  <p class="note">Pourquoi «&nbsp;6-8&nbsp;» et pas un forfait 8&nbsp;: le bord haut de la fenêtre se gagne par une approbation Google rapide et l'absence de friction des plateformes de subventions&nbsp;; le bord bas, c'est le calendrier lui-même. Si une vérification arrive tard, les étapes touchées glissent&nbsp;; M4-M6 sont construits pour être indépendants de l'ordre autour du registre, si bien que le plan plie sans rompre.</p>
+  <div class="quote"><strong>Le jour 60, face à vos propres demandes&nbsp;:</strong> briefing quotidien en marche · registres et chaîne caritative vivants · mémoire en quatre contextes séparés · documents à votre marque et contrôlés · garde-fous appliquant votre politique d'approbation · hébergeur 24/7 en option · et chaque pièce s'accompagne du tutoriel qui vous permet de la réparer vous-même. C'est la seule définition du succès que vous ayez écrite.</div>
   <h3>Ce dont nous avons besoin de vous pour démarrer</h3>
-  <p>L'heure et le canal de votre briefing (§8) · quelles adresses et quels dossiers chaque agent peut lire · une machine pour l'installation de la Phase 1. Tout le reste démarre sans ces réponses.</p>
+  <p>Votre heure et votre canal de briefing (§8) · quelles adresses et quels dossiers chaque agent peut lire · une machine pour l'installation de la phase 1. Tout le reste démarre sans ces réponses.</p>
   <p style="margin-top:22px"><a class="cta" href="#modules">Retour aux modules ↑</a></p>
 </section>
-
+<section id="sources" class="reveal">
+  <p class="quote"><strong>Le fond&nbsp;:</strong> nous montrons nos devoirs. Chaque prix et chaque chiffre de ce rapport vient d'une page publique ou de nos propres journaux de mesure, chacun daté. Chaque fois qu'un chiffre touche votre argent, vous pouvez le vérifier vous-même.</p>
+  <p class="eyebrow">11 · Les sources</p>
+  <h2>Chaque chiffre, daté et traçable</h2>
+  <ol style="margin:0 0 14px 22px">
+    <li><a href="https://claude.com/pricing" target="_blank" rel="noopener">Tarifs Claude, claude.com/pricing</a> <span>· Sonnet 5.5&nbsp;: 2 $/10 $ par million de jetons (sortie&nbsp;= 5× l'entrée)&nbsp;; Claude Max dès 100 $/mois&nbsp;; Claude Pro 20 $/mois (17 $ annuel). Mesuré les 15-16 oct. 2026</span></li>
+    <li><a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener">Tarifs DeepSeek, api-docs.deepseek.com</a> <span>· deepseek-flash (V4.1-Flash)&nbsp;: 0,15 $/0,30 $ en entrée (creuses/pointe), 0,60 $/1,20 $ en sortie, 0,003 $ sur décrochage de cache. Mesuré le 16 oct. 2026 sur la page rendue</span></li>
+    <li><a href="https://developers.openai.com" target="_blank" rel="noopener">Tarifs modèles OpenAI, developers.openai.com</a> <span>· paliers GPT-6 Luna / GPT-6.1 Sol / GPT-6 Astra, selon le tableau du §5. Lu le 16 oct. 2026</span></li>
+    <li><a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">OpenClaw, github.com/openclaw/openclaw</a> <span>· licence MIT, entretenu par une fondation (501(c)(3)), 392&nbsp;K+ étoiles, «&nbsp;OpenAI is a donor, not an owner&nbsp;», «&nbsp;l'état, la mémoire et les identifiants restent sur votre matériel&nbsp;», Node 24.16+/26.1+, applications natives, commandes d'installation. Visité le 16 oct. 2026</span></li>
+    <li><a href="https://github.com/VoltAgent/awesome-openclaw-skills" target="_blank" rel="noopener">Compétences communautaires OpenClaw, VoltAgent/awesome-openclaw-skills</a> <span>· «&nbsp;5&nbsp;300+&nbsp;» dans l'index du README&nbsp;; la rubrique «&nbsp;À propos&nbsp;» de la même page annonce déjà 5&nbsp;400+&nbsp;; le marché officiel ClawHub relié depuis là. Mesuré le 16 oct. 2026</span></li>
+    <li><a href="https://store.nousresearch.com" target="_blank" rel="noopener">Hermes Agent, Nous Research</a> <span>· v0.21.5&nbsp;: compétences auto-améliorantes issues de l'expérience, mémoire persistante, horaires en langage naturel, 25+ canaux par une seule passerelle, sécurité «&nbsp;refus par défaut&nbsp;», plancher éditeur à 5 $ pour un VPS, chemin de migration OpenClaw documenté. Docs de l'éditeur plus notre propre exploitation, 16 oct. 2026&nbsp;; notre pont agent-à-agent en direct depuis le 4 oct. 2026</span></li>
+    <li><a href="https://www.rtk-ai.app" target="_blank" rel="noopener">RTK, rtk-ai.app / github.com/rtk-ai/rtk</a> <span>· notre propre compteur, rtk gain daté du 16 oct. 2026&nbsp;: 73&nbsp;500+ commandes, 7,4 M de jetons économisés (41&nbsp;% des jetons de commande, 69&nbsp;% de ceux de sortie)</span></li>
+    <li><a href="https://code.claude.com/docs/en/costs" target="_blank" rel="noopener">Claude Code, gérer les coûts</a> <span>· règle du fichier de contexte à 200 lignes, délégation aux sous-agents, motif de crochet grep|head. Vérifié le 13 oct. 2026</span></li>
+    <li><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching" target="_blank" rel="noopener">Anthropic, cache de prompts</a> <span>· lecture de cache 0,1× (0,05×/0,25× en dernier), écriture de cache +25&nbsp;% (durée de vie 5 min), règle du préfixe. Vérifié les 13-16 oct. 2026</span></li>
+    <li><b>Prix du marché</b> <span>· pages de cohortes Maven 2&nbsp;200 à 4&nbsp;200 $&nbsp;; Replit Pro 100 $/mois (replit.com/pricing)&nbsp;; Cursor paliers 0 à 200 $/mois (cursor.com/pricing)&nbsp;; Notion Business 20 $/membre/mois (notion.com/pricing)&nbsp;; Zapier Professional 19,99 $/mois annuel (zapier.com/pricing)&nbsp;; Coursera Plus 24 $/mois (coursera.org/courseraplus). Tout mesuré le 16 oct. 2026 sur les pages mêmes des vendeurs, HTTP 200</span></li>
+    <li><b>Mesures internes</b> <span>· compteur de jetons RTK&nbsp;; index mémoire (600+ fiches)&nbsp;; câblage Search Console de NEXUS V3 (relecture interne 10/10, 13 oct. 2026)&nbsp;; déploiement ELMO le 14 oct. 2026 (4 conteneurs)&nbsp;; instance OpenSEO le 15 oct. 2026&nbsp;; mesures d'édition KREA2 (6-13&nbsp;% d'écart de pixels)&nbsp;; suites de preuve MiniMax H3 (67 tests)&nbsp;; déploiements clients Wan 3.0 (oct. 2026)&nbsp;; pipeline local TRELLIS&nbsp;; voix françaises validées le 28 sept. 2026. Dates telles qu'inscrites dans le tableau du banc au §3</span></li>
+  </ol>
+  <p class="note">Les tarifs grand public de ChatGPT étaient bloqués aux accès automatisés (403, 16 oct. 2026)&nbsp;: nous les omettons plutôt que de citer un chiffre que nous n'avons pas pu vérifier.</p>
+</section>
+<!--APPEND12-->
 <section id="market" class="reveal">
-  <p class="eyebrow">10 · Face au marché</p>
-  <h2>Les prix d'octobre 2026, mesurés sur les pages des vendeurs eux-mêmes</h2>
-  <p class="quote"><strong>En clair :</strong> le chemin complet des 60 jours (1 050 $ pour six modules, tutoriels à vie) coûte moins de la moitié d'UNE seule formation collective en IA cet automne — et une formation s'arrête ; vos modules restent.</p>
-  <div class="tablewrap">
-  <table>
+  <p class="quote"><strong>En synthèse&nbsp;:</strong> tout le chemin des 60 jours coûte moins que la moitié d'UNE seule cohorte IA en direct cet automne, et une cohorte se termine pendant que vos modules restent. Les abonnements louent la même capacité chaque mois, pour toujours.</p>
+  <p class="eyebrow">12 · La comparaison au marché</p>
+  <h2>Les prix d'octobre 2026, mesurés sur les pages mêmes des vendeurs</h2>
+  <div class="tablewrap"><table>
     <tr><th>Produit (oct. 2026)</th><th>Ce que c'est</th><th>Prix mesuré</th><th>Source (mesuré le 16 oct.)</th></tr>
-    <tr><td>Formations collectives IA (Maven)</td><td>5 à 8 semaines d'ingénierie IA enseignée</td><td><b>2 200 à 4 200 $</b> la session</td><td>maven.com — 3 pages de cours, HTTP 200</td></tr>
-    <tr><td>Claude Max</td><td>abonnement assistant usage étendu</td><td>dès <b>100 $/mois</b></td><td>claude.com/pricing, HTTP 200</td></tr>
+    <tr><td>Cohortes IA en direct (Maven)</td><td>5 à 8 semaines d'ingénierie IA enseignée</td><td><b>2&nbsp;200 à 4&nbsp;200 $</b> la cohorte</td><td>maven.com, 3 pages de cours, HTTP 200</td></tr>
+    <tr><td>Claude Max</td><td>abonnement assistant à usage étendu</td><td>dès <b>100 $/mois</b></td><td>claude.com/pricing, HTTP 200</td></tr>
     <tr><td>Claude Pro</td><td>abonnement assistant</td><td>20 $/mois (17 $ annuel)</td><td>claude.com/pricing, HTTP 200</td></tr>
     <tr><td>Replit Pro</td><td>IDE en ligne + agents (10 en parallèle)</td><td>100 $/mois</td><td>replit.com/pricing, HTTP 200</td></tr>
-    <tr><td>Cursor</td><td>éditeur de code IA</td><td>0 à 200 $/mois par paliers (plus de plan « Pro » — Plus 8 $ / Premium 30 $ / Super 100 $ / Ultra 200 $)</td><td>cursor.com/pricing, HTTP 200</td></tr>
+    <tr><td>Cursor</td><td>éditeur de code IA</td><td>paliers 0 à 200 $/mois (Plus 8 $ / Premium 30 $ / Super 100 $ / Ultra 200 $)</td><td>cursor.com/pricing, HTTP 200</td></tr>
     <tr><td>Notion Business</td><td>espace de travail avec agent IA</td><td>20 $/membre/mois</td><td>notion.com/pricing, HTTP 200</td></tr>
-    <tr><td>Zapier Professional</td><td>automatisations, 750 tâches</td><td>19,99 $/mois (annuel ; 29,99 $ mensuel)</td><td>zapier.com/pricing, HTTP 200</td></tr>
+    <tr><td>Zapier Professional</td><td>automatisations, 750 tâches</td><td>19,99 $/mois (annuel&nbsp;; 29,99 $ mensuel)</td><td>zapier.com/pricing, HTTP 200</td></tr>
     <tr><td>Coursera Plus</td><td>catalogue de cours</td><td>24 $/mois (160 $/an)</td><td>coursera.org/courseraplus, HTTP 200</td></tr>
-  </table>
-  </div>
-  <p><b>Trois positionnements, vérifiables à l'arithmétique :</b></p>
+  </table></div>
+  <p><b>Trois positionnements, vérifiables à l'arithmétique&nbsp;:</b></p>
   <ul style="margin:0 0 14px 22px">
-    <li><b>Face aux cohortes :</b> 1 050 $ pour six modules, c'est moins de la moitié d'une seule cohorte Maven (2 200 $) et le quart de celle sur les évaluations (4 200 $) — et une cohorte finit en novembre, vos tutoriels restent.</li>
-    <li><b>Face aux abonnements :</b> 1 050 $, c'est environ <b>4 ans de Claude Pro</b> (20 $/mois) — le prix d'apprendre à faire tourner votre propre système au lieu d'en louer un, pour toujours.</li>
-    <li><b>Face aux catalogues de cours :</b> un seul module (100-300 $) vaut 5 à 15 mois d'un abonnement qui enseigne mais ne livre rien.</li>
+    <li><b>Face aux cohortes en direct&nbsp;:</b> 1&nbsp;050 $ pour six modules, c'est moins de la moitié d'une cohorte Maven (2&nbsp;200 $) et le quart de celle sur les évaluations (4&nbsp;200 $). Une cohorte se termine en novembre&nbsp;; vos tutoriels restent.</li>
+    <li><b>Face aux abonnements&nbsp;:</b> 1&nbsp;050 $ achètent environ <b>4 ans de Claude Pro</b> (20 $/mois)&nbsp;: le prix d'apprendre à faire tourner votre propre système au lieu d'en louer un, pour toujours.</li>
+    <li><b>Face aux catalogues de cours&nbsp;:</b> un seul module (100-300 $) vaut 5 à 15 mois d'un abonnement de catalogue qui enseigne mais ne livre rien.</li>
   </ul>
-  <p class="note">Tous les prix mesurés le 16 oct. 2026 sur les pages des vendeurs (HTTP 200). La tarification grand public de ChatGPT était bloquée aux accès automatiques (403) — nous l'omettons plutôt que de citer un chiffre non vérifié.</p>
 </section>
 
 </main>
 
 <footer>
-  <p class="quote"><strong>En clair :</strong> nous montrons nos devoirs. Chaque prix et chaque chiffre du rapport vient d'une page publique ou de nos propres relevés, chacun daté (15-16 octobre 2026). Rien n'est inventé : dès qu'un chiffre touche votre argent, vous pouvez cliquer et vérifier vous-même.</p>
-  <p><b>Construit à partir de vos mots.</b> Chaque affirmation remonte à votre cahier des charges (85 lignes, 15 oct. 2026) ou à vos réponses au formulaire.<br>
-  Répondez avec la liste de modules souhaitée — même un seul — et la semaine 1 démarre.</p>
+  <p><b>Chaque chiffre ici remonte soit à votre cahier des charges (85 lignes, datées du 15 oct. 2026), soit à vos réponses au questionnaire d'orientation.</b><br>
+  Répondez avec la liste de modules que vous voulez — même un seul — et la semaine 1 démarre.</p>
 </footer>
 
 <script>
