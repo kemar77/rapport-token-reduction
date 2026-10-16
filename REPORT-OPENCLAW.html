@@ -142,7 +142,7 @@
   <h3>8. Price sensitivity is about tools, not expertise</h3>
   <p>"$0 free only" monthly, but no stated cap on one-time purchases. Today you pay "Up to $50/month". The wedge is arithmetic: the first module routes that spend to free models — a $150 module that cancels a $50/month bill pays for itself in about three months.</p>
 
-  <h3>9. Your spec is unusually mature — this is a delivery job, not discovery</h3>
+  <h3>9. Your spec does the work of a discovery phase for us</h3>
   <p>You already wrote acceptance tests ("Every task has an ID, owner, status…"), a 5-phase delivery plan, an approval matrix, and 5 open decisions. Our quote answers <em>your</em> phases — it does not re-invent them.</p>
 
   <h3>10. "Not sure / several" machines — local-first fits, one server follows</h3>
@@ -150,9 +150,9 @@
 </section>
 
 <section id="spec" class="reveal">
-  <p class="quote"><strong>In plain words:</strong> your eight-part specification matches systems we already run daily — briefings, research registers, safety gates, shared memory. Most pieces exist here in working form. The one genuinely new thing to build is letting an agent read your Google mail and calendar safely — read-only first, sending only with your approval. You pick the frame: OpenClaw or ours.</p>
-  <p class="eyebrow">2 · Your specification, read honestly</p>
-  <h2>What OpenClaw asks — what already runs — the real gap</h2>
+  <p class="quote"><strong>In plain words:</strong> your eight-part specification matches systems we already run daily — briefings, research registers, safety gates, shared memory. Most pieces exist here in working form. The one genuinely new thing to build is letting an agent read your Google mail and calendar safely — we start by reading, never sending; sending comes only when you approve it. You pick the frame: OpenClaw or ours.</p>
+  <p class="eyebrow">2 · Your specification, read closely</p>
+  <h2>What OpenClaw asks, what already runs here, what's actually missing</h2>
   <p class="muted">We deliver the functional equivalent of your spec with the agent stack we operate daily. "OpenClaw" is your name for the system — and your choice. See "Your OpenClaw — two honest roads" below: both roads stay on the table.</p>
 
   <div class="tablewrap">
@@ -163,7 +163,7 @@
     <tr><td><b>§3</b> Standard workflow</td><td>Task ID → classify → delegate with minimum access → QA loop → approve → archive</td><td>This is how our own sessions already run — plan, verify, adversarial review (two independent reviewers), archive</td><td>Wiring <em>your</em> front door to it = the orchestrator build</td></tr>
     <tr><td><b>§4</b> Approval &amp; safety</td><td>Scoped OAuth for read <span class="note">(OAuth = Google's secure permission screen: you tick exactly what the agent may do — read mail, read calendar — and you can revoke it anytime)</span>; approval for send/spend/delete; test-rollback-audit</td><td>Our permission gates implement this policy today; secrets live in a vault; operations are version-controlled</td><td><strong>The real build item: scoped Google OAuth for Gmail/Drive/Calendar.</strong> Read-only first, drafts labeled, send only on approval</td></tr>
     <tr><td><b>§5</b> Data &amp; memory</td><td>6-folder taxonomy, four permissioned contexts, no passwords in memory</td><td>A 600+ indexed-note memory system our agents query in milliseconds, with per-context separation</td><td>Taxonomy = simple setup; UK GDPR compliance wording (RGPD UK) = you sign, we support</td></tr>
-    <tr><td><b>§6</b> Acceptance tests</td><td>Failed tasks visible; no unapproved external action; critical alerts bypass A1</td><td>All testable today; the independent alert path exists (a channel separate from the agent loop, straight to the owner)</td><td>Formally signed off in M8; the bypass path needs the server or a hosted channel</td></tr>
+    <tr><td><b>§6</b> Acceptance tests</td><td>Failed tasks visible; no unapproved external action; critical alerts bypass A1</td><td>All testable today; an alert push path to the owner exists (tested); a fully independent alert lane that survives a gateway outage is on the build list, not yet running</td><td>Formally signed off in M8; the bypass path needs the server or a hosted channel</td></tr>
     <tr><td><b>§7</b> Phased delivery</td><td>Phases 1-5, orchestration → automation</td><td>Maps 1:1 onto module order M1-M10</td><td>Phase 5 (learned automation) is beyond 60 days — inside the custom build</td></tr>
     <tr><td><b>§8</b> Open decisions</td><td>Hosting, scopes, briefing time, budget ceilings, templates, residency</td><td>We answer hosting + tools now (all $0 but the server)</td><td>The rest are <em>your</em> calls — collected at the week-4 checkpoint; none blocks M1-M3</td></tr>
   </table>
@@ -176,13 +176,13 @@
   <p class="quote"><strong>In plain words:</strong> these machines run our own company every day, not just yours. For the brain you have two roads: OpenClaw — the free open-source helper that lives on your own devices and speaks WhatsApp; or HERMÈS — the cockpit we already run and repair ourselves. Prices are identical on both roads; we choose after lessons M1 and M3.</p>
   <p class="eyebrow">· We live inside it</p>
   <h2>The same architecture runs our own company today</h2>
-  <p>Everything your spec describes has a working counterpart in our own daily operation — HERMÈS orchestrates and briefs us the way your A1 should, NEXUS holds the registers, feeds and logs the way your A2-A3 should, and Claude Code (hardened by the tutorial you already followed) executes the way your agents should. Why this matters: <strong>you are not hiring hope — every module below teaches you to run machinery that already runs our own company.</strong></p>
+  <p>Nothing in your spec is new to us. HERMÈS briefs us every morning, the way your A1 should brief you. NEXUS holds the registers, feeds and logs, the way your A2 and A3 would. Claude Code, hardened by the tutorial you already followed, does the legwork. So the modules below teach you to run machinery that already runs our shop every day. You would be buying practice, not hope.</p>
 
   <h3 style="margin-top:26px">Your OpenClaw — two honest roads, you pick</h3>
   <p>"OpenClaw" is both <em>your</em> name for the system <em>and</em> a real, mature open-source project (MIT license, 390k+ stars on GitHub, stewarded by a foundation — your assistant on your own devices, connected to WhatsApp/Telegram/Slack and 20+ channels, with Claude, Codex or local models as swappable plugins). We read its documentation with care. So the fork is real, and both roads lead to your spec:</p>
-  <p><b>Road A — WE DEPLOY OPENCLAW, only OpenClaw.</b> You want the framework itself, on your own devices — we set it up end-to-end: install, gateway and channels configuration (your WhatsApp for the SA charity, email for the consultancy…), model providers wired the free-first way, your four permissioned contexts, your approval matrix. We do the plumbing and teach you to steer it (modules below unchanged — they teach the method, and OpenClaw's own skills ecosystem slots right in: 5,300+ community skills exist).</p>
-  <p><b>Road B — REPLACE OpenClaw with HERMÈS.</b> Let us deploy our own cockpit — the orchestration layer that already runs our company daily (briefing, group approvals, score-based triage, independent alert path, scheduled tasks) — configured on <em>your</em> server to <em>your</em> spec. Same result shape as your spec's A1, proven in production; that is the custom build offered at the end. <b>The strongest system we know how to build</b> — but entirely your call.</p>
-  <p style="color:var(--muted);font-size:.92rem">Our only stated preference (because you asked): HERMÈS is what we run and trust daily. But Road A is a first-class citizen — it's your machine, your channels, and OpenClaw's "state, memory, and credentials live on your hardware" philosophy matches your spec §5 point for point. We scope either after seeing M1 and M3 run.</p>
+  <p><b>Road A — WE DEPLOY OPENCLAW, only OpenClaw.</b> You want the framework itself, on your own devices — we set it up end-to-end: install, gateway and channels configuration (your WhatsApp for the SA charity, email for the consultancy…), model providers wired the free-first way, your four permissioned contexts, your approval matrix. We do the plumbing and teach you to steer it. Concretely, per the official docs: one-line install <span style="white-space:nowrap">(install.sh / install.ps1 or npm with --allow-scripts=openclaw)</span>, onboarding wizard, `openclaw gateway status` and the Control UI dashboard, and `openclaw doctor` / `openclaw triage` — two built-in commands that diagnose the system when something breaks, exactly your "knowledge to fix when it does wrong" goal. Each of your four business contexts gets its own isolated instance (separate state directories). And OpenClaw's skills ecosystem slots right in: 5,300-5,400+ community skills, plus the official ClawHub marketplace. Native apps exist for macOS, iOS, Android, Windows and Linux — your charity's WhatsApp becomes a phone-native assistant.</p>
+  <p><b>Road B — REPLACE OpenClaw with HERMÈS.</b> Or let us install the cockpit we already run our own company on, set up on your server, to your spec. HERMÈS comes from Nous Research as a self-improving agent: per its documentation, it "creates skills from experience", remembers your conversations, runs daily reports and nightly tasks from plain-language schedules, and reaches 25+ messaging channels through one gateway. Security is deny-by-default out of the box, and we pair approvals the way we run them ourselves. Two details we like: the vendor says a $5 VPS is enough, and there is a documented migration path from OpenClaw (memory, skills and settings). We have not tested that migration yet, so we count it as a build item. It covers the same ground as your spec's A1, and it is the custom build offered at the end. It happens to be the strongest system we know how to build. Your call all the same.</p>
+  <p style="color:var(--muted);font-size:.92rem">Our only stated preference (because you asked): HERMÈS is what we run and trust daily. But Road A is a first-class citizen — it's your machine, your channels, and OpenClaw's "state, memory, and credentials live on your hardware" philosophy matches your spec §5 almost line for line. We scope either after seeing M1 and M3 run.</p>
   <p style="color:var(--muted);font-size:.92rem">A full side-by-side comparison of the two roads is in the section <b>"HERMÈS vs OpenClaw — side by side"</b>, near the end of this document.</p>
 
   <h3 style="margin-top:26px">And around the orchestrator — the rest of our bench</h3>
@@ -211,9 +211,9 @@
   <div class="tablewrap">
   <table>
     <tr><th>Dimension</th><th>HERMÈS (ours)</th><th>OpenClaw (open source)</th></tr>
-    <tr><td>What it is</td><td>Our production orchestrator — the cockpit that runs our own company</td><td>The most popular open-source personal-assistant framework, stewarded by a foundation (501(c)(3), MIT)</td></tr>
+    <tr><td>What it is</td><td>Our production orchestrator — the cockpit that runs our own company</td><td>An open-source personal-assistant framework with 392k+ GitHub stars, MIT-licensed, stewarded by an independent foundation (501(c)(3)) — "OpenAI is a donor, not an owner"</td></tr>
     <tr><td>Where it lives</td><td><b>Hybrid</b>: locally on your PC (like Claude Code) or on a server for true 24/7 operation — our rules apply either way (pinned images, vault-stored secrets). The 24/7 briefs need the server; everything else runs local.</td><td>Your machine — "state, memory, and credentials live on your hardware"</td></tr>
-    <tr><td>Channels</td><td>Agent-to-agent protocol, scheduled tasks, message inbox, independent alert path</td><td>WhatsApp, Telegram, Slack, Discord, iMessage, Teams and 20+ more — beyond us; plus 5,300+ community skills</td></tr>
+    <tr><td>Channels</td><td>Speaks where you do: 25+ channels supported by the software (4 already active in our operation: Telegram, agent protocol, API, local); growing to the rest — Discord, Slack, WhatsApp, Signal, Email, iMessage, Teams, SMS, Matrix — is configuration, not construction. Plus scheduled tasks, message inbox, a learning loop that turns your corrections into skills (vendor docs + Hermes self-audit, 16 Oct 2026)</td><td>WhatsApp, Telegram, Slack, Discord, iMessage, Teams and 20+ more out of the box — 5,300-5,400+ community skills</td></tr>
     <tr><td>Model freedom</td><td>Any model, routed free-first (this document's whole argument)</td><td>Any model too — Claude, Codex, local models as swappable plugins</td></tr>
     <tr><td>Approval gates &amp; audit</td><td>Built to our §4-6 demands: approval queues, revocable tokens, audit trails — operated daily</td><td>Sender pairing by approval codes; documented security model; <em>you</em> own the audit — it is your install</td></tr>
     <tr><td>Who maintains it</td><td>Us — we fix it in hours, because it is ours</td><td>A foundation and a vast community — but <em>you</em> own deployment, updates and breakage</td></tr>
@@ -226,17 +226,17 @@
 
 <section id="budget" class="reveal">
   <p class="quote"><strong>In plain words:</strong> "free" isn't magic. The system always tries a free model first, like choosing the bus before the taxi. Everyday work stays free; one important letter might cost a few cents — never a monthly fee. On paper, the same big job costs $0.60 on the cheap model versus $10 on the premium one: a 16-times gap.</p>
-  <p class="eyebrow">· The honest budget — how "free" actually works</p>
+  <p class="eyebrow">· How "$0 free only" holds up, line by line</p>
   <h2>The hybrid reality: free-first, not free-forever</h2>
   <p class="note">A <b>token</b> is a small chunk of text (about 3/4 of a word) — the AI reads and writes tokens, and you pay per token. (Where "revocable tokens" appears later, "token" means an access key, not a chunk of text.)</p>
-  <p>Our own system runs <b>free most of the time</b> thanks to automatic routing across free models almost as strong as today's very best (the "frontier") — community-served ones like LongCat, GLM, DeepSeek — plus fully local ones via Ollama). When a task demands it, it switches to a paid model for that one job. This is not a promise — it is how our own company operates today.</p>
+  <p>Our own system runs free most of the time. It routes automatically across free models almost as strong as today's frontier (community-served ones like LongCat, GLM, DeepSeek, plus fully local ones through Ollama). When a task genuinely needs it, the system switches to a paid model for that one job. We run our company this way today; the routing is not a pledge, it is our normal.</p>
   <p><b>What this means for your "$0 free only" budget — said honestly:</b></p>
   <ul style="margin:0 0 14px 22px">
     <li>Free models are sometimes <b>slower</b> or occasionally <b>saturated</b> — timing is not guaranteed.</li>
     <li>Quality <b>varies</b> by model and by day; the routing picks the best available, and M1 teaches you to steer it.</li>
     <li>A high-stakes job (a grant letter, a client document) may warrant a paid model <b>once</b> — costing cents or a few dollars, never a subscription.</li>
   </ul>
-  <p><strong>We do not sell the dream of "0 everywhere, always."</strong> We deliver a system that <em>seeks the free route first</em> and knows when to switch. That is the honest version — and the only one we know how to build.</p>
+  <p>We won't sell you "0 everywhere, always". What we build seeks the free route first and switches when it should. That is the version we can stand behind, because it is the one we live on.</p>
 
   <h3 style="margin-top:26px">The price gap, in numbers — measured today</h3>
   <p>Why the free-first routing is not a gimmick, but arithmetic. Official published prices per million tokens (DeepSeek measured from their pricing page today; Claude from Anthropic's official pricing page):</p>
@@ -244,17 +244,20 @@
   <table>
     <tr><th>Model</th><th>Class</th><th>Input / 1M</th><th>Output / 1M</th><th>Best at</th></tr>
     <tr><td><b>DeepSeek V4.1 Flash</b></td><td>cheap frontier-grade (CN)</td><td><b>$0.15</b> (off-peak; $0.30 peak) — <b>$0.003</b> on cache hit ($0.006 peak) — a cache hit means the AI re-uses what it has already read of your conversation, so there is no re-reading fee</td><td><b>$0.60</b> (off-peak; $1.20 peak)</td><td>bulk work: research passes, register fills, first drafts, summarizing — our own architect runs on it</td></tr>
+    <tr><td><b>GPT-6 Luna</b> (OpenAI, Oct 2026)</td><td>US small format</td><td><b>$0.05-$0.10</b></td><td><b>$0.25-$0.50</b></td><td>fast everyday tasks where a US-hosted model is required</td></tr>
+    <tr><td><b>GPT-6.1 Sol</b> (OpenAI, Oct 2026)</td><td>US mid frontier</td><td><b>$1.00-$2.00</b></td><td><b>$5.00-$10.00</b></td><td>serious US-frontier work at mid price</td></tr>
+    <tr><td><b>GPT-6 Astra</b> (OpenAI, Oct 2026)</td><td>US high frontier</td><td><b>$5.00-$10.00</b></td><td><b>$25.00-$50.00</b></td><td>the strongest OpenAI tier of the moment</td></tr>
     <tr><td>Xiaomi MiMo 2.6 (Pro tier, free route)</td><td>free-tier served</td><td>≈ $0 (community/free serving)</td><td>≈ $0</td><td>second-opinion passes, mechanical edits, background tasks</td></tr>
     <tr><td>LongCat 2.0 (free route)</td><td>free-tier served</td><td>$0 on our agent routes</td><td>$0</td><td>sub-agent delegation — our own sub-agents default to it</td></tr>
-    <tr><td>Claude Sonnet 5.5 (reference US frontier)</td><td>US frontier</td><td>$2.00</td><td>$10.00</td><td>final drafting, nuanced judgment calls, code that must be right</td></tr>
+    <tr><td><b>Claude Sonnet 5.5</b> (US frontier reference)</td><td>US frontier</td><td>$2.00</td><td>$10.00</td><td>final drafting, nuanced judgment calls, code that must be right</td></tr>
   </table>
   </div>
-  <p><b>Read the table as a buyer:</b> the same research pass that costs <b>$10 of Claude output</b> costs <b>$0.60 on DeepSeek Flash</b> (off-peak) — a <b>16× difference on the exact tasks that fill registers and briefs</b>. That is why our system routes the bulk to cheap/free fronts and reserves the US frontier tier for the moments that deserve it: your bill drops <em>because the cheap work goes to cheap models</em>, not because we skimped. (Price sources: deepseek.com pricing page and claude.com/pricing, measured 15-16 Oct 2026. MiMo/LongCat are served through community/free routes whose availability varies — see the honesty notes above.)</p>
+  <p><b>Read the table as a buyer:</b> the same research pass that costs <b>$10 of Claude output</b> costs <b>$0.60 on DeepSeek Flash</b> (off-peak) — a <b>16× difference on the exact tasks that fill registers and briefs</b>. That is why our system routes the bulk to cheap/free fronts and reserves the US frontier tier for the moments that deserve it: your bill drops <em>because the cheap work goes to cheap models</em>, not because we skimped. (Price sources: deepseek.com, openai.com official pricing pages and claude.com/pricing, measured 15-16 Oct 2026. MiMo/LongCat are served through community/free routes whose availability varies — see the honesty notes above.)</p>
 </section>
 
 <section id="pacing" class="reveal">
   <p class="quote"><strong>In plain words:</strong> same lessons, same prices — only the calendar moves. About 4 hours a week and you finish in 8 weeks; 2-3 hours a day, 3 weeks; full days, 1 week. One thing no speed can shorten: the waiting time Google asks before an assistant may read your mail.</p>
-  <p class="eyebrow">· The real timeline — three speeds</p>
+  <p class="eyebrow">· Three speeds, one calendar</p>
   <h2>How fast this goes depends on your availability</h2>
   <p>The module content and prices never change — only the density does. Our base calendar assumes a part-time pace. Three real speeds for the same M1-M10 path:</p>
   <table>
@@ -271,7 +274,7 @@
   <h2>"Done-for-you" × learn-with-me × $0 — the pyramid way</h2>
   <p>Each level pays for the next:</p>
   <h3>Phase 1 — weeks 1-4: learn on your machine, $0 tools</h3>
-  <p>We install <strong>together</strong>: model routing first — CCR, Claude Code Router — (M1) — your "Up to $50/month" drops toward $0, which makes your "$0 free only" budget <em>true</em> instead of aspirational — then Claude Code pro (M2) and the morning brief (M3), free and local. Your 90-day goal ("knowledge to fix when it does wrong") is a Phase 1 deliverable, not a promise.</p>
+  <p>We install together, starting with model routing (CCR, the Claude Code Router, M1). Your "Up to $50/month" drops toward $0, which turns your "$0 free only" budget from an aspiration into your actual bill. Then Claude Code pro (M2) and the morning brief (M3), free and local. Your 90-day goal, "knowledge to fix when it does wrong", gets built in Phase 1, not promised for later.</p>
   <h3>Phase 2 — weeks 3-6: the registers</h3>
   <p>Research engine + opportunities register (M4), the four-permissioned-context memory (M5), and the charity grant pipeline (M6) — the use case you proposed verbatim. This is exactly your spec's Phase 2.</p>
   <h3>Phase 3+ — weeks 5-8: documents and watchtowers</h3>
@@ -294,7 +297,7 @@
     <div class="mod"><div class="row"><span class="mid">M6 · WEEKS 5-6</span><span class="price">$300</span></div><h3>The Charity Grant Pipeline (SA football)</h3><p>Grant discovery → register → eligibility check → PDF brief, deadlines as the scoreboard. Your first revenue-relevant flow.</p><p class="meta">≈1.5 days · covers §2 A2, §7 Phase 2 · first grant brief as PDF: week 6</p></div>
     <div class="mod"><div class="row"><span class="mid">M7 · WEEK 6</span><span class="price">$250</span></div><h3>The Document Factory (branded Word / PPT / PDF)</h3><p>Templated, QA'd documents — editable originals plus final PDFs, spelling/layout/accessibility gates, as your A4 requires.</p><p class="meta">≈1 day · covers §2 A4, §6, §7 Phase 3</p></div>
     <div class="mod"><div class="row"><span class="mid">M8 · WEEK 6</span><span class="price">$300</span></div><h3>Security &amp; Human-in-the-Loop Guardrails</h3><p>Your approval matrix, enforced in code: approval queues, secret storage, audit logs, revocation, the independent alert path. Your acceptance tests, written and run.</p><p class="meta">≈1.5 days · covers §4, §2 A3, §6 · highest-stakes module</p></div>
-    <div class="mod"><div class="row"><span class="mid">M9 · WEEK 7</span><span class="price">$150</span></div><h3>Your Always-On Server (VPS)</h3><p>The night agent moves to 24/7. <b>~$6-12/mo real cost</b> — the one recurring fee in this whole plan, stated here, once.</p><p class="meta">≈3h · covers §7 Phase 4</p></div>
+    <div class="mod"><div class="row"><span class="mid">M9 · WEEK 7</span><span class="price">$150</span></div><h3>Your Always-On Server (VPS)</h3><p>The night agent moves to 24/7. <b>~$6-12/mo real cost</b> — the vendor of HERMÈS itself says a $5 VPS suffices; the one recurring fee in this whole plan, stated here, once.</p><p class="meta">≈3h · covers §7 Phase 4</p></div>
     <div class="mod"><div class="row"><span class="mid">M10 · WEEKS 7-8</span><span class="price">$200</span></div><h3>Local AI (Ollama / LM Studio) + the GPU Decision</h3><p>Run models free on your own hardware, plus a decision framework for when a rented GPU is worth it. Default: not needed.</p><p class="meta">≈4h · covers §8</p></div>
     <div class="mod"><div class="row"><span class="mid">M11 · AFTER DAY 60</span><span class="price">$300</span></div><h3>SEO + AI Visibility (UK)</h3><p>Getting found by search and AI answers. Kept off the 60-day clock deliberately — it needs an offer first ("Ideal client: Not defined yet" is your honest answer, and that's fine).</p><p class="meta">≈1 day · business side</p></div>
     <div class="mod"><div class="row"><span class="mid">M12 · ON DEMAND</span><span class="price">$100-$300</span></div><h3>Video / Photo / Audio AI</h3><p>Media production, priced per module complexity at order. Not in the 60-day path.</p><p class="meta">ad hoc</p></div>
@@ -350,7 +353,7 @@
     <li><a href="https://claude.com/pricing" target="_blank" rel="noopener">Claude pricing — claude.com/pricing</a> <span>· output = 5× input; Sonnet 5.5 $2/$10 per MTok — measured 15 Oct 2026</span></li>
     <li><a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener">DeepSeek pricing — api-docs.deepseek.com</a> <span>· deepseek-flash (V4.1-Flash): $0.15/$0.30 in (off-peak/peak), $0.60/$1.20 out, $0.003 cache hit — measured 16 Oct 2026 in the rendered page</span></li>
     <li><a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">OpenClaw — github.com/openclaw/openclaw</a> <span>· MIT, foundation-stewarded, 392k+ stars, channels list, "state, memory, and credentials live on your hardware", Node 24+/26 — read 15 Oct 2026</span></li>
-    <li><a href="https://github.com/VoltAgent/awesome-openclaw-skills" target="_blank" rel="noopener">OpenClaw community skills — VoltAgent/awesome-openclaw-skills</a> <span>· "5,300+ skills" (registry index varies 5.3k-5.4k) — measured 16 Oct 2026</span></li>
+    <li><a href="https://github.com/VoltAgent/awesome-openclaw-skills" target="_blank" rel="noopener">OpenClaw community skills — VoltAgent/awesome-openclaw-skills</a> <span>· "5,300+" in README index; the same page's About already announces 5,400+ — measured 16 Oct 2026</span></li>
     <li><a href="https://www.rtk-ai.app" target="_blank" rel="noopener">RTK — rtk-ai.app / github.com/rtk-ai/rtk</a> <span>· our own counter, `rtk gain` dated 16 Oct 2026: 73,500+ commands, 7.4M tokens saved (41% of all command tokens, 69% of output)</span></li>
     <li><a href="https://code.claude.com/docs/en/costs" target="_blank" rel="noopener">Claude Code — manage costs</a> <span>· 200-line context-file rule, subagent delegation, grep|head hook pattern — verified 13 Oct 2026</span></li>
     <li><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching" target="_blank" rel="noopener">Anthropic — prompt caching</a> <span>· cache read 0.1× (0.05×/0.025× latest), cache write +25% (5-min TTL), prefix rule — verified 13-16 Oct 2026</span></li>
@@ -387,7 +390,7 @@
 </main>
 
 <footer>
-  <p><b>Built from your words.</b> Every claim traces to your specification (85 lines, dated 15 Oct 2026) or your gameplan answers.<br>
+  <p><b>Every figure here traces either to your specification (85 lines, dated 15 Oct 2026) or to your gameplan answers.</b><br>
   Reply with the module list you want — even one — and week 1 starts.</p>
 </footer>
 
