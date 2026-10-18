@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earl Super Assistant — 6 questions, 1 minute</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%23B85042'/%3E%3C/svg%3E">
+<meta name="description" content="Six quick questions about your private AI assistant. No account, no payment, nothing sent anywhere until you copy or share the summary.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#B85042; --forest:#2C5F2D; --sand:#E7E8D1; --ink:#1F2421; --paper:#FBF9F4;
+    --muted:#5A5F58; --surface:#FFFFFF; --ink-soft:#3C423C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+  h1,h2{font-family:'Playfair Display',Georgia,serif}
+  /* PROGRESS */
+  .progress{position:sticky;top:0;z-index:10;background:rgba(251,249,244,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--sand);padding:14px 0}
+  .progress .bar{height:6px;background:var(--sand);border-radius:999px;overflow:hidden}
+  .progress .fill{height:100%;width:0%;background:var(--terracotta);border-radius:999px;transition:width .4s cubic-bezier(.22,1,.36,1)}
+  .progress .meta{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:6px;font-weight:500}
+  /* HERO */
+  header.hero{padding:56px 0 40px;text-align:center}
+  .eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta);margin-bottom:12px}
+  header.hero h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;line-height:1.15;letter-spacing:-.015em;margin-bottom:14px}
+  header.hero .sub{color:var(--muted);max-width:52ch;margin:0 auto}
+  .trust{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+  .trust span{font-size:.78rem;color:var(--forest);background:rgba(44,95,45,.07);border:1px solid rgba(44,95,45,.25);border-radius:999px;padding:5px 14px;font-weight:600}
+  /* SCREENS */
+  .screen{display:none;padding:36px 0 60px}
+  .screen.active{display:block}
+  .qlabel{font-weight:700;font-size:1.05rem;margin-bottom:6px}
+  .why{font-size:.84rem;color:var(--muted);margin-bottom:16px;font-style:italic}
+  /* OPTIONS */
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opt{position:relative;display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--surface);border:1px solid var(--sand);border-radius:12px;cursor:pointer;transition:border-color .15s, background .15s, transform .15s;font-size:.95rem}
+  .opt:hover{border-color:var(--terracotta);transform:translateX(2px)}
+  .opt input{position:absolute;opacity:0;pointer-events:none}
+  .opt .dot{width:18px;height:18px;flex:none;border-radius:50%;border:2px solid var(--muted);position:relative;transition:border-color .15s}
+  .opt:has(input:focus-visible){outline:3px solid var(--terracotta);outline-offset:2px}
+  .opt:has(input:checked){border-color:var(--terracotta);background:rgba(184,80,66,.05)}
+  .opt:has(input:checked) .dot{border-color:var(--terracotta)}
+  .opt:has(input:checked) .dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--terracotta)}
+  .opt.checked{border-color:var(--terracotta);background:rgba(184,80,66,.05)}
+  .opt.checked .dot{border-color:var(--terracotta)}
+  .opt.checked .dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--terracotta)}
+  .opt:focus-visible,input:focus-visible,button:focus-visible,textarea:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
+  /* FREETEXT */
+  .freebtn{background:none;border:none;color:var(--muted);font-size:.9rem;font-weight:600;padding:12px 0 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:'Inter',sans-serif;min-height:44px}
+  .freebtn:hover{color:var(--terracotta)}
+  .freebtn:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
+  .freetext{margin-top:12px;display:none}
+  .freetext.show{display:block;animation:fadein .3s ease}
+  textarea{width:100%;min-height:96px;resize:vertical;font-family:'Inter',sans-serif;font-size:.95rem;color:var(--ink);background:var(--surface);border:1px solid var(--sand);border-radius:12px;padding:12px 14px;outline:none;transition:border-color .2s}
+  textarea:focus{border-color:var(--terracotta)}
+  .freetext label{display:block;font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:6px}
+  @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  /* NAV + SAVE */
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px}
+  .back{background:none;border:none;color:var(--muted);font-size:.9rem;font-weight:600;padding:10px 6px;cursor:pointer;font-family:'Inter',sans-serif;visibility:hidden;min-height:44px}
+  .back.visible{visibility:visible}
+  .savenext{background:var(--forest);color:#fff;border:none;border-radius:999px;padding:13px 28px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .2s, background .2s;min-height:48px}
+  .savenext:hover{transform:translateY(-2px);background:#254c25}
+  .savenext:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
+  /* SUMMARY */
+  .summary{margin:30px 0 30px;background:var(--ink);border-radius:20px;padding:34px 30px;color:var(--paper);box-shadow:0 16px 44px rgba(31,36,33,.26)}
+  .summary .eyebrow{color:var(--sand)}
+  .summary h2{color:var(--paper);font-size:1.7rem;font-weight:800;margin-bottom:8px}
+  .summary .sub{color:rgba(231,232,209,.75);font-size:.92rem;margin-bottom:20px}
+  #summaryOut{font-family:ui-monospace,'Cascadia Code',Consolas,Menlo,monospace;font-size:.82rem;line-height:1.75;white-space:pre-wrap;color:var(--sand);background:rgba(251,249,244,.05);border:1px solid rgba(231,232,209,.12);border-radius:12px;padding:18px 20px;max-height:340px;overflow-y:auto}
+  .copybtn{margin-top:16px;background:var(--sand);color:var(--ink);border:none;border-radius:999px;padding:13px 30px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .2s, background .2s;min-height:48px}
+  .copybtn:hover{transform:translateY(-2px);background:#fff}
+  .copybtn.done{background:var(--forest);color:#fff}
+  .copybtn.second{background:transparent;color:var(--sand);border:1px solid rgba(231,232,209,.35)}
+  .copybtn.second:hover{background:rgba(231,232,209,.12)}
+  .copybtn:focus-visible{outline:3px solid var(--paper);outline-offset:2px}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+  .copied{font-size:.85rem;color:rgba(231,232,209,.85);margin-top:12px;min-height:1.4em}
+  .ghost{margin-top:20px;background:none;border:none;color:rgba(231,232,209,.6);font-size:.85rem;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:'Inter',sans-serif;padding:8px}
+  .ghost:hover{color:var(--sand)}
+  footer{padding:34px 0 60px;text-align:center;color:var(--muted);font-size:.82rem}
+  footer .rule{width:60px;height:2px;background:var(--sand);margin:0 auto 16px;border-radius:2px}
+  /* PRINT + MOBILE + MOTION */
+  @media print{.progress,.copybtn,.bodybtns{display:none}.summary{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:20px}.screen{break-inside:avoid;padding:12px 0}}
+  @media (max-width:600px){
+    body{font-size:15px}
+    header.hero h1{font-size:1.7rem}
+    header.hero{padding:44px 0 30px}
+    .summary{padding:26px 20px}
+    .opt{padding:13px 14px}
+    .savenext{width:100%}
+    .nav{flex-direction:column-reverse;gap:10px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .progress .fill{transition:none}
+    .opt:hover,.copybtn:hover,.savenext:hover{transform:none}
+    .freetext.show{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress">
+  <div class="wrap">
+    <div class="bar"><div class="fill" id="pfill"></div></div>
+    <div class="meta"><span id="pcount">0 of 6 answered</span><span>≈ 1 minute</span></div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Earl Super Assistant — setup form</p>
+    <h1>Six questions. One minute.<br/>Then it starts working for you.</h1>
+    <p class="sub">One question per screen. Tap what fits, or write your own words. At the end you get a clean summary — copy it or send it in one tap. Nothing leaves your phone before you do.</p>
+    <div class="trust">
+      <span>✓ No account needed</span>
+      <span>✓ Nothing sent until you tap copy or share</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="screen" id="s-q1" aria-labelledby="h-q1">
+    <p class="qlabel" id="h-q1">1. Where should your assistant reach you?</p>
+    <p class="why">Pick the app you already open all day — delivery follows it.</p>
+    <div class="opts" role="radiogroup" aria-labelledby="h-q1">
+      <label class="opt"><input type="radio" name="q1" value="WhatsApp"><span class="dot" aria-hidden="true"></span><span>WhatsApp — voice notes, texts, photos</span></label>
+      <label class="opt"><input type="radio" name="q1" value="Telegram"><span class="dot" aria-hidden="true"></span><span>Telegram — full voice support, easiest bot setup</span></label>
+      <label class="opt"><input type="radio" name="q1" value="Both"><span class="dot" aria-hidden="true"></span><span>Both — the same assistant on both apps</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-q1">Or write your own answer</button>
+    <div class="freetext" id="f-q1">
+      <label for="t-q1">Your words</label>
+      <textarea id="t-q1" placeholder="Your words — say it however you like (optional)"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-q2" aria-labelledby="h-q2">
+    <p class="qlabel" id="h-q2">2. What is the first mission you hand over?</p>
+    <p class="why">We start where it hurts most. The rest follows on the same foundation.</p>
+    <div class="opts" role="radiogroup" aria-labelledby="h-q2">
+      <label class="opt"><input type="radio" name="q2" value="HSE audit dictation"><span class="dot" aria-hidden="true"></span><span>Dictate HSE audits — walk the floor, speak, get the report</span></label>
+      <label class="opt"><input type="radio" name="q2" value="Job scouting"><span class="dot" aria-hidden="true"></span><span>Hunt job opportunities — the #OpenToWork radar, sourced leads</span></label>
+      <label class="opt"><input type="radio" name="q2" value="Charity &amp; drone projects"><span class="dot" aria-hidden="true"></span><span>Charity &amp; drone projects — grants, sponsors, tenders, deadlines</span></label>
+      <label class="opt"><input type="radio" name="q2" value="Personal organising"><span class="dot" aria-hidden="true"></span><span>Organise my personal life — notes, appointments, receipts</span></label>
+      <label class="opt"><input type="radio" name="q2" value="Email handling"><span class="dot" aria-hidden="true"></span><span>Handle my emails — drafts ready for your approval</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-q2">Or write your own answer</button>
+    <div class="freetext" id="f-q2">
+      <label for="t-q2">Your words</label>
+      <textarea id="t-q2" placeholder="Your words — say it however you like (optional)"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-q3" aria-labelledby="h-q3">
+    <p class="qlabel" id="h-q3">3. How much do you want to be in the loop?</p>
+    <p class="why">You choose the altitude. You can change it any time.</p>
+    <div class="opts" role="radiogroup" aria-labelledby="h-q3">
+      <label class="opt"><input type="radio" name="q3" value="Dictate and approve"><span class="dot" aria-hidden="true"></span><span>I dictate, I approve — the quiet way</span></label>
+      <label class="opt"><input type="radio" name="q3" value="Watch the steps"><span class="dot" aria-hidden="true"></span><span>I want to see the steps — what it does, before it lands</span></label>
+      <label class="opt"><input type="radio" name="q3" value="Learn to steer it myself"><span class="dot" aria-hidden="true"></span><span>I want to learn to steer it — grow into piloting it yourself</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-q3">Or write your own answer</button>
+    <div class="freetext" id="f-q3">
+      <label for="t-q3">Your words</label>
+      <textarea id="t-q3" placeholder="Your words — say it however you like (optional)"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-q4" aria-labelledby="h-q4">
+    <p class="qlabel" id="h-q4">4. How should it handle your emails at the start?</p>
+    <p class="why">Nothing goes out without your rules — that is fixed by design.</p>
+    <div class="opts" role="radiogroup" aria-labelledby="h-q4">
+      <label class="opt"><input type="radio" name="q4" value="Drafts for approval"><span class="dot" aria-hidden="true"></span><span>Drafts for me to approve — it writes, you send</span></label>
+      <label class="opt"><input type="radio" name="q4" value="Direct for simple cases"><span class="dot" aria-hidden="true"></span><span>Send directly for simple cases — fast lane for routine mail, approval for the rest</span></label>
+      <label class="opt"><input type="radio" name="q4" value="No email at first"><span class="dot" aria-hidden="true"></span><span>Nothing by email at the start — chat only, emails later</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-q4">Or write your own answer</button>
+    <div class="freetext" id="f-q4">
+      <label for="t-q4">Your words</label>
+      <textarea id="t-q4" placeholder="Your words — say it however you like (optional)"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-q5" aria-labelledby="h-q5">
+    <p class="qlabel" id="h-q5">5. What do we do with the OTTO box?</p>
+    <p class="why">The box you paid for. It becomes yours for good.</p>
+    <div class="opts" role="radiogroup" aria-labelledby="h-q5">
+      <label class="opt"><input type="radio" name="q5" value="Convert to Ubuntu now"><span class="dot" aria-hidden="true"></span><span>Convert it to Ubuntu now — wipe Otto OS, own the machine</span></label>
+      <label class="opt"><input type="radio" name="q5" value="Cloud first, migrate later"><span class="dot" aria-hidden="true"></span><span>Start in the cloud, migrate later — working in days, box converted after</span></label>
+      <label class="opt"><input type="radio" name="q5" value="Another idea"><span class="dot" aria-hidden="true"></span><span>I have another idea — write it below or tell us when we talk</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-q5">Or write your own answer</button>
+    <div class="freetext" id="f-q5">
+      <label for="t-q5">Your words</label>
+      <textarea id="t-q5" placeholder="Your words — say it however you like (optional)"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-q6" aria-labelledby="h-q6">
+    <p class="qlabel" id="h-q6">6. What would be THE proof that it works?</p>
+    <p class="why">One moment that tells you this was worth it.</p>
+    <div class="opts" role="radiogroup" aria-labelledby="h-q6">
+      <label class="opt"><input type="radio" name="q6" value="Audit report without me"><span class="dot" aria-hidden="true"></span><span>An audit report done without me — you dictated on site, the report just arrived</span></label>
+      <label class="opt"><input type="radio" name="q6" value="Daily brief kills chaos"><span class="dot" aria-hidden="true"></span><span>The daily brief that kills the chaos — one message every morning, nothing forgotten</span></label>
+      <label class="opt"><input type="radio" name="q6" value="Opportunity I'd have missed"><span class="dot" aria-hidden="true"></span><span>An opportunity I would have missed — a job, tender or grant found, sourced and dated</span></label>
+      <label class="opt"><input type="radio" name="q6" value="Expenses filed without thinking"><span class="dot" aria-hidden="true"></span><span>My expenses filed without thinking — snap a receipt, it's filed</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-q6">Or write your own answer</button>
+    <div class="freetext" id="f-q6">
+      <label for="t-q6">Your words</label>
+      <textarea id="t-q6" placeholder="Your words — say it however you like (optional)"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-end" aria-labelledby="h-end">
+    <div class="summary">
+      <p class="eyebrow" id="endStatus">Done</p>
+      <h2 id="h-end">Your setup, ready to send.</h2>
+      <p class="sub">Copy it, or push it straight to your chat.</p>
+      <pre id="summaryOut"></pre>
+      <div class="bodybtns">
+        <button type="button" class="copybtn" id="copyBtn">Copy my answers</button>
+        <button type="button" class="copybtn second" id="waBtn">Send to WhatsApp</button>
+        <button type="button" class="copybtn second" id="tgBtn">Send to Telegram</button>
+      </div>
+      <p class="copied" id="copied" aria-live="polite"></p>
+      <button type="button" class="ghost" id="restartBtn">Start over</button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="rule"></div>
+    <p>Earl Super Assistant — PRD v1.1 · 18 Oct 2026</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var SCREENS = ["s-q1","s-q2","s-q3","s-q4","s-q5","s-q6","s-end"];
+  var QUESTIONS = [
+    { id:"q1", screen:"s-q1" },
+    { id:"q2", screen:"s-q2" },
+    { id:"q3", screen:"s-q3" },
+    { id:"q4", screen:"s-q4" },
+    { id:"q5", screen:"s-q5" },
+    { id:"q6", screen:"s-q6" }
+  ];
+  var TITLES = {
+    q1:"Where your assistant reaches you",
+    q2:"The first mission handed over",
+    q3:"How much you stay in the loop",
+    q4:"How it handles your emails at the start",
+    q5:"What happens to the OTTO box",
+    q6:"THE proof that it works"
+  };
+
+  var answers = {};
+  var idx = 0;
+  var freeOpen = {};
+
+  var progressFill = document.getElementById("pfill");
+  var progressCount = document.getElementById("pcount");
+
+  function $(sel){ return document.querySelector(sel); }
+
+  function currentScreen(){ return document.getElementById(SCREENS[idx]); }
+
+  function refreshProgress(){
+    var answered = 0;
+    QUESTIONS.forEach(function(q){
+      var radios = document.querySelectorAll('input[name="' + q.id + '"]');
+      var hasRadio = !!document.querySelector('input[name="' + q.id + '"]:checked');
+      var hasFree = (document.getElementById("t-" + q.id).value.trim() !== "");
+      if (hasRadio || hasFree) answered++;
+    });
+    progressCount.textContent = answered + " of 6 answered";
+    progressFill.style.width = Math.round(answered / QUESTIONS.length * 100) + "%";
+  }
+
+  function show(i){
+    idx = i;
+    SCREENS.forEach(function(id, n){
+      document.getElementById(id).classList.toggle("active", n === i);
+    });
+    var back = currentScreen().querySelector("[data-back]");
+    if (back){ back.classList.toggle("visible", i > 0); }
+    refreshProgress();
+    window.scrollTo(0,0);
+  }
+
+  document.querySelectorAll(".freebtn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var box = document.getElementById(btn.getAttribute("data-toggle"));
+      var open = box.classList.toggle("show");
+      btn.textContent = open ? "Hide the free box" : "Or write your own answer";
+      if (open){ box.querySelector("textarea").focus(); }
+    });
+  });
+
+  document.querySelectorAll(".opt input").forEach(function(input){
+    input.addEventListener("change", function(){
+      var name = input.name;
+      document.querySelectorAll('input[name="' + name + '"]').forEach(function(r){
+        r.closest(".opt").classList.toggle("checked", r.checked);
+      });
+      refreshProgress();
+    });
+  });
+
+  document.querySelectorAll(".opt").forEach(function(label){
+    label.addEventListener("click", function(e){
+      if (e.target.tagName === "INPUT") return;
+      var input = label.querySelector("input");
+      if (input && !input.checked){
+        input.checked = true;
+        var name = input.name;
+        document.querySelectorAll('input[name="' + name + '"]').forEach(function(r){
+          r.closest(".opt").classList.toggle("checked", r.checked);
+        });
+        refreshProgress();
+      }
+    });
+  });
+
+  document.querySelectorAll("textarea[id^='t-']").forEach(function(ta){
+    ta.addEventListener("input", refreshProgress);
+  });
+
+  document.querySelectorAll("[data-next]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var q = QUESTIONS[idx];
+      var input = document.querySelector('input[name="' + q.id + '"]:checked');
+      if (input){ answers[q.id] = input.value; }
+      else { delete answers[q.id]; }
+      var ta = document.getElementById("t-" + q.id);
+      var free = ta.value.trim();
+      if (free){ answers[q.id + "_free"] = free; }
+      else { delete answers[q.id + "_free"]; }
+      var next = idx + 1;
+      if (next < SCREENS.length - 1){ show(next); }
+      else { show(next); renderSummary(); }
+    });
+  });
+
+  document.querySelectorAll("[data-back]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      if (idx > 0){ show(idx - 1); }
+    });
+  });
+
+  function buildSummary(){
+    var lines = ["EARL SUPER ASSISTANT — my setup answers (18 Oct 2026)"];
+    var n = 0;
+    QUESTIONS.forEach(function(q){
+      var choice = answers[q.id] || "(no answer)";
+      var free = answers[q.id + "_free"];
+      lines.push("");
+      n++;
+      lines.push(n + ". " + TITLES[q.id]);
+      lines.push("   → " + choice);
+      if (free){ lines.push("   my words: " + free); }
+    });
+    lines.push("");
+    lines.push("Sent from the 6-question setup page.");
+    return lines.join("\n");
+  }
+
+  function renderSummary(){
+    document.getElementById("summaryOut").textContent = buildSummary();
+    document.getElementById("copied").textContent = "";
+    var n = 0;
+    for (var k in answers){ if (QUESTIONS.some(function(q){ return q.id === k; })) n++; }
+    document.getElementById("endStatus").textContent =
+      "Done — " + n + " of 6 answered" + (n < 6 ? " (your notes travel with it)" : "");
+    var cb = document.getElementById("copyBtn");
+    cb.classList.remove("done");
+    cb.textContent = "Copy my answers";
+  }
+
+  function legacyCopy(text){
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    var done = false;
+    try { done = document.execCommand("copy"); } catch(err){ done = false; }
+    document.body.removeChild(ta);
+    return done;
+  }
+
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var text = buildSummary();
+    var note = document.getElementById("copied");
+    var btn = document.getElementById("copyBtn");
+    function ok(){
+      note.textContent = "Copied. Paste it back to the team who sent you this page.";
+      btn.classList.add("done");
+      btn.textContent = "Copied ✓";
+    }
+    function fail(){
+      note.textContent = "Copy blocked by the browser — select the text above and copy it by hand.";
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok, function(){ if (legacyCopy(text)) ok(); else fail(); });
+    } else { if (legacyCopy(text)) ok(); else fail(); }
+  });
+
+  document.getElementById("waBtn").addEventListener("click", function(){
+    window.location.href = "https://wa.me/?text=" + encodeURIComponent(buildSummary());
+  });
+
+  document.getElementById("tgBtn").addEventListener("click", function(){
+    window.location.href = "https://t.me/share/url?url=&text=" + encodeURIComponent(buildSummary());
+  });
+
+  document.getElementById("restartBtn").addEventListener("click", function(){
+    answers = {};
+    document.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = false; });
+    document.querySelectorAll(".opt.checked").forEach(function(l){ l.classList.remove("checked"); });
+    document.querySelectorAll("textarea[id^='t-']").forEach(function(t){ t.value = ""; });
+    document.querySelectorAll(".freetext").forEach(function(f){ f.classList.remove("show"); });
+    document.querySelectorAll(".freebtn").forEach(function(b){ b.textContent = "Or write your own answer"; });
+    show(0);
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>
