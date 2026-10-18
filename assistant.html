@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Earl Super Assistant — your life, one assistant</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%23B85042'/%3E%3C/svg%3E">
-<meta name="description" content="Fourteen areas of your week — tick what you want taken off your plate. No account, no payment, nothing sent anywhere until you copy or share the summary.">
+<meta name="description" content="Twenty-two areas of your life — tick what you want taken off your plate. No account, no payment, nothing sent anywhere until you copy or share the summary.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -122,7 +122,7 @@
 <div class="progress">
   <div class="wrap">
     <div class="bar"><div class="fill" id="pfill"></div></div>
-    <div class="meta"><span id="pcount">0 of 14 answered</span><span>about 5 minutes</span></div>
+    <div class="meta"><span id="pcount">0 of 22 answered</span><span>about 8 minutes</span></div>
   </div>
 </div>
 
@@ -132,7 +132,7 @@
     <header class="hero">
       <p class="eyebrow">Earl Super Assistant — a private intake</p>
       <h1>Your life, one assistant.</h1>
-      <p class="sub">Fourteen areas of your week. Tick what you want taken off your plate, and tap the apps you already use. About <b>5 minutes</b>.</p>
+      <p class="sub">Twenty-two areas of your life. Tick what you want taken off your plate, and tap the apps you already use. About <b>8 minutes</b>.</p>
       <div class="trust">
         <span>✓ No account needed</span>
         <span>✓ Nothing sent until you tap Copy or Share</span>
@@ -182,7 +182,9 @@
       <label class="opt"><input type="checkbox" name="d2" value="6"><span class="box" aria-hidden="true"></span><span class="txt">"Move my 3pm to Thursday" — one sentence, done.</span></label>
       <label class="opt"><input type="checkbox" name="d2" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Block travel time before and after every site visit without me asking.</span></label>
       <label class="opt"><input type="checkbox" name="d2" value="8"><span class="box" aria-hidden="true"></span><span class="txt">Remind me when to leave, based on the traffic that morning.</span></label>
+      <label class="opt"><input type="checkbox" name="d2" value="n0"><span class="box" aria-hidden="true"></span><span class="txt">Rearrange my week when the news hits it — and show me why before anything moves.</span></label>
     </div>
+      
     <p class="toolq" id="h-d2-tools">What do you use for this? Tap the apps, add your own below.</p>
     <div class="chips" role="group" aria-labelledby="h-d2-tools">
       <label class="opt small"><input type="checkbox" name="tools_d2" value="Google Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Google Calendar</span></label><label class="opt small"><input type="checkbox" name="tools_d2" value="Outlook Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Outlook Calendar</span></label><label class="opt small"><input type="checkbox" name="tools_d2" value="Apple Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Apple Calendar</span></label>
@@ -211,7 +213,12 @@
       <label class="opt"><input type="checkbox" name="d3" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Tell me my train is late before I leave the house.</span></label>
       <label class="opt"><input type="checkbox" name="d3" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Put the whole trip on one page: trains, hotel, bookings, addresses, times.</span></label>
       <label class="opt"><input type="checkbox" name="d3" value="8"><span class="box" aria-hidden="true"></span><span class="txt">When a meeting moves, move the train and hotel with it and ask me to confirm.</span></label>
+      <label class="opt"><input type="checkbox" name="d3" value="n0"><span class="box" aria-hidden="true"></span><span class="txt">When my flight cancels, rebook me from here — tonight, not tomorrow morning.</span></label>
+      <label class="opt"><input type="checkbox" name="d3" value="n1"><span class="box" aria-hidden="true"></span><span class="txt">Track my flight and move the car with it — the driver waits when the plane is late.</span></label>
+      <label class="opt"><input type="checkbox" name="d3" value="n2"><span class="box" aria-hidden="true"></span><span class="txt">Check my passport against the destination’s rules before anything is booked — block it if the papers don’t hold.</span></label>
+      <label class="opt"><input type="checkbox" name="d3" value="n3"><span class="box" aria-hidden="true"></span><span class="txt">Run the carbon report for my travel, when a client asks.</span></label>
     </div>
+      
     <p class="toolq" id="h-d3-tools">What do you use for this? Tap the apps, add your own below.</p>
     <div class="chips" role="group" aria-labelledby="h-d3-tools">
       <label class="opt small"><input type="checkbox" name="tools_d3" value="Trainline"><span class="box" aria-hidden="true"></span><span class="txt">Trainline</span></label><label class="opt small"><input type="checkbox" name="tools_d3" value="Eurostar"><span class="box" aria-hidden="true"></span><span class="txt">Eurostar</span></label><label class="opt small"><input type="checkbox" name="tools_d3" value="Uber"><span class="box" aria-hidden="true"></span><span class="txt">Uber</span></label><label class="opt small"><input type="checkbox" name="tools_d3" value="Bolt"><span class="box" aria-hidden="true"></span><span class="txt">Bolt</span></label><label class="opt small"><input type="checkbox" name="tools_d3" value="Booking.com"><span class="box" aria-hidden="true"></span><span class="txt">Booking.com</span></label><label class="opt small"><input type="checkbox" name="tools_d3" value="Airbnb"><span class="box" aria-hidden="true"></span><span class="txt">Airbnb</span></label>
@@ -240,7 +247,11 @@
       <label class="opt"><input type="checkbox" name="d4" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Watch my bills; tell me if one jumps or looks wrong.</span></label>
       <label class="opt"><input type="checkbox" name="d4" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Draft the chase email when an invoice is about to go late.</span></label>
       <label class="opt"><input type="checkbox" name="d4" value="8"><span class="box" aria-hidden="true"></span><span class="txt">Money never moves without me. You prepare, I approve.</span></label>
+      <label class="opt"><input type="checkbox" name="d4" value="n0"><span class="box" aria-hidden="true"></span><span class="txt">Collect the foreign VAT I can recover and assemble the claims for me.</span></label>
+      <label class="opt"><input type="checkbox" name="d4" value="n1"><span class="box" aria-hidden="true"></span><span class="txt">One travel bill a month instead of forty receipts.</span></label>
+      <label class="opt"><input type="checkbox" name="d4" value="n2"><span class="box" aria-hidden="true"></span><span class="txt">Keep every open invoice aged — polite nudge, firmer note, escalation — each draft ready, none sent without me.</span></label>
     </div>
+      
     <p class="toolq" id="h-d4-tools">What do you use for this? Tap the apps, add your own below.</p>
     <div class="chips" role="group" aria-labelledby="h-d4-tools">
       <label class="opt small"><input type="checkbox" name="tools_d4" value="Excel"><span class="box" aria-hidden="true"></span><span class="txt">Excel</span></label><label class="opt small"><input type="checkbox" name="tools_d4" value="Google Sheets"><span class="box" aria-hidden="true"></span><span class="txt">Google Sheets</span></label><label class="opt small"><input type="checkbox" name="tools_d4" value="my banking app"><span class="box" aria-hidden="true"></span><span class="txt">my banking app</span></label>
@@ -356,7 +367,9 @@
       <label class="opt"><input type="checkbox" name="d8" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Remember what I gave people last year so I never repeat.</span></label>
       <label class="opt"><input type="checkbox" name="d8" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Handle RSVPs for the wedding, the reunion, the christening.</span></label>
       <label class="opt"><input type="checkbox" name="d8" value="8"><span class="box" aria-hidden="true"></span><span class="txt">Draft the card messages I always put off writing.</span></label>
+      <label class="opt"><input type="checkbox" name="d8" value="n0"><span class="box" aria-hidden="true"></span><span class="txt">Source the gift for a client I’ve never met — found, wrapped, carded, delivered, within budget.</span></label>
     </div>
+      
     <p class="toolq" id="h-d8-tools">What do you use for this? Tap the apps, add your own below.</p>
     <div class="chips" role="group" aria-labelledby="h-d8-tools">
       <label class="opt small"><input type="checkbox" name="tools_d8" value="WhatsApp groups"><span class="box" aria-hidden="true"></span><span class="txt">WhatsApp groups</span></label><label class="opt small"><input type="checkbox" name="tools_d8" value="Facebook"><span class="box" aria-hidden="true"></span><span class="txt">Facebook</span></label><label class="opt small"><input type="checkbox" name="tools_d8" value="phone contacts"><span class="box" aria-hidden="true"></span><span class="txt">phone contacts</span></label>
@@ -414,7 +427,10 @@
       <label class="opt"><input type="checkbox" name="d10" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Tell me which bins go out tonight.</span></label>
       <label class="opt"><input type="checkbox" name="d10" value="8"><span class="box" aria-hidden="true"></span><span class="txt">Draft the letters I keep postponing — landlord, council, gym cancellation, complaint.</span></label>
       <label class="opt"><input type="checkbox" name="d10" value="9"><span class="box" aria-hidden="true"></span><span class="txt">Run the stock-take: what's used up at home and needs replacing.</span></label>
+      <label class="opt"><input type="checkbox" name="d10" value="n0"><span class="box" aria-hidden="true"></span><span class="txt">Tie the connected house kit into one routine — the lights, the purifier — on my words, not an app-hunt.</span></label>
+      <label class="opt"><input type="checkbox" name="d10" value="n1"><span class="box" aria-hidden="true"></span><span class="txt">Keep the house year honest — alarms in autumn, boiler before winter, first-aid kit restocked — booked and logged.</span></label>
     </div>
+      
     <p class="toolq" id="h-d10-tools">What do you use for this? Tap the apps, add your own below.</p>
     <div class="chips" role="group" aria-labelledby="h-d10-tools">
       <label class="opt small"><input type="checkbox" name="tools_d10" value="Amazon"><span class="box" aria-hidden="true"></span><span class="txt">Amazon</span></label><label class="opt small"><input type="checkbox" name="tools_d10" value="my council app"><span class="box" aria-hidden="true"></span><span class="txt">my council app</span></label><label class="opt small"><input type="checkbox" name="tools_d10" value="a notes app"><span class="box" aria-hidden="true"></span><span class="txt">a notes app</span></label>
@@ -469,7 +485,9 @@
       <label class="opt"><input type="checkbox" name="d12" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Find the short course — not the whole degree — for what I need next.</span></label>
       <label class="opt"><input type="checkbox" name="d12" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Read the new industry guidance end to end and brief me on what changes.</span></label>
       <label class="opt"><input type="checkbox" name="d12" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Keep one running page of what I've learned each month.</span></label>
+      <label class="opt"><input type="checkbox" name="d12" value="n0"><span class="box" aria-hidden="true"></span><span class="txt">Turn every course and every read into CPD evidence, dated, kept three years, exportable to the portfolio.</span></label>
     </div>
+      
     <p class="toolq" id="h-d12-tools">What do you use for this? Tap the apps, add your own below.</p>
     <div class="chips" role="group" aria-labelledby="h-d12-tools">
       <label class="opt small"><input type="checkbox" name="tools_d12" value="YouTube"><span class="box" aria-hidden="true"></span><span class="txt">YouTube</span></label><label class="opt small"><input type="checkbox" name="tools_d12" value="LinkedIn Learning"><span class="box" aria-hidden="true"></span><span class="txt">LinkedIn Learning</span></label><label class="opt small"><input type="checkbox" name="tools_d12" value="saved articles"><span class="box" aria-hidden="true"></span><span class="txt">saved articles</span></label>
@@ -497,7 +515,9 @@
       <label class="opt"><input type="checkbox" name="d13" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Track my mileage per job for the expense claims.</span></label>
       <label class="opt"><input type="checkbox" name="d13" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Draft the appeal if I get a ticket I think is unfair.</span></label>
       <label class="opt"><input type="checkbox" name="d13" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Tell me about tubes, buses and roadworks between me and the next meeting.</span></label>
+      <label class="opt"><input type="checkbox" name="d13" value="n0"><span class="box" aria-hidden="true"></span><span class="txt">When it’s time to sell the car, run the listing and the negotiation to get a better price.</span></label>
     </div>
+      
     <p class="toolq" id="h-d13-tools">What do you use for this? Tap the apps, add your own below.</p>
     <div class="chips" role="group" aria-labelledby="h-d13-tools">
       <label class="opt small"><input type="checkbox" name="tools_d13" value="Citymapper"><span class="box" aria-hidden="true"></span><span class="txt">Citymapper</span></label><label class="opt small"><input type="checkbox" name="tools_d13" value="the Tube app"><span class="box" aria-hidden="true"></span><span class="txt">the Tube app</span></label><label class="opt small"><input type="checkbox" name="tools_d13" value="Google Maps"><span class="box" aria-hidden="true"></span><span class="txt">Google Maps</span></label>
@@ -524,7 +544,9 @@
       <label class="opt"><input type="checkbox" name="d14" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Tell me when a better price lands on the thing I'm waiting on.</span></label>
       <label class="opt"><input type="checkbox" name="d14" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Keep my sizes and addresses on file so checkout is one instruction.</span></label>
       <label class="opt"><input type="checkbox" name="d14" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Log what I buy in one place so the money domain can see it.</span></label>
+      <label class="opt"><input type="checkbox" name="d14" value="n0"><span class="box" aria-hidden="true"></span><span class="txt">Build the week’s grocery order from our usuals and the saved recipes — I say go, it goes.</span></label>
     </div>
+      
     <p class="toolq" id="h-d14-tools">What do you use for this? Tap the apps, add your own below.</p>
     <div class="chips" role="group" aria-labelledby="h-d14-tools">
       <label class="opt small"><input type="checkbox" name="tools_d14" value="Amazon"><span class="box" aria-hidden="true"></span><span class="txt">Amazon</span></label><label class="opt small"><input type="checkbox" name="tools_d14" value="eBay"><span class="box" aria-hidden="true"></span><span class="txt">eBay</span></label><label class="opt small"><input type="checkbox" name="tools_d14" value="my supermarket app"><span class="box" aria-hidden="true"></span><span class="txt">my supermarket app</span></label>
@@ -541,8 +563,215 @@
     </div>
   </section>
 
+  <section class="screen" id="s-d15" aria-labelledby="h-d15">
+    <div class="dhead"><span class="secnum">15</span><h2 id="h-d15">Restaurants &amp; Tables</h2></div>
+    <p class="dsub">Client dinners, family tables, the usual spot — booked without the phone tree.</p>
+    <div class="opts" role="group" aria-labelledby="h-d15">
+      <label class="opt"><input type="checkbox" name="d15" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Book me a table at a good restaurant near the office — tonight if possible.</span></label>
+      <label class="opt"><input type="checkbox" name="d15" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Book a private room for a client dinner — eight people, discreet.</span></label>
+      <label class="opt"><input type="checkbox" name="d15" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Book the same table I liked last time — and tell them it's my anniversary.</span></label>
+      <label class="opt"><input type="checkbox" name="d15" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Keep my usual spots on file — the place, the table, the time — and just use them.</span></label>
+      <label class="opt"><input type="checkbox" name="d15" value="5"><span class="box" aria-hidden="true"></span><span class="txt">When the first choice is full, come back with the honest alternatives — other nights, other times, nearby.</span></label>
+    </div>
+    <p class="toolq" id="h-d15-tools">What do you use for this? Tap the apps, add your own below.</p>
+    <div class="chips" role="group" aria-labelledby="h-d15-tools">
+      <label class="opt small"><input type="checkbox" name="tools_d15" value="OpenTable"><span class="box" aria-hidden="true"></span><span class="txt">OpenTable</span></label><label class="opt small"><input type="checkbox" name="tools_d15" value="TheFork"><span class="box" aria-hidden="true"></span><span class="txt">TheFork</span></label><label class="opt small"><input type="checkbox" name="tools_d15" value="the hotel's phone"><span class="box" aria-hidden="true"></span><span class="txt">the hotel's phone</span></label>
+    </div>
+
+    <button type="button" class="freebtn" data-toggle="f-d15">Or tell us in your own words</button>
+    <div class="freetext" id="f-d15">
+      <label for="t-d15">In your own words</label>
+      <textarea id="t-d15" data-key="d15_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d16" aria-labelledby="h-d16">
+    <div class="dhead"><span class="secnum">16</span><h2 id="h-d16">Events &amp; Tickets</h2></div>
+    <p class="dsub">Concerts, matches, theatre — the seats found, the calendar kept.</p>
+    <div class="opts" role="group" aria-labelledby="h-d16">
+      <label class="opt"><input type="checkbox" name="d16" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Find and book the tickets for the match or the concert I want to see.</span></label>
+      <label class="opt"><input type="checkbox" name="d16" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Book the theatre for Friday night — two seats together, close enough to see.</span></label>
+      <label class="opt"><input type="checkbox" name="d16" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Hunt for seats when the show looks full — returns, resales, late releases — and tell me the moment they land.</span></label>
+      <label class="opt"><input type="checkbox" name="d16" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Book client hospitality — the seats, the lunch, the room — when a client deserves a day.</span></label>
+      <label class="opt"><input type="checkbox" name="d16" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Put every booked event on my calendar — doors, times, how to collect the tickets.</span></label>
+    </div>
+    <p class="toolq" id="h-d16-tools">What do you use for this? Tap the apps, add your own below.</p>
+    <div class="chips" role="group" aria-labelledby="h-d16-tools">
+      <label class="opt small"><input type="checkbox" name="tools_d16" value="Ticketmaster"><span class="box" aria-hidden="true"></span><span class="txt">Ticketmaster</span></label><label class="opt small"><input type="checkbox" name="tools_d16" value="StubHub"><span class="box" aria-hidden="true"></span><span class="txt">StubHub</span></label><label class="opt small"><input type="checkbox" name="tools_d16" value="the venue's site"><span class="box" aria-hidden="true"></span><span class="txt">the venue's site</span></label>
+    </div>
+
+    <button type="button" class="freebtn" data-toggle="f-d16">Or tell us in your own words</button>
+    <div class="freetext" id="f-d16">
+      <label for="t-d16">In your own words</label>
+      <textarea id="t-d16" data-key="d16_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d17" aria-labelledby="h-d17">
+    <div class="dhead"><span class="secnum">17</span><h2 id="h-d17">Bills &amp; Subscriptions</h2></div>
+    <p class="dsub">The list of everything you pay; the forgotten ones cancelled. Money never moves without you.</p>
+    <div class="opts" role="group" aria-labelledby="h-d17">
+      <label class="opt"><input type="checkbox" name="d17" value="1"><span class="box" aria-hidden="true"></span><span class="txt">List every subscription I actually pay for — and show me the ones I never use.</span></label>
+      <label class="opt"><input type="checkbox" name="d17" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Cancel the forgotten ones — the trials that became payments, the apps I never open.</span></label>
+      <label class="opt"><input type="checkbox" name="d17" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Flag any bill that jumps, and draft the letter asking why.</span></label>
+      <label class="opt"><input type="checkbox" name="d17" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Draft the negotiation on my phone and broadband bills — the comparison, the case, the polite push.</span></label>
+      <label class="opt"><input type="checkbox" name="d17" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Warn me before every free trial turns into a payment.</span></label>
+    </div>
+    <p class="toolq" id="h-d17-tools">What do you use for this? Tap the apps, add your own below.</p>
+    <div class="chips" role="group" aria-labelledby="h-d17-tools">
+      <label class="opt small"><input type="checkbox" name="tools_d17" value="my banking app"><span class="box" aria-hidden="true"></span><span class="txt">my banking app</span></label><label class="opt small"><input type="checkbox" name="tools_d17" value="Excel"><span class="box" aria-hidden="true"></span><span class="txt">Excel</span></label><label class="opt small"><input type="checkbox" name="tools_d17" value="PayPal"><span class="box" aria-hidden="true"></span><span class="txt">PayPal</span></label>
+    </div>
+
+    <button type="button" class="freebtn" data-toggle="f-d17">Or tell us in your own words</button>
+    <div class="freetext" id="f-d17">
+      <label for="t-d17">In your own words</label>
+      <textarea id="t-d17" data-key="d17_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d18" aria-labelledby="h-d18">
+    <div class="dhead"><span class="secnum">18</span><h2 id="h-d18">Government &amp; Paperwork (UK)</h2></div>
+    <p class="dsub">Passport, MOT, tax calendar, the CSCS card the job runs on — never a clock you forgot.</p>
+    <div class="opts" role="group" aria-labelledby="h-d18">
+      <label class="opt"><input type="checkbox" name="d18" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Keep one expiry list for everything I hold — passport, licence, MOT, TV licence — warn me six months early.</span></label>
+      <label class="opt"><input type="checkbox" name="d18" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Sign me up once for the official reminders — passport, licence, MOT — then never let one lapse.</span></label>
+      <label class="opt"><input type="checkbox" name="d18" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Run the tax calendar: register 5 October, pay 31 January, the July payment — ask me in September.</span></label>
+      <label class="opt"><input type="checkbox" name="d18" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Keep my CSCS card and first-aid certificate current — the right test, inside the right window, months not days.</span></label>
+      <label class="opt"><input type="checkbox" name="d18" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Sort the visa paperwork for the trip — what I need, when it's due, and whether my passport covers it.</span></label>
+    </div>
+    <p class="toolq" id="h-d18-tools">What do you use for this? Tap the apps, add your own below.</p>
+    <div class="chips" role="group" aria-labelledby="h-d18-tools">
+      <label class="opt small"><input type="checkbox" name="tools_d18" value="GOV.UK"><span class="box" aria-hidden="true"></span><span class="txt">GOV.UK</span></label><label class="opt small"><input type="checkbox" name="tools_d18" value="HMRC app"><span class="box" aria-hidden="true"></span><span class="txt">HMRC app</span></label><label class="opt small"><input type="checkbox" name="tools_d18" value="the council's site"><span class="box" aria-hidden="true"></span><span class="txt">the council's site</span></label>
+    </div>
+
+    <button type="button" class="freebtn" data-toggle="f-d18">Or tell us in your own words</button>
+    <div class="freetext" id="f-d18">
+      <label for="t-d18">In your own words</label>
+      <textarea id="t-d18" data-key="d18_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d19" aria-labelledby="h-d19">
+    <div class="dhead"><span class="secnum">19</span><h2 id="h-d19">Insurance &amp; Protection</h2></div>
+    <p class="dsub">Every policy on one page; the renewals shopped, not auto-paid.</p>
+    <div class="opts" role="group" aria-labelledby="h-d19">
+      <label class="opt"><input type="checkbox" name="d19" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Put every policy on one page — home, car, life, indemnity, travel — cover, renewal date, who's named.</span></label>
+      <label class="opt"><input type="checkbox" name="d19" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Diary each renewal two months early, so I shop around instead of auto-renewing.</span></label>
+      <label class="opt"><input type="checkbox" name="d19" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Make sure every trip is covered — medical, baggage, cancellation — before I fly.</span></label>
+      <label class="opt"><input type="checkbox" name="d19" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Keep my warranties alive: photo of the plate, the receipt, the expiry — one entry per thing I own.</span></label>
+      <label class="opt"><input type="checkbox" name="d19" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Read my beneficiaries and my will with me once a year, and flag whatever's gone stale.</span></label>
+    </div>
+    <p class="toolq" id="h-d19-tools">What do you use for this? Tap the apps, add your own below.</p>
+    <div class="chips" role="group" aria-labelledby="h-d19-tools">
+      <label class="opt small"><input type="checkbox" name="tools_d19" value="a comparison site"><span class="box" aria-hidden="true"></span><span class="txt">a comparison site</span></label><label class="opt small"><input type="checkbox" name="tools_d19" value="my policy folder"><span class="box" aria-hidden="true"></span><span class="txt">my policy folder</span></label><label class="opt small"><input type="checkbox" name="tools_d19" value="the insurer's app"><span class="box" aria-hidden="true"></span><span class="txt">the insurer's app</span></label>
+    </div>
+
+    <button type="button" class="freebtn" data-toggle="f-d19">Or tell us in your own words</button>
+    <div class="freetext" id="f-d19">
+      <label for="t-d19">In your own words</label>
+      <textarea id="t-d19" data-key="d19_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d20" aria-labelledby="h-d20">
+    <div class="dhead"><span class="secnum">20</span><h2 id="h-d20">Customer-Service Calls &amp; Claims</h2></div>
+    <p class="dsub">The annoying call, the stuck refund, the points owed — handled while you work.</p>
+    <div class="opts" role="group" aria-labelledby="h-d20">
+      <label class="opt"><input type="checkbox" name="d20" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Make the annoying call for me — the hold music, the menus, the repeats — and come back with the answer.</span></label>
+      <label class="opt"><input type="checkbox" name="d20" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Chase the refund that's been sitting for weeks — the follow-up, the firm note, in my name but read by me first.</span></label>
+      <label class="opt"><input type="checkbox" name="d20" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Claim the compensation when a flight or delivery goes wrong — evidence, form, chase.</span></label>
+      <label class="opt"><input type="checkbox" name="d20" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Recover the loyalty points and credits the companies owe me.</span></label>
+      <label class="opt"><input type="checkbox" name="d20" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Dispute the wrong bill — the overcharge, the double charge — with the history lined up.</span></label>
+    </div>
+    <p class="toolq" id="h-d20-tools">What do you use for this? Tap the apps, add your own below.</p>
+    <div class="chips" role="group" aria-labelledby="h-d20-tools">
+      <label class="opt small"><input type="checkbox" name="tools_d20" value="the phone"><span class="box" aria-hidden="true"></span><span class="txt">the phone</span></label><label class="opt small"><input type="checkbox" name="tools_d20" value="online chat"><span class="box" aria-hidden="true"></span><span class="txt">online chat</span></label><label class="opt small"><input type="checkbox" name="tools_d20" value="the company's form"><span class="box" aria-hidden="true"></span><span class="txt">the company's form</span></label>
+    </div>
+
+    <button type="button" class="freebtn" data-toggle="f-d20">Or tell us in your own words</button>
+    <div class="freetext" id="f-d20">
+      <label for="t-d20">In your own words</label>
+      <textarea id="t-d20" data-key="d20_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d21" aria-labelledby="h-d21">
+    <div class="dhead"><span class="secnum">21</span><h2 id="h-d21">The No-Panic Page</h2></div>
+    <p class="dsub">One page everything lives on — so the family never has to guess.</p>
+    <div class="opts" role="group" aria-labelledby="h-d21">
+      <label class="opt"><input type="checkbox" name="d21" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Build my one emergency page: who to call, in what order, and where to find it.</span></label>
+      <label class="opt"><input type="checkbox" name="d21" value="2"><span class="box" aria-hidden="true"></span><span class="txt">List the documents on it — passport, certificates, the will — and where the originals live.</span></label>
+      <label class="opt"><input type="checkbox" name="d21" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Map the money: which bills pay themselves, which accounts, who gets paid when — so the lights stay on.</span></label>
+      <label class="opt"><input type="checkbox" name="d21" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Write my medical one-liner — blood group, prescriptions, allergies, my wishes in three sentences.</span></label>
+      <label class="opt"><input type="checkbox" name="d21" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Re-check the page twice a year, and make sure my family knows the one place it lives.</span></label>
+    </div>
+    <p class="toolq" id="h-d21-tools">What do you use for this? Tap the apps, add your own below.</p>
+    <div class="chips" role="group" aria-labelledby="h-d21-tools">
+      <label class="opt small"><input type="checkbox" name="tools_d21" value="a printed page"><span class="box" aria-hidden="true"></span><span class="txt">a printed page</span></label><label class="opt small"><input type="checkbox" name="tools_d21" value="my phone notes"><span class="box" aria-hidden="true"></span><span class="txt">my phone notes</span></label><label class="opt small"><input type="checkbox" name="tools_d21" value="the family WhatsApp"><span class="box" aria-hidden="true"></span><span class="txt">the family WhatsApp</span></label>
+    </div>
+
+    <button type="button" class="freebtn" data-toggle="f-d21">Or tell us in your own words</button>
+    <div class="freetext" id="f-d21">
+      <label for="t-d21">In your own words</label>
+      <textarea id="t-d21" data-key="d21_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d22" aria-labelledby="h-d22">
+    <div class="dhead"><span class="secnum">22</span><h2 id="h-d22">Wellness &amp; Routine</h2></div>
+    <p class="dsub">The gym, the runs, the sleep — one honest line a week, no flattery.</p>
+    <div class="opts" role="group" aria-labelledby="h-d22">
+      <label class="opt"><input type="checkbox" name="d22" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Book my gym classes and court time around the working week.</span></label>
+      <label class="opt"><input type="checkbox" name="d22" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Pull my watch data into one picture — sleep, steps, training — quietly, no nagging.</span></label>
+      <label class="opt"><input type="checkbox" name="d22" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Fold the week's exercise into my brief like meetings — what I did, what I skipped, no flattery.</span></label>
+      <label class="opt"><input type="checkbox" name="d22" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Keep the routine alive on site weeks — early flights, hotel gyms, long days.</span></label>
+    </div>
+    <p class="toolq" id="h-d22-tools">What do you use for this? Tap the apps, add your own below.</p>
+    <div class="chips" role="group" aria-labelledby="h-d22-tools">
+      <label class="opt small"><input type="checkbox" name="tools_d22" value="Strava"><span class="box" aria-hidden="true"></span><span class="txt">Strava</span></label><label class="opt small"><input type="checkbox" name="tools_d22" value="my watch's app"><span class="box" aria-hidden="true"></span><span class="txt">my watch's app</span></label><label class="opt small"><input type="checkbox" name="tools_d22" value="the gym's app"><span class="box" aria-hidden="true"></span><span class="txt">the gym's app</span></label>
+    </div>
+
+    <button type="button" class="freebtn" data-toggle="f-d22">Or tell us in your own words</button>
+    <div class="freetext" id="f-d22">
+      <label for="t-d22">In your own words</label>
+      <textarea id="t-d22" data-key="d22_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
   <section class="screen" id="s-rules" aria-labelledby="h-rules">
-    <div class="dhead"><span class="secnum">15</span><h2 id="h-rules">Your rules &amp; where we meet</h2></div>
+    <div class="dhead"><span class="secnum">23</span><h2 id="h-rules">Your rules &amp; where we meet</h2></div>
     <p class="dsub">The last screen before your summary: the lines the assistant never crosses, and where it reaches you.</p>
 
     <p class="qhead" id="h-rules-tick">Tick the rules my assistant never breaks</p>
@@ -615,7 +844,7 @@
 <footer>
   <div class="wrap">
     <div class="rule"></div>
-    <p>Earl Super Assistant — a private intake, v3 (life map + your apps).<br>Nothing leaves your phone until you tap Copy or Share.</p>
+    <p>Earl Super Assistant — a private intake, v4 (full life map).<br>Nothing leaves your phone until you tap Copy or Share.</p>
   </div>
 </footer>
 
@@ -623,7 +852,7 @@
 (function(){
   "use strict";
 
-  var SCREENS = ["s-intro","s-d1","s-d2","s-d3","s-d4","s-d5","s-d6","s-d7","s-d8","s-d9","s-d10","s-d11","s-d12","s-d13","s-d14","s-rules","s-end"];
+  var SCREENS = ["s-intro","s-d1","s-d2","s-d3","s-d4","s-d5","s-d6","s-d7","s-d8","s-d9","s-d10","s-d11","s-d12","s-d13","s-d14","s-d15","s-d16","s-d17","s-d18","s-d19","s-d20","s-d21","s-d22","s-rules","s-end"];
   var DOMAINS = [
     { id:"d1",  num:"01", title:"Email & Inbox" },
     { id:"d2",  num:"02", title:"Calendar & Meetings" },
@@ -638,7 +867,15 @@
     { id:"d11", num:"11", title:"Charity" },
     { id:"d12", num:"12", title:"Learning" },
     { id:"d13", num:"13", title:"Car & Getting Around" },
-    { id:"d14", num:"14", title:"Shopping & Deliveries" }
+    { id:"d14", num:"14", title:"Shopping & Deliveries" },
+    { id:"d15", num:"15", title:"Restaurants & Tables" },
+    { id:"d16", num:"16", title:"Events & Tickets" },
+    { id:"d17", num:"17", title:"Bills & Subscriptions" },
+    { id:"d18", num:"18", title:"Government & Paperwork (UK)" },
+    { id:"d19", num:"19", title:"Insurance & Protection" },
+    { id:"d20", num:"20", title:"Customer-Service Calls & Claims" },
+    { id:"d21", num:"21", title:"The No-Panic Page" },
+    { id:"d22", num:"22", title:"Wellness & Routine" }
   ];
   var RULE_TEXTS = {
     "1":"Never send money, confirm a booking or pay a bill unless I approve it in the moment.",
@@ -661,7 +898,7 @@
 
   /* Persist answers across a phone refresh (F4): save on every screen change,
      restore once at load. Nothing leaves the device — plain localStorage. */
-  var STORE_KEY = "earl_la_v2";
+  var STORE_KEY = "earl_la_v4";
   function persistAnswers(){ try { localStorage.setItem(STORE_KEY, JSON.stringify(answers)); } catch(e){} }
   function restoreAnswers(){
     try {
@@ -734,8 +971,8 @@
   function refreshProgress(){
     var n = 0;
     DOMAINS.forEach(function(dg){ if(domainTouched(dg.id)){ n++; } });
-    document.getElementById("pcount").textContent = n + " of 14 answered";
-    document.getElementById("pfill").style.width = Math.round(n / 14 * 100) + "%";
+    document.getElementById("pcount").textContent = n + " of 22 answered";
+    document.getElementById("pfill").style.width = Math.round(n / 22 * 100) + "%";
   }
 
   function show(i){
@@ -835,7 +1072,7 @@
     L.push("Lives: " + (answers.lives || "(not chosen)"));
     if(answers.final_free){ L.push("   my words: " + answers.final_free); }
     L.push("");
-    L.push("Earl marked " + areaCount() + " of 14 areas.");
+    L.push("Earl marked " + areaCount() + " of 22 areas.");
     L.push("Sent from the Earl Super Assistant intake page.");
     return L.join("\n");
   }
@@ -845,7 +1082,7 @@
     document.getElementById("copied").textContent = "";
     var withTasks = areaCount();
     var tickedRules = (answers.rules || []).length;
-    var bits = [withTasks + " of 14 areas with tasks"];
+    var bits = [withTasks + " of 22 areas with tasks"];
     if(tickedRules){ bits.push(tickedRules + " rule" + (tickedRules === 1 ? "" : "s") + " set"); }
     document.getElementById("endStatus").textContent = "Done — " + bits.join(", ");
     var cb = document.getElementById("copyBtn");
