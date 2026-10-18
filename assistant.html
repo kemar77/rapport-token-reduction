@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Earl Super Assistant — 6 questions, 1 minute</title>
+<title>Earl Super Assistant — your life, one assistant</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%23B85042'/%3E%3C/svg%3E">
-<meta name="description" content="Six quick questions about your private AI assistant. No account, no payment, nothing sent anywhere until you copy or share the summary.">
+<meta name="description" content="Fourteen areas of your week — tick what you want taken off your plate. No account, no payment, nothing sent anywhere until you copy or share the summary.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,39 +19,43 @@
   body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
   .wrap{max-width:760px;margin:0 auto;padding:0 24px}
   h1,h2{font-family:'Playfair Display',Georgia,serif}
-  /* PROGRESS */
   .progress{position:sticky;top:0;z-index:10;background:rgba(251,249,244,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--sand);padding:14px 0}
   .progress .bar{height:6px;background:var(--sand);border-radius:999px;overflow:hidden}
   .progress .fill{height:100%;width:0%;background:var(--terracotta);border-radius:999px;transition:width .4s cubic-bezier(.22,1,.36,1)}
   .progress .meta{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:6px;font-weight:500}
-  /* HERO */
-  header.hero{padding:56px 0 40px;text-align:center}
+  header.hero{padding:64px 0 44px;text-align:center}
   .eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta);margin-bottom:12px}
   header.hero h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;line-height:1.15;letter-spacing:-.015em;margin-bottom:14px}
   header.hero .sub{color:var(--muted);max-width:52ch;margin:0 auto}
+  header.hero .sub b{color:var(--ink);font-weight:600}
   .trust{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:20px}
   .trust span{font-size:.78rem;color:var(--forest);background:rgba(44,95,45,.07);border:1px solid rgba(44,95,45,.25);border-radius:999px;padding:5px 14px;font-weight:600}
-  /* SCREENS */
-  .screen{display:none;padding:36px 0 60px}
-  .screen.active{display:block}
-  .qlabel{font-weight:700;font-size:1.05rem;margin-bottom:6px}
-  .why{font-size:.84rem;color:var(--muted);margin-bottom:16px;font-style:italic}
-  /* OPTIONS */
+  .screen{display:none;padding:10px 0 60px}
+  .screen.active{display:block;animation:fadein .35s ease}
+  .dhead{display:flex;align-items:baseline;gap:14px;margin-bottom:4px}
+  .secnum{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:800;color:var(--sand);line-height:1}
+  .dhead h2{font-size:1.5rem;font-weight:700;letter-spacing:-.01em}
+  .dsub{color:var(--muted);font-size:.93rem;margin:0 0 18px;max-width:58ch}
+  .qhead{font-weight:700;font-size:1.05rem;margin:26px 0 4px}
+  .qhead:first-of-type{margin-top:0}
+  .qwhy{font-size:.84rem;color:var(--muted);margin-bottom:14px;font-style:italic}
   .opts{display:flex;flex-direction:column;gap:8px}
-  .opt{position:relative;display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--surface);border:1px solid var(--sand);border-radius:12px;cursor:pointer;transition:border-color .15s, background .15s, transform .15s;font-size:.95rem}
+  .opt{position:relative;display:flex;align-items:flex-start;gap:12px;padding:14px 18px;background:var(--surface);border:1px solid var(--sand);border-radius:12px;cursor:pointer;transition:border-color .15s, background .15s, transform .15s;font-size:.95rem}
   .opt:hover{border-color:var(--terracotta);transform:translateX(2px)}
   .opt input{position:absolute;opacity:0;pointer-events:none}
-  .opt .dot{width:18px;height:18px;flex:none;border-radius:50%;border:2px solid var(--muted);position:relative;transition:border-color .15s}
+  .opt .box{width:18px;height:18px;flex:none;margin-top:3px;border-radius:5px;border:2px solid var(--muted);position:relative;transition:border-color .15s}
+  .opt .dot{width:18px;height:18px;flex:none;margin-top:3px;border-radius:50%;border:2px solid var(--muted);position:relative;transition:border-color .15s}
   .opt:has(input:focus-visible){outline:3px solid var(--terracotta);outline-offset:2px}
   .opt:has(input:checked){border-color:var(--terracotta);background:rgba(184,80,66,.05)}
-  .opt:has(input:checked) .dot{border-color:var(--terracotta)}
+  .opt:has(input:checked) .box,.opt:has(input:checked) .dot{border-color:var(--terracotta)}
+  .opt:has(input:checked) .box::after{content:"";position:absolute;inset:3px;border-radius:2px;background:var(--terracotta)}
   .opt:has(input:checked) .dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--terracotta)}
   .opt.checked{border-color:var(--terracotta);background:rgba(184,80,66,.05)}
-  .opt.checked .dot{border-color:var(--terracotta)}
+  .opt.checked .box,.opt.checked .dot{border-color:var(--terracotta)}
+  .opt.checked .box::after{content:"";position:absolute;inset:3px;border-radius:2px;background:var(--terracotta)}
   .opt.checked .dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--terracotta)}
   .opt:focus-visible,input:focus-visible,button:focus-visible,textarea:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
-  /* FREETEXT */
-  .freebtn{background:none;border:none;color:var(--muted);font-size:.9rem;font-weight:600;padding:12px 0 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:'Inter',sans-serif;min-height:44px}
+  .freebtn{background:none;border:none;color:var(--muted);font-size:.9rem;font-weight:600;padding:12px 0 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:'Inter',sans-serif;min-height:48px}
   .freebtn:hover{color:var(--terracotta)}
   .freebtn:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
   .freetext{margin-top:12px;display:none}
@@ -60,14 +64,12 @@
   textarea:focus{border-color:var(--terracotta)}
   .freetext label{display:block;font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:6px}
   @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  /* NAV + SAVE */
   .nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px}
-  .back{background:none;border:none;color:var(--muted);font-size:.9rem;font-weight:600;padding:10px 6px;cursor:pointer;font-family:'Inter',sans-serif;visibility:hidden;min-height:44px}
+  .back{background:none;border:none;color:var(--muted);font-size:.9rem;font-weight:600;padding:10px 6px;cursor:pointer;font-family:'Inter',sans-serif;visibility:hidden;min-height:48px}
   .back.visible{visibility:visible}
   .savenext{background:var(--forest);color:#fff;border:none;border-radius:999px;padding:13px 28px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .2s, background .2s;min-height:48px}
   .savenext:hover{transform:translateY(-2px);background:#254c25}
   .savenext:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
-  /* SUMMARY */
   .summary{margin:30px 0 30px;background:var(--ink);border-radius:20px;padding:34px 30px;color:var(--paper);box-shadow:0 16px 44px rgba(31,36,33,.26)}
   .summary .eyebrow{color:var(--sand)}
   .summary h2{color:var(--paper);font-size:1.7rem;font-weight:800;margin-bottom:8px}
@@ -85,12 +87,19 @@
   .ghost:hover{color:var(--sand)}
   footer{padding:34px 0 60px;text-align:center;color:var(--muted);font-size:.82rem}
   footer .rule{width:60px;height:2px;background:var(--sand);margin:0 auto 16px;border-radius:2px}
-  /* PRINT + MOBILE + MOTION */
-  @media print{.progress,.copybtn,.bodybtns{display:none}.summary{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:20px}.screen{break-inside:avoid;padding:12px 0}}
+  @media print{
+    .progress,.bodybtns,.nav,.freebtn,.startbtn{display:none}
+    .screen{display:none!important}
+    #s-end{display:block!important}
+    .summary{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:20px}
+  }
   @media (max-width:600px){
     body{font-size:15px}
-    header.hero h1{font-size:1.7rem}
     header.hero{padding:44px 0 30px}
+    header.hero h1{font-size:1.7rem}
+    .secnum{font-size:2rem}
+    .dhead{gap:10px}
+    .dhead h2{font-size:1.22rem}
     .summary{padding:26px 20px}
     .opt{padding:13px 14px}
     .savenext{width:100%}
@@ -98,10 +107,14 @@
   }
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto}
+    .screen.active{animation:none}
     .progress .fill{transition:none}
     .opt:hover,.copybtn:hover,.savenext:hover{transform:none}
     .freetext.show{animation:none}
   }
+  .startbtn{background:var(--forest);color:#fff;border:none;border-radius:999px;padding:15px 46px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .2s, background .2s;min-height:48px;margin-top:26px}
+  .startbtn:hover{transform:translateY(-2px);background:#254c25}
+  .startbtn:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -109,36 +122,42 @@
 <div class="progress">
   <div class="wrap">
     <div class="bar"><div class="fill" id="pfill"></div></div>
-    <div class="meta"><span id="pcount">0 of 6 answered</span><span>≈ 1 minute</span></div>
+    <div class="meta"><span id="pcount">0 of 14 answered</span><span>about 5 minutes</span></div>
   </div>
 </div>
 
-<header class="hero">
-  <div class="wrap">
-    <p class="eyebrow">Earl Super Assistant — setup form</p>
-    <h1>Six questions. One minute.<br/>Then it starts working for you.</h1>
-    <p class="sub">One question per screen. Tap what fits, or write your own words. At the end you get a clean summary — copy it or send it in one tap. Nothing leaves your phone before you do.</p>
-    <div class="trust">
-      <span>✓ No account needed</span>
-      <span>✓ Nothing sent until you tap copy or share</span>
-    </div>
-  </div>
-</header>
-
 <main class="wrap">
 
-  <section class="screen" id="s-q1" aria-labelledby="h-q1">
-    <p class="qlabel" id="h-q1">1. Where should your assistant reach you?</p>
-    <p class="why">Pick the app you already open all day — delivery follows it.</p>
-    <div class="opts" role="radiogroup" aria-labelledby="h-q1">
-      <label class="opt"><input type="radio" name="q1" value="WhatsApp"><span class="dot" aria-hidden="true"></span><span>WhatsApp — voice notes, texts, photos</span></label>
-      <label class="opt"><input type="radio" name="q1" value="Telegram"><span class="dot" aria-hidden="true"></span><span>Telegram — full voice support, easiest bot setup</span></label>
-      <label class="opt"><input type="radio" name="q1" value="Both"><span class="dot" aria-hidden="true"></span><span>Both — the same assistant on both apps</span></label>
+  <section class="screen" id="s-intro">
+    <header class="hero">
+      <p class="eyebrow">Earl Super Assistant — a private intake</p>
+      <h1>Your life, one assistant.</h1>
+      <p class="sub">Fourteen areas of your week. Tick what you want taken off your plate. About <b>5 minutes</b>.</p>
+      <div class="trust">
+        <span>✓ No account needed</span>
+        <span>✓ Nothing sent until you tap Copy or Share</span>
+      </div>
+      <button type="button" class="startbtn" data-next>Start</button>
+    </header>
+  </section>
+
+  <section class="screen" id="s-d1" aria-labelledby="h-d1">
+    <div class="dhead"><span class="secnum">01</span><h2 id="h-d1">Email &amp; Inbox</h2></div>
+    <p class="dsub">Several accounts — work, personal, charity. This is where most people start.</p>
+    <div class="opts" role="group" aria-labelledby="h-d1">
+      <label class="opt"><input type="checkbox" name="d1" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Show me only what needs me today, as one short list.</span></label>
+      <label class="opt"><input type="checkbox" name="d1" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Draft the reply in my voice. I read it, I say go, it goes.</span></label>
+      <label class="opt"><input type="checkbox" name="d1" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Unsubscribe me from every newsletter I haven't opened in two months.</span></label>
+      <label class="opt"><input type="checkbox" name="d1" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Chase replies for me. If someone hasn't answered by Friday, send a polite nudge.</span></label>
+      <label class="opt"><input type="checkbox" name="d1" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Find that one email: the parking receipt from last Tuesday.</span></label>
+      <label class="opt"><input type="checkbox" name="d1" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Keep work mail, personal mail and charity mail as three separate lists — never mixed.</span></label>
+      <label class="opt"><input type="checkbox" name="d1" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Warn me when a client's email has sat unanswered for more than a day.</span></label>
+      <label class="opt"><input type="checkbox" name="d1" value="8"><span class="box" aria-hidden="true"></span><span class="txt">Turn a heap of forwarded mail into one summary I can read in a minute.</span></label>
     </div>
-    <button type="button" class="freebtn" data-toggle="f-q1">Or write your own answer</button>
-    <div class="freetext" id="f-q1">
-      <label for="t-q1">Your words</label>
-      <textarea id="t-q1" placeholder="Your words — say it however you like (optional)"></textarea>
+    <button type="button" class="freebtn" data-toggle="f-d1">Or tell us in your own words</button>
+    <div class="freetext" id="f-d1">
+      <label for="t-d1">In your own words</label>
+      <textarea id="t-d1" data-key="d1_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
     </div>
     <div class="nav">
       <button type="button" class="back" data-back>‹ Back</button>
@@ -146,39 +165,23 @@
     </div>
   </section>
 
-  <section class="screen" id="s-q2" aria-labelledby="h-q2">
-    <p class="qlabel" id="h-q2">2. What is the first mission you hand over?</p>
-    <p class="why">We start where it hurts most. The rest follows on the same foundation.</p>
-    <div class="opts" role="radiogroup" aria-labelledby="h-q2">
-      <label class="opt"><input type="radio" name="q2" value="HSE audit dictation"><span class="dot" aria-hidden="true"></span><span>Dictate HSE audits — walk the floor, speak, get the report</span></label>
-      <label class="opt"><input type="radio" name="q2" value="Job scouting"><span class="dot" aria-hidden="true"></span><span>Hunt job opportunities — the #OpenToWork radar, sourced leads</span></label>
-      <label class="opt"><input type="radio" name="q2" value="Charity &amp; drone projects"><span class="dot" aria-hidden="true"></span><span>Charity &amp; drone projects — grants, sponsors, tenders, deadlines</span></label>
-      <label class="opt"><input type="radio" name="q2" value="Personal organising"><span class="dot" aria-hidden="true"></span><span>Organise my personal life — notes, appointments, receipts</span></label>
-      <label class="opt"><input type="radio" name="q2" value="Email handling"><span class="dot" aria-hidden="true"></span><span>Handle my emails — drafts ready for your approval</span></label>
+  <section class="screen" id="s-d2" aria-labelledby="h-d2">
+    <div class="dhead"><span class="secnum">02</span><h2 id="h-d2">Calendar &amp; Meetings</h2></div>
+    <p class="dsub">The day ahead, the double bookings, the brief before each meeting.</p>
+    <div class="opts" role="group" aria-labelledby="h-d2">
+      <label class="opt"><input type="checkbox" name="d2" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Give me the day ahead at 7am: meetings, travel, the three things that need me.</span></label>
+      <label class="opt"><input type="checkbox" name="d2" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Check my work, personal and charity calendars together — catch the double bookings.</span></label>
+      <label class="opt"><input type="checkbox" name="d2" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Find a time that works across time zones and send the invite.</span></label>
+      <label class="opt"><input type="checkbox" name="d2" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Build me a short brief before each meeting: who they are, what we agreed last time.</span></label>
+      <label class="opt"><input type="checkbox" name="d2" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Write up the meeting notes from my voice memo; send them to everyone who came.</span></label>
+      <label class="opt"><input type="checkbox" name="d2" value="6"><span class="box" aria-hidden="true"></span><span class="txt">"Move my 3pm to Thursday" — one sentence, done.</span></label>
+      <label class="opt"><input type="checkbox" name="d2" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Block travel time before and after every site visit without me asking.</span></label>
+      <label class="opt"><input type="checkbox" name="d2" value="8"><span class="box" aria-hidden="true"></span><span class="txt">Remind me when to leave, based on the traffic that morning.</span></label>
     </div>
-    <button type="button" class="freebtn" data-toggle="f-q2">Or write your own answer</button>
-    <div class="freetext" id="f-q2">
-      <label for="t-q2">Your words</label>
-      <textarea id="t-q2" placeholder="Your words — say it however you like (optional)"></textarea>
-    </div>
-    <div class="nav">
-      <button type="button" class="back" data-back>‹ Back</button>
-      <button type="button" class="savenext" data-next>Save &amp; continue</button>
-    </div>
-  </section>
-
-  <section class="screen" id="s-q3" aria-labelledby="h-q3">
-    <p class="qlabel" id="h-q3">3. How much do you want to be in the loop?</p>
-    <p class="why">You choose the altitude. You can change it any time.</p>
-    <div class="opts" role="radiogroup" aria-labelledby="h-q3">
-      <label class="opt"><input type="radio" name="q3" value="Dictate and approve"><span class="dot" aria-hidden="true"></span><span>I dictate, I approve — the quiet way</span></label>
-      <label class="opt"><input type="radio" name="q3" value="Watch the steps"><span class="dot" aria-hidden="true"></span><span>I want to see the steps — what it does, before it lands</span></label>
-      <label class="opt"><input type="radio" name="q3" value="Learn to steer it myself"><span class="dot" aria-hidden="true"></span><span>I want to learn to steer it — grow into piloting it yourself</span></label>
-    </div>
-    <button type="button" class="freebtn" data-toggle="f-q3">Or write your own answer</button>
-    <div class="freetext" id="f-q3">
-      <label for="t-q3">Your words</label>
-      <textarea id="t-q3" placeholder="Your words — say it however you like (optional)"></textarea>
+    <button type="button" class="freebtn" data-toggle="f-d2">Or tell us in your own words</button>
+    <div class="freetext" id="f-d2">
+      <label for="t-d2">In your own words</label>
+      <textarea id="t-d2" data-key="d2_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
     </div>
     <div class="nav">
       <button type="button" class="back" data-back>‹ Back</button>
@@ -186,37 +189,23 @@
     </div>
   </section>
 
-  <section class="screen" id="s-q4" aria-labelledby="h-q4">
-    <p class="qlabel" id="h-q4">4. How should it handle your emails at the start?</p>
-    <p class="why">Nothing goes out without your rules — that is fixed by design.</p>
-    <div class="opts" role="radiogroup" aria-labelledby="h-q4">
-      <label class="opt"><input type="radio" name="q4" value="Drafts for approval"><span class="dot" aria-hidden="true"></span><span>Drafts for me to approve — it writes, you send</span></label>
-      <label class="opt"><input type="radio" name="q4" value="Direct for simple cases"><span class="dot" aria-hidden="true"></span><span>Send directly for simple cases — fast lane for routine mail, approval for the rest</span></label>
-      <label class="opt"><input type="radio" name="q4" value="No email at first"><span class="dot" aria-hidden="true"></span><span>Nothing by email at the start — chat only, emails later</span></label>
+  <section class="screen" id="s-d3" aria-labelledby="h-d3">
+    <div class="dhead"><span class="secnum">03</span><h2 id="h-d3">Travel &amp; Bookings</h2></div>
+    <p class="dsub">Site visits, hotels, trains — door to door, on one page.</p>
+    <div class="opts" role="group" aria-labelledby="h-d3">
+      <label class="opt"><input type="checkbox" name="d3" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Compare train vs flight vs driving for a site visit — door to door, total time, total cost.</span></label>
+      <label class="opt"><input type="checkbox" name="d3" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Find the hotel nearest the site I'm inspecting, within my usual budget.</span></label>
+      <label class="opt"><input type="checkbox" name="d3" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Watch fares for my next trip and tell me when they drop.</span></label>
+      <label class="opt"><input type="checkbox" name="d3" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Book the taxi to the airport — show me the price before anything is paid.</span></label>
+      <label class="opt"><input type="checkbox" name="d3" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Keep my seat, hotel and airline preferences on file and use them every time.</span></label>
+      <label class="opt"><input type="checkbox" name="d3" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Tell me my train is late before I leave the house.</span></label>
+      <label class="opt"><input type="checkbox" name="d3" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Put the whole trip on one page: trains, hotel, bookings, addresses, times.</span></label>
+      <label class="opt"><input type="checkbox" name="d3" value="8"><span class="box" aria-hidden="true"></span><span class="txt">When a meeting moves, move the train and hotel with it and ask me to confirm.</span></label>
     </div>
-    <button type="button" class="freebtn" data-toggle="f-q4">Or write your own answer</button>
-    <div class="freetext" id="f-q4">
-      <label for="t-q4">Your words</label>
-      <textarea id="t-q4" placeholder="Your words — say it however you like (optional)"></textarea>
-    </div>
-    <div class="nav">
-      <button type="button" class="back" data-back>‹ Back</button>
-      <button type="button" class="savenext" data-next>Save &amp; continue</button>
-    </div>
-  </section>
-
-  <section class="screen" id="s-q5" aria-labelledby="h-q5">
-    <p class="qlabel" id="h-q5">5. What do we do with the OTTO box?</p>
-    <p class="why">The box you paid for. It becomes yours for good.</p>
-    <div class="opts" role="radiogroup" aria-labelledby="h-q5">
-      <label class="opt"><input type="radio" name="q5" value="Convert to Ubuntu now"><span class="dot" aria-hidden="true"></span><span>Convert it to Ubuntu now — wipe Otto OS, own the machine</span></label>
-      <label class="opt"><input type="radio" name="q5" value="Cloud first, migrate later"><span class="dot" aria-hidden="true"></span><span>Start in the cloud, migrate later — working in days, box converted after</span></label>
-      <label class="opt"><input type="radio" name="q5" value="Another idea"><span class="dot" aria-hidden="true"></span><span>I have another idea — write it below or tell us when we talk</span></label>
-    </div>
-    <button type="button" class="freebtn" data-toggle="f-q5">Or write your own answer</button>
-    <div class="freetext" id="f-q5">
-      <label for="t-q5">Your words</label>
-      <textarea id="t-q5" placeholder="Your words — say it however you like (optional)"></textarea>
+    <button type="button" class="freebtn" data-toggle="f-d3">Or tell us in your own words</button>
+    <div class="freetext" id="f-d3">
+      <label for="t-d3">In your own words</label>
+      <textarea id="t-d3" data-key="d3_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
     </div>
     <div class="nav">
       <button type="button" class="back" data-back>‹ Back</button>
@@ -224,19 +213,23 @@
     </div>
   </section>
 
-  <section class="screen" id="s-q6" aria-labelledby="h-q6">
-    <p class="qlabel" id="h-q6">6. What would be THE proof that it works?</p>
-    <p class="why">One moment that tells you this was worth it.</p>
-    <div class="opts" role="radiogroup" aria-labelledby="h-q6">
-      <label class="opt"><input type="radio" name="q6" value="Audit report without me"><span class="dot" aria-hidden="true"></span><span>An audit report done without me — you dictated on site, the report just arrived</span></label>
-      <label class="opt"><input type="radio" name="q6" value="Daily brief kills chaos"><span class="dot" aria-hidden="true"></span><span>The daily brief that kills the chaos — one message every morning, nothing forgotten</span></label>
-      <label class="opt"><input type="radio" name="q6" value="Opportunity I'd have missed"><span class="dot" aria-hidden="true"></span><span>An opportunity I would have missed — a job, tender or grant found, sourced and dated</span></label>
-      <label class="opt"><input type="radio" name="q6" value="Expenses filed without thinking"><span class="dot" aria-hidden="true"></span><span>My expenses filed without thinking — snap a receipt, it's filed</span></label>
+  <section class="screen" id="s-d4" aria-labelledby="h-d4">
+    <div class="dhead"><span class="secnum">04</span><h2 id="h-d4">Money &amp; Receipts</h2></div>
+    <p class="dsub">Photo a receipt on site; the sheet builds itself. Money never moves without you.</p>
+    <div class="opts" role="group" aria-labelledby="h-d4">
+      <label class="opt"><input type="checkbox" name="d4" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Turn a photo of a receipt into an expense line while I'm still on site.</span></label>
+      <label class="opt"><input type="checkbox" name="d4" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Match each receipt to the right job — the data-centre audit, the factory day, the charity trip.</span></label>
+      <label class="opt"><input type="checkbox" name="d4" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Draft the monthly expense sheet; flag anything missing a receipt.</span></label>
+      <label class="opt"><input type="checkbox" name="d4" value="4"><span class="box" aria-hidden="true"></span><span class="txt">List every subscription I pay and how often I've actually used it.</span></label>
+      <label class="opt"><input type="checkbox" name="d4" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Cancel the ones I never touch — and tell me before any of them renews.</span></label>
+      <label class="opt"><input type="checkbox" name="d4" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Watch my bills; tell me if one jumps or looks wrong.</span></label>
+      <label class="opt"><input type="checkbox" name="d4" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Draft the chase email when an invoice is about to go late.</span></label>
+      <label class="opt"><input type="checkbox" name="d4" value="8"><span class="box" aria-hidden="true"></span><span class="txt">Money never moves without me. You prepare, I approve.</span></label>
     </div>
-    <button type="button" class="freebtn" data-toggle="f-q6">Or write your own answer</button>
-    <div class="freetext" id="f-q6">
-      <label for="t-q6">Your words</label>
-      <textarea id="t-q6" placeholder="Your words — say it however you like (optional)"></textarea>
+    <button type="button" class="freebtn" data-toggle="f-d4">Or tell us in your own words</button>
+    <div class="freetext" id="f-d4">
+      <label for="t-d4">In your own words</label>
+      <textarea id="t-d4" data-key="d4_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
     </div>
     <div class="nav">
       <button type="button" class="back" data-back>‹ Back</button>
@@ -244,19 +237,306 @@
     </div>
   </section>
 
-  <section class="screen" id="s-end" aria-labelledby="h-end">
+  <section class="screen" id="s-d5" aria-labelledby="h-d5">
+    <div class="dhead"><span class="secnum">05</span><h2 id="h-d5">My Safety Work</h2></div>
+    <p class="dsub">Sites, audits, reports — the core of the working week.</p>
+    <div class="opts" role="group" aria-labelledby="h-d5">
+      <label class="opt"><input type="checkbox" name="d5" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Take my dictated notes from the site walk and turn them into a clean report.</span></label>
+      <label class="opt"><input type="checkbox" name="d5" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Turn my on-site voice notes into numbered findings, with the photos attached in the right place.</span></label>
+      <label class="opt"><input type="checkbox" name="d5" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Check my draft report against the safety rules for that country before I send it.</span></label>
+      <label class="opt"><input type="checkbox" name="d5" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Keep one page per site: who's who, phone numbers, gate rules, access times.</span></label>
+      <label class="opt"><input type="checkbox" name="d5" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Remind me to follow up the findings left open from the last audit.</span></label>
+      <label class="opt"><input type="checkbox" name="d5" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Assemble the standard pack for each job: report, photos, certificates, checklist.</span></label>
+      <label class="opt"><input type="checkbox" name="d5" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Every month, brief me on new safety rules that affect my clients.</span></label>
+      <label class="opt"><input type="checkbox" name="d5" value="8"><span class="box" aria-hidden="true"></span><span class="txt">Draft the client summary in my voice — plain words, no padding.</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-d5">Or tell us in your own words</button>
+    <div class="freetext" id="f-d5">
+      <label for="t-d5">In your own words</label>
+      <textarea id="t-d5" data-key="d5_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d6" aria-labelledby="h-d6">
+    <div class="dhead"><span class="secnum">06</span><h2 id="h-d6">Finding My Next Role</h2></div>
+    <p class="dsub">Roles, tenders, contacts — and all of it stays private.</p>
+    <div class="opts" role="group" aria-labelledby="h-d6">
+      <label class="opt"><input type="checkbox" name="d6" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Watch the job boards for HSE adviser roles near London and across Europe.</span></label>
+      <label class="opt"><input type="checkbox" name="d6" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Keep my CV up to date; build the tailored version for each application.</span></label>
+      <label class="opt"><input type="checkbox" name="d6" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Draft the cover letter in my voice. I read every word before it goes anywhere.</span></label>
+      <label class="opt"><input type="checkbox" name="d6" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Track the H&amp;S tenders I could bid on — and warn me before they close.</span></label>
+      <label class="opt"><input type="checkbox" name="d6" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Note who I met this week and remind me after two weeks to follow up.</span></label>
+      <label class="opt"><input type="checkbox" name="d6" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Check my LinkedIn once a week: new messages, invites, things worth a reply.</span></label>
+      <label class="opt"><input type="checkbox" name="d6" value="7"><span class="box" aria-hidden="true"></span><span class="txt">The job search stays private. Nothing public unless I say so.</span></label>
+      <label class="opt"><input type="checkbox" name="d6" value="8"><span class="box" aria-hidden="true"></span><span class="txt">Keep one list of every application and where each one stands.</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-d6">Or tell us in your own words</button>
+    <div class="freetext" id="f-d6">
+      <label for="t-d6">In your own words</label>
+      <textarea id="t-d6" data-key="d6_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d7" aria-labelledby="h-d7">
+    <div class="dhead"><span class="secnum">07</span><h2 id="h-d7">Documents &amp; Files</h2></div>
+    <p class="dsub">Every paper in its place, found the second you ask.</p>
+    <div class="opts" role="group" aria-labelledby="h-d7">
+      <label class="opt"><input type="checkbox" name="d7" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Put every new document in the right folder: personal, safety work, drone jobs, charity.</span></label>
+      <label class="opt"><input type="checkbox" name="d7" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Find it when I ask: the gas safety certificate for the site in Slough.</span></label>
+      <label class="opt"><input type="checkbox" name="d7" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Rename and tidy my Drive and OneDrive so I stop guessing where things are.</span></label>
+      <label class="opt"><input type="checkbox" name="d7" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Turn my scribbled notes into a clean PDF on the company template.</span></label>
+      <label class="opt"><input type="checkbox" name="d7" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Make the standard letters and forms once — then fill them in forever after.</span></label>
+      <label class="opt"><input type="checkbox" name="d7" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Keep old versions safe, with dates, in case anyone asks.</span></label>
+      <label class="opt"><input type="checkbox" name="d7" value="7"><span class="box" aria-hidden="true"></span><span class="txt">A document leaves my name only after I've read the final text.</span></label>
+      <label class="opt"><input type="checkbox" name="d7" value="8"><span class="box" aria-hidden="true"></span><span class="txt">I photograph paperwork; you file it where it belongs.</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-d7">Or tell us in your own words</button>
+    <div class="freetext" id="f-d7">
+      <label for="t-d7">In your own words</label>
+      <textarea id="t-d7" data-key="d7_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d8" aria-labelledby="h-d8">
+    <div class="dhead"><span class="secnum">08</span><h2 id="h-d8">Family, Friends &amp; Gifts</h2></div>
+    <p class="dsub">Birthdays, thank-you notes, RSVPs — nobody forgotten.</p>
+    <div class="opts" role="group" aria-labelledby="h-d8">
+      <label class="opt"><input type="checkbox" name="d8" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Remind me two weeks before every birthday, with gift ideas to choose from.</span></label>
+      <label class="opt"><input type="checkbox" name="d8" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Keep all the family birthdays and school dates in one list.</span></label>
+      <label class="opt"><input type="checkbox" name="d8" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Draft the thank-you notes; I'll add a line and send them.</span></label>
+      <label class="opt"><input type="checkbox" name="d8" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Track who's coming to the family lunch and chase the ones who haven't answered.</span></label>
+      <label class="opt"><input type="checkbox" name="d8" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Find a gift for someone who has everything — and let me pick from three.</span></label>
+      <label class="opt"><input type="checkbox" name="d8" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Remember what I gave people last year so I never repeat.</span></label>
+      <label class="opt"><input type="checkbox" name="d8" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Handle RSVPs for the wedding, the reunion, the christening.</span></label>
+      <label class="opt"><input type="checkbox" name="d8" value="8"><span class="box" aria-hidden="true"></span><span class="txt">Draft the card messages I always put off writing.</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-d8">Or tell us in your own words</button>
+    <div class="freetext" id="f-d8">
+      <label for="t-d8">In your own words</label>
+      <textarea id="t-d8" data-key="d8_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d9" aria-labelledby="h-d9">
+    <div class="dhead"><span class="secnum">09</span><h2 id="h-d9">Health</h2></div>
+    <p class="dsub">Appointments around site days, prescriptions before they run out.</p>
+    <div class="opts" role="group" aria-labelledby="h-d9">
+      <label class="opt"><input type="checkbox" name="d9" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Book and reschedule dentist, GP and eye appointments around my site days.</span></label>
+      <label class="opt"><input type="checkbox" name="d9" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Remind me to reorder my prescription before I run out.</span></label>
+      <label class="opt"><input type="checkbox" name="d9" value="3"><span class="box" aria-hidden="true"></span><span class="txt">After a doctor's visit, turn the voice memo into short notes I keep.</span></label>
+      <label class="opt"><input type="checkbox" name="d9" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Track my runs and my sleep and give me one honest line a week.</span></label>
+      <label class="opt"><input type="checkbox" name="d9" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Find a physio near home with slots outside work hours.</span></label>
+      <label class="opt"><input type="checkbox" name="d9" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Keep vaccinations and medical records in one place for travel and for work.</span></label>
+      <label class="opt"><input type="checkbox" name="d9" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Draft the awkward emails: to doctors, dentists, insurers. I send them.</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-d9">Or tell us in your own words</button>
+    <div class="freetext" id="f-d9">
+      <label for="t-d9">In your own words</label>
+      <textarea id="t-d9" data-key="d9_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d10" aria-labelledby="h-d10">
+    <div class="dhead"><span class="secnum">10</span><h2 id="h-d10">Home &amp; Errands</h2></div>
+    <p class="dsub">Parcels, renewals, the plumber, the bins.</p>
+    <div class="opts" role="group" aria-labelledby="h-d10">
+      <label class="opt"><input type="checkbox" name="d10" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Track my parcels and tell me which one lands today.</span></label>
+      <label class="opt"><input type="checkbox" name="d10" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Find a plumber or electrician with good reviews and ask three of them to quote.</span></label>
+      <label class="opt"><input type="checkbox" name="d10" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Keep a running shopping list; reorder the staples every week.</span></label>
+      <label class="opt"><input type="checkbox" name="d10" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Remind me before insurance, TV licence and other renewals bite.</span></label>
+      <label class="opt"><input type="checkbox" name="d10" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Tell me when the rent or service charge is due.</span></label>
+      <label class="opt"><input type="checkbox" name="d10" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Book the boiler service every year before winter.</span></label>
+      <label class="opt"><input type="checkbox" name="d10" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Tell me which bins go out tonight.</span></label>
+      <label class="opt"><input type="checkbox" name="d10" value="8"><span class="box" aria-hidden="true"></span><span class="txt">Draft the letters I keep postponing — landlord, council, gym cancellation, complaint.</span></label>
+      <label class="opt"><input type="checkbox" name="d10" value="9"><span class="box" aria-hidden="true"></span><span class="txt">Run the stock-take: what's used up at home and needs replacing.</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-d10">Or tell us in your own words</button>
+    <div class="freetext" id="f-d10">
+      <label for="t-d10">In your own words</label>
+      <textarea id="t-d10" data-key="d10_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d11" aria-labelledby="h-d11">
+    <div class="dhead"><span class="secnum">11</span><h2 id="h-d11">Charity</h2></div>
+    <p class="dsub">The football charity in South Africa — grants, minutes, rosters, kept entirely separate.</p>
+    <div class="opts" role="group" aria-labelledby="h-d11">
+      <label class="opt"><input type="checkbox" name="d11" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Find grant deadlines for football development in South Africa — with the source and the date found.</span></label>
+      <label class="opt"><input type="checkbox" name="d11" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Draft the funding applications on the charity's letterhead.</span></label>
+      <label class="opt"><input type="checkbox" name="d11" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Write the committee minutes from my voice memo after each call.</span></label>
+      <label class="opt"><input type="checkbox" name="d11" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Chase the volunteers who haven't confirmed the match-day roster.</span></label>
+      <label class="opt"><input type="checkbox" name="d11" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Keep the charity calendar: meetings, matches, reporting dates.</span></label>
+      <label class="opt"><input type="checkbox" name="d11" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Track what each funder asked and when we last answered them.</span></label>
+      <label class="opt"><input type="checkbox" name="d11" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Prepare a one-page summary before every board meeting.</span></label>
+      <label class="opt"><input type="checkbox" name="d11" value="8"><span class="box" aria-hidden="true"></span><span class="txt">Keep charity money and admin clearly separate from my own.</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-d11">Or tell us in your own words</button>
+    <div class="freetext" id="f-d11">
+      <label for="t-d11">In your own words</label>
+      <textarea id="t-d11" data-key="d11_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d12" aria-labelledby="h-d12">
+    <div class="dhead"><span class="secnum">12</span><h2 id="h-d12">Learning</h2></div>
+    <p class="dsub">The reading pile, the short course, the certificate renewals.</p>
+    <div class="opts" role="group" aria-labelledby="h-d12">
+      <label class="opt"><input type="checkbox" name="d12" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Save the articles I send myself and give each one a three-line summary.</span></label>
+      <label class="opt"><input type="checkbox" name="d12" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Remind me when my safety certifications are due for renewal — months early, not days.</span></label>
+      <label class="opt"><input type="checkbox" name="d12" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Find the short course — not the whole degree — for what I need next.</span></label>
+      <label class="opt"><input type="checkbox" name="d12" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Read the new industry guidance end to end and brief me on what changes.</span></label>
+      <label class="opt"><input type="checkbox" name="d12" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Keep one running page of what I've learned each month.</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-d12">Or tell us in your own words</button>
+    <div class="freetext" id="f-d12">
+      <label for="t-d12">In your own words</label>
+      <textarea id="t-d12" data-key="d12_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d13" aria-labelledby="h-d13">
+    <div class="dhead"><span class="secnum">13</span><h2 id="h-d13">Car &amp; Getting Around</h2></div>
+    <p class="dsub">MOT, parking, mileage — and the tube between you and the next meeting.</p>
+    <div class="opts" role="group" aria-labelledby="h-d13">
+      <label class="opt"><input type="checkbox" name="d13" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Remind me before the MOT, the service and the insurance renewal.</span></label>
+      <label class="opt"><input type="checkbox" name="d13" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Compare garages near me and book the slot that fits my week.</span></label>
+      <label class="opt"><input type="checkbox" name="d13" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Remember where I parked and what I paid.</span></label>
+      <label class="opt"><input type="checkbox" name="d13" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Find parking near a site visit and tell me what it costs before I set off.</span></label>
+      <label class="opt"><input type="checkbox" name="d13" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Track my mileage per job for the expense claims.</span></label>
+      <label class="opt"><input type="checkbox" name="d13" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Draft the appeal if I get a ticket I think is unfair.</span></label>
+      <label class="opt"><input type="checkbox" name="d13" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Tell me about tubes, buses and roadworks between me and the next meeting.</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-d13">Or tell us in your own words</button>
+    <div class="freetext" id="f-d13">
+      <label for="t-d13">In your own words</label>
+      <textarea id="t-d13" data-key="d13_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-d14" aria-labelledby="h-d14">
+    <div class="dhead"><span class="secnum">14</span><h2 id="h-d14">Shopping &amp; Deliveries</h2></div>
+    <p class="dsub">Find it, compare it, track it to the door.</p>
+    <div class="opts" role="group" aria-labelledby="h-d14">
+      <label class="opt"><input type="checkbox" name="d14" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Find it, compare it, and show me the options with where they came from and when checked.</span></label>
+      <label class="opt"><input type="checkbox" name="d14" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Reorder the regulars — shirts, boots, filters — when they run low.</span></label>
+      <label class="opt"><input type="checkbox" name="d14" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Track every parcel from order to door in one list.</span></label>
+      <label class="opt"><input type="checkbox" name="d14" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Tell me when a better price lands on the thing I'm waiting on.</span></label>
+      <label class="opt"><input type="checkbox" name="d14" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Keep my sizes and addresses on file so checkout is one instruction.</span></label>
+      <label class="opt"><input type="checkbox" name="d14" value="6"><span class="box" aria-hidden="true"></span><span class="txt">Log what I buy in one place so the money domain can see it.</span></label>
+    </div>
+    <button type="button" class="freebtn" data-toggle="f-d14">Or tell us in your own words</button>
+    <div class="freetext" id="f-d14">
+      <label for="t-d14">In your own words</label>
+      <textarea id="t-d14" data-key="d14_free" maxlength="280" placeholder="Say it however you like — optional"></textarea>
+    </div>
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; continue</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-rules" aria-labelledby="h-rules">
+    <div class="dhead"><span class="secnum">15</span><h2 id="h-rules">Your rules &amp; where we meet</h2></div>
+    <p class="dsub">The last screen before your summary: the lines the assistant never crosses, and where it reaches you.</p>
+
+    <p class="qhead" id="h-rules-tick">Tick the rules my assistant never breaks</p>
+    <p class="qwhy">These lines hold every day, on every task. Tick the ones you want set in stone — add your own below.</p>
+    <div class="opts" role="group" aria-labelledby="h-rules-tick">
+      <label class="opt"><input type="checkbox" name="rules" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Never send money, confirm a booking or pay a bill unless I approve it in the moment.</span></label>
+      <label class="opt"><input type="checkbox" name="rules" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Never send an email under my name without me reading the final text.</span></label>
+      <label class="opt"><input type="checkbox" name="rules" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Never touch passwords, bank logins or ID scans — they live outside you.</span></label>
+      <label class="opt"><input type="checkbox" name="rules" value="4"><span class="box" aria-hidden="true"></span><span class="txt">Never post, like or reply anywhere social. Nothing about my job search goes public.</span></label>
+      <label class="opt"><input type="checkbox" name="rules" value="5"><span class="box" aria-hidden="true"></span><span class="txt">Never share between worlds: the charity doesn't see my work mail; my work never sees my family.</span></label>
+      <label class="opt"><input type="checkbox" name="rules" value="6"><span class="box" aria-hidden="true"></span><span class="txt">If you're not sure — stop and ask me. Every time.</span></label>
+      <label class="opt"><input type="checkbox" name="rules" value="7"><span class="box" aria-hidden="true"></span><span class="txt">Urgent safety or security alerts come straight to me — even at 2am, even if everything else is down.</span></label>
+    </div>
+
+    <p class="qhead" id="h-chan">Where should your assistant reach you?</p>
+    <p class="qwhy">Pick the app you already open all day. Short messages live there.</p>
+    <div class="opts" role="radiogroup" aria-labelledby="h-chan">
+      <label class="opt"><input type="radio" name="channel" value="WhatsApp"><span class="dot" aria-hidden="true"></span><span class="txt">WhatsApp — voice notes, texts, photos</span></label>
+      <label class="opt"><input type="radio" name="channel" value="Telegram"><span class="dot" aria-hidden="true"></span><span class="txt">Telegram — full voice support</span></label>
+      <label class="opt"><input type="radio" name="channel" value="Both"><span class="dot" aria-hidden="true"></span><span class="txt">Both — the same assistant on both apps</span></label>
+    </div>
+
+    <p class="qhead" id="h-lives">Where does it live?</p>
+    <p class="qwhy">The machine it runs on — your phone, your laptop, or a quiet box at home.</p>
+    <div class="opts" role="radiogroup" aria-labelledby="h-lives">
+      <label class="opt"><input type="radio" name="lives" value="In my phone"><span class="dot" aria-hidden="true"></span><span class="txt">In my phone — with me, always</span></label>
+      <label class="opt"><input type="radio" name="lives" value="On my laptop"><span class="dot" aria-hidden="true"></span><span class="txt">On my laptop — for the heavy jobs: reports and long letters</span></label>
+      <label class="opt"><input type="radio" name="lives" value="A small always-on box at home"><span class="dot" aria-hidden="true"></span><span class="txt">A small always-on box at home — it watches overnight while I sleep</span></label>
+      <label class="opt"><input type="radio" name="lives" value="Not sure — advise me"><span class="dot" aria-hidden="true"></span><span class="txt">Not sure — advise me</span></label>
+    </div>
+
+    <p class="qhead" id="h-brief">The morning brief</p>
+    <p class="qwhy">One message, every day, at the time you choose — your calendar, the things that need you, and what was done overnight.</p>
+    <div class="opts" role="group" aria-labelledby="h-brief">
+      <label class="opt"><input type="checkbox" name="brief" value="1"><span class="box" aria-hidden="true"></span><span class="txt">Send me the daily brief — calendar, the three things that need me, what you did overnight.</span></label>
+      <label class="opt"><input type="checkbox" name="brief" value="2"><span class="box" aria-hidden="true"></span><span class="txt">Email me too when it's long or official — and keep a copy I can find.</span></label>
+      <label class="opt"><input type="checkbox" name="brief" value="3"><span class="box" aria-hidden="true"></span><span class="txt">Voice notes count. I talk while walking; you write it up.</span></label>
+    </div>
+
+    <button type="button" class="freebtn" data-toggle="f-final">Or tell us in your own words</button>
+    <div class="freetext" id="f-final">
+      <label for="t-final">Anything else, in your own words</label>
+      <textarea id="t-final" data-key="final_free" maxlength="400" placeholder="A rule, a habit, a worry, a wish — optional"></textarea>
+    </div>
+
+    <div class="nav">
+      <button type="button" class="back" data-back>‹ Back</button>
+      <button type="button" class="savenext" data-next>Save &amp; see my summary</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-end">
     <div class="summary">
       <p class="eyebrow" id="endStatus">Done</p>
-      <h2 id="h-end">Your setup, ready to send.</h2>
-      <p class="sub">Copy it, or push it straight to your chat.</p>
-      <pre id="summaryOut"></pre>
+      <h2>Your life to organise, ready to send.</h2>
+      <p class="sub">It builds as you answer. Copy it, or push it straight to your chat.</p>
+      <pre id="summaryOut" aria-live="polite"></pre>
       <div class="bodybtns">
         <button type="button" class="copybtn" id="copyBtn">Copy my answers</button>
         <button type="button" class="copybtn second" id="waBtn">Send to WhatsApp</button>
         <button type="button" class="copybtn second" id="tgBtn">Send to Telegram</button>
+        <button type="button" class="ghost" id="restartBtn">Start over</button>
       </div>
       <p class="copied" id="copied" aria-live="polite"></p>
-      <button type="button" class="ghost" id="restartBtn">Start over</button>
     </div>
   </section>
 
@@ -265,7 +545,7 @@
 <footer>
   <div class="wrap">
     <div class="rule"></div>
-    <p>Earl Super Assistant — PRD v1.1 · 18 Oct 2026</p>
+    <p>Earl Super Assistant — a private intake, v2 (life map).<br>Nothing leaves your phone until you tap Copy or Share.</p>
   </div>
 </footer>
 
@@ -273,45 +553,119 @@
 (function(){
   "use strict";
 
-  var SCREENS = ["s-q1","s-q2","s-q3","s-q4","s-q5","s-q6","s-end"];
-  var QUESTIONS = [
-    { id:"q1", screen:"s-q1" },
-    { id:"q2", screen:"s-q2" },
-    { id:"q3", screen:"s-q3" },
-    { id:"q4", screen:"s-q4" },
-    { id:"q5", screen:"s-q5" },
-    { id:"q6", screen:"s-q6" }
+  var SCREENS = ["s-intro","s-d1","s-d2","s-d3","s-d4","s-d5","s-d6","s-d7","s-d8","s-d9","s-d10","s-d11","s-d12","s-d13","s-d14","s-rules","s-end"];
+  var DOMAINS = [
+    { id:"d1",  num:"01", title:"Email & Inbox" },
+    { id:"d2",  num:"02", title:"Calendar & Meetings" },
+    { id:"d3",  num:"03", title:"Travel & Bookings" },
+    { id:"d4",  num:"04", title:"Money & Receipts" },
+    { id:"d5",  num:"05", title:"My Safety Work" },
+    { id:"d6",  num:"06", title:"Finding My Next Role" },
+    { id:"d7",  num:"07", title:"Documents & Files" },
+    { id:"d8",  num:"08", title:"Family, Friends & Gifts" },
+    { id:"d9",  num:"09", title:"Health" },
+    { id:"d10", num:"10", title:"Home & Errands" },
+    { id:"d11", num:"11", title:"Charity" },
+    { id:"d12", num:"12", title:"Learning" },
+    { id:"d13", num:"13", title:"Car & Getting Around" },
+    { id:"d14", num:"14", title:"Shopping & Deliveries" }
   ];
-  var TITLES = {
-    q1:"Where your assistant reaches you",
-    q2:"The first mission handed over",
-    q3:"How much you stay in the loop",
-    q4:"How it handles your emails at the start",
-    q5:"What happens to the OTTO box",
-    q6:"THE proof that it works"
+  var RULE_TEXTS = {
+    "1":"Never send money, confirm a booking or pay a bill unless I approve it in the moment.",
+    "2":"Never send an email under my name without me reading the final text.",
+    "3":"Never touch passwords, bank logins or ID scans — they live outside you.",
+    "4":"Never post, like or reply anywhere social. Nothing about my job search goes public.",
+    "5":"Never share between worlds: the charity doesn't see my work mail; my work never sees my family.",
+    "6":"If you're not sure — stop and ask me. Every time.",
+    "7":"Urgent safety or security alerts come straight to me — even at 2am, even if everything else is down."
   };
+  var BRIEF_TEXTS = {
+    "1": "Send me the daily brief — calendar, the three things that need me, what you did overnight.",
+    "2": "Email me too when it's long or official — and keep a copy I can find.",
+    "3": "Voice notes count. I talk while walking; you write it up."
+  };
+  var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
   var answers = {};
   var idx = 0;
-  var freeOpen = {};
 
-  var progressFill = document.getElementById("pfill");
-  var progressCount = document.getElementById("pcount");
+  /* Persist answers across a phone refresh (F4): save on every screen change,
+     restore once at load. Nothing leaves the device — plain localStorage. */
+  var STORE_KEY = "earl_la_v2";
+  function persistAnswers(){ try { localStorage.setItem(STORE_KEY, JSON.stringify(answers)); } catch(e){} }
+  function restoreAnswers(){
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if(!raw){ return; }
+      var saved = JSON.parse(raw);
+      if(saved && typeof saved === "object"){ answers = saved; }
+    } catch(e){}
+  }
+  function reflectAnswers(){
+    /* re-tick inputs and refill textareas from the restored answers */
+    Object.keys(answers).forEach(function(key){
+      if(key.indexOf("_free") > -1){
+        var ta = document.querySelector('textarea[data-key="' + key + '"]');
+        if(ta){ ta.value = answers[key]; }
+        return;
+      }
+      var vals = Array.isArray(answers[key]) ? answers[key] : [answers[key]];
+      document.querySelectorAll('input[name="' + key + '"]').forEach(function(inp){
+        var txt = inp.closest(".opt") && inp.closest(".opt").querySelector(".txt");
+        var match = vals.some(function(v){
+          return v === inp.value || (txt && v === txt.textContent);
+        });
+        inp.checked = match;
+        var card = inp.closest(".opt");
+        if(card){ card.classList.toggle("checked", match); }
+      });
+    });
+    refreshProgress();
+  }
 
-  function $(sel){ return document.querySelector(sel); }
+  /* Parse one screen into answers. Checkbox groups become arrays of the
+     ticked task texts; radios store their value; textareas use data-key. */
+  function persistScreen(screenId){
+    var sc = document.getElementById(screenId);
+    if(!sc){ return; }
+    var seenBoxes = {};
+    sc.querySelectorAll("input[type=checkbox]").forEach(function(cb){
+      var name = cb.name;
+      if(seenBoxes[name]){ return; }
+      seenBoxes[name] = true;
+      var picked = [];
+      sc.querySelectorAll('input[name="' + name + '"]:checked').forEach(function(x){
+        var txt = x.closest(".opt").querySelector(".txt");
+        picked.push(txt ? txt.textContent : x.value);
+      });
+      if(picked.length){ answers[name] = picked; } else { delete answers[name]; }
+    });
+    var seenRadios = {};
+    sc.querySelectorAll("input[type=radio]").forEach(function(r){
+      var name = r.name;
+      if(seenRadios[name]){ return; }
+      seenRadios[name] = true;
+      var sel = sc.querySelector('input[name="' + name + '"]:checked');
+      if(sel){ answers[name] = sel.value; } else { delete answers[name]; }
+    });
+    sc.querySelectorAll("textarea[data-key]").forEach(function(ta){
+      var key = ta.getAttribute("data-key");
+      var v = ta.value.trim();
+      if(v){ answers[key] = v; } else { delete answers[key]; }
+    });
+  }
 
-  function currentScreen(){ return document.getElementById(SCREENS[idx]); }
+  function domainTouched(name){
+    if(document.querySelector('input[name="' + name + '"]:checked')){ return true; }
+    var ta = document.getElementById("t-" + name);
+    return !!(ta && ta.value.trim() !== "");
+  }
 
   function refreshProgress(){
-    var answered = 0;
-    QUESTIONS.forEach(function(q){
-      var radios = document.querySelectorAll('input[name="' + q.id + '"]');
-      var hasRadio = !!document.querySelector('input[name="' + q.id + '"]:checked');
-      var hasFree = (document.getElementById("t-" + q.id).value.trim() !== "");
-      if (hasRadio || hasFree) answered++;
-    });
-    progressCount.textContent = answered + " of 6 answered";
-    progressFill.style.width = Math.round(answered / QUESTIONS.length * 100) + "%";
+    var n = 0;
+    DOMAINS.forEach(function(dg){ if(domainTouched(dg.id)){ n++; } });
+    document.getElementById("pcount").textContent = n + " of 14 answered";
+    document.getElementById("pfill").style.width = Math.round(n / 14 * 100) + "%";
   }
 
   function show(i){
@@ -319,21 +673,15 @@
     SCREENS.forEach(function(id, n){
       document.getElementById(id).classList.toggle("active", n === i);
     });
-    var back = currentScreen().querySelector("[data-back]");
-    if (back){ back.classList.toggle("visible", i > 0); }
+    var back = document.getElementById(SCREENS[i]).querySelector("[data-back]");
+    if(back){ back.classList.toggle("visible", i > 0); }
     refreshProgress();
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }
 
-  document.querySelectorAll(".freebtn").forEach(function(btn){
-    btn.addEventListener("click", function(){
-      var box = document.getElementById(btn.getAttribute("data-toggle"));
-      var open = box.classList.toggle("show");
-      btn.textContent = open ? "Hide the free box" : "Or write your own answer";
-      if (open){ box.querySelector("textarea").focus(); }
-    });
-  });
-
+  /* The hidden inputs still receive label activation and keyboard events;
+     the change listener syncs the card. No manual toggle here: a checkbox
+     toggled by hand plus the native label activation would cancel out. */
   document.querySelectorAll(".opt input").forEach(function(input){
     input.addEventListener("change", function(){
       var name = input.name;
@@ -344,71 +692,90 @@
     });
   });
 
-  document.querySelectorAll(".opt").forEach(function(label){
-    label.addEventListener("click", function(e){
-      if (e.target.tagName === "INPUT") return;
-      var input = label.querySelector("input");
-      if (input && !input.checked){
-        input.checked = true;
-        var name = input.name;
-        document.querySelectorAll('input[name="' + name + '"]').forEach(function(r){
-          r.closest(".opt").classList.toggle("checked", r.checked);
-        });
-        refreshProgress();
-      }
-    });
+  document.querySelectorAll("textarea[data-key]").forEach(function(ta){
+    ta.addEventListener("input", refreshProgress);
   });
 
-  document.querySelectorAll("textarea[id^='t-']").forEach(function(ta){
-    ta.addEventListener("input", refreshProgress);
+  document.querySelectorAll(".freebtn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var box = document.getElementById(btn.getAttribute("data-toggle"));
+      var open = box.classList.toggle("show");
+      btn.textContent = open ? "Hide the free box" : "Or tell us in your own words";
+      if(open){ box.querySelector("textarea").focus(); }
+    });
   });
 
   document.querySelectorAll("[data-next]").forEach(function(btn){
     btn.addEventListener("click", function(){
-      var q = QUESTIONS[idx];
-      var input = document.querySelector('input[name="' + q.id + '"]:checked');
-      if (input){ answers[q.id] = input.value; }
-      else { delete answers[q.id]; }
-      var ta = document.getElementById("t-" + q.id);
-      var free = ta.value.trim();
-      if (free){ answers[q.id + "_free"] = free; }
-      else { delete answers[q.id + "_free"]; }
+      persistScreen(SCREENS[idx]);
+      persistAnswers();
       var next = idx + 1;
-      if (next < SCREENS.length - 1){ show(next); }
-      else { show(next); renderSummary(); }
+      if(SCREENS[next] === "s-end"){ renderSummary(); }
+      show(next);
     });
   });
 
   document.querySelectorAll("[data-back]").forEach(function(btn){
     btn.addEventListener("click", function(){
-      if (idx > 0){ show(idx - 1); }
+      if(idx > 0){ persistScreen(SCREENS[idx]); persistAnswers(); show(idx - 1); }
     });
   });
 
-  function buildSummary(){
-    var lines = ["EARL SUPER ASSISTANT — my setup answers (18 Oct 2026)"];
+  function areaCount(){
     var n = 0;
-    QUESTIONS.forEach(function(q){
-      var choice = answers[q.id] || "(no answer)";
-      var free = answers[q.id + "_free"];
-      lines.push("");
-      n++;
-      lines.push(n + ". " + TITLES[q.id]);
-      lines.push("   → " + choice);
-      if (free){ lines.push("   my words: " + free); }
+    DOMAINS.forEach(function(dg){
+      if((answers[dg.id] && answers[dg.id].length) || answers[dg.id + "_free"]){ n++; }
     });
-    lines.push("");
-    lines.push("Sent from the 6-question setup page.");
-    return lines.join("\n");
+    return n;
+  }
+
+  function buildSummary(){
+    var d = new Date();
+    var today = d.getDate() + " " + MONTHS[d.getMonth()] + " " + d.getFullYear();
+    var L = [];
+    L.push("EARL SUPER ASSISTANT — my life to organise (" + today + ")");
+    DOMAINS.forEach(function(dg){
+      var tasks = answers[dg.id] || [];
+      var free = answers[dg.id + "_free"];
+      if(!tasks.length && !free){ return; }
+      L.push("");
+      L.push(dg.num + " " + dg.title + " — " + tasks.length + (tasks.length === 1 ? " task" : " tasks") + " ticked");
+      tasks.forEach(function(t){ L.push("   - " + t); });
+      if(free){ L.push("   my words: " + free); }
+    });
+    L.push("");
+    L.push("-- The rules my assistant never breaks --");
+    var rules = answers.rules || [];
+    if(rules.length){
+      rules.forEach(function(rv){ L.push("   - " + (RULE_TEXTS[rv] || rv)); });
+    } else {
+      L.push("   (none ticked yet)");
+    }
+    L.push("");
+    var brief = answers.brief || [];
+    if(brief.length){
+      L.push("-- The daily brief --");
+      brief.forEach(function(bv){ L.push("   - " + (BRIEF_TEXTS[bv] || bv)); });
+      L.push("");
+    }
+    L.push("-- Where we meet --");
+    L.push("Reaches me: " + (answers.channel || "(not chosen)"));
+    L.push("Lives: " + (answers.lives || "(not chosen)"));
+    if(answers.final_free){ L.push("   my words: " + answers.final_free); }
+    L.push("");
+    L.push("Earl marked " + areaCount() + " of 14 areas.");
+    L.push("Sent from the Earl Super Assistant intake page.");
+    return L.join("\n");
   }
 
   function renderSummary(){
     document.getElementById("summaryOut").textContent = buildSummary();
     document.getElementById("copied").textContent = "";
-    var n = 0;
-    for (var k in answers){ if (QUESTIONS.some(function(q){ return q.id === k; })) n++; }
-    document.getElementById("endStatus").textContent =
-      "Done — " + n + " of 6 answered" + (n < 6 ? " (your notes travel with it)" : "");
+    var withTasks = areaCount();
+    var tickedRules = (answers.rules || []).length;
+    var bits = [withTasks + " of 14 areas with tasks"];
+    if(tickedRules){ bits.push(tickedRules + " rule" + (tickedRules === 1 ? "" : "s") + " set"); }
+    document.getElementById("endStatus").textContent = "Done — " + bits.join(", ");
     var cb = document.getElementById("copyBtn");
     cb.classList.remove("done");
     cb.textContent = "Copy my answers";
@@ -431,16 +798,18 @@
     var note = document.getElementById("copied");
     var btn = document.getElementById("copyBtn");
     function ok(){
-      note.textContent = "Copied. Paste it back to the team who sent you this page.";
+      note.textContent = "Copied. Paste it back to whoever sent you this page.";
       btn.classList.add("done");
       btn.textContent = "Copied ✓";
     }
     function fail(){
       note.textContent = "Copy blocked by the browser — select the text above and copy it by hand.";
     }
-    if (navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(ok, function(){ if (legacyCopy(text)) ok(); else fail(); });
-    } else { if (legacyCopy(text)) ok(); else fail(); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok, function(){ if(legacyCopy(text)){ ok(); } else { fail(); } });
+    } else {
+      if(legacyCopy(text)){ ok(); } else { fail(); }
+    }
   });
 
   document.getElementById("waBtn").addEventListener("click", function(){
@@ -453,14 +822,20 @@
 
   document.getElementById("restartBtn").addEventListener("click", function(){
     answers = {};
-    document.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = false; });
+    try { localStorage.removeItem(STORE_KEY); } catch(e){}
+    document.querySelectorAll("input[type=checkbox], input[type=radio]").forEach(function(r){
+      r.checked = false;
+    });
     document.querySelectorAll(".opt.checked").forEach(function(l){ l.classList.remove("checked"); });
-    document.querySelectorAll("textarea[id^='t-']").forEach(function(t){ t.value = ""; });
+    document.querySelectorAll("textarea[data-key]").forEach(function(t){ t.value = ""; });
     document.querySelectorAll(".freetext").forEach(function(f){ f.classList.remove("show"); });
-    document.querySelectorAll(".freebtn").forEach(function(b){ b.textContent = "Or write your own answer"; });
+    document.querySelectorAll(".freebtn").forEach(function(b){ b.textContent = "Or tell us in your own words"; });
     show(0);
   });
 
+  /* restore a session interrupted by a refresh (F4) */
+  restoreAnswers();
+  if(Object.keys(answers).length){ reflectAnswers(); }
   show(0);
 })();
 </script>
