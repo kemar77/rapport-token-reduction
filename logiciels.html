@@ -843,7 +843,7 @@
   <div class="summary">
     <p class="eyebrow" id="endStatus">Done</p>
     <h2 id="h-end">Your software setup, ready to send.</h2>
-    <p class="sub">This is what we will wire up. Copy it and send it back — each app you ticked becomes a prepared connection waiting for your login.</p>
+    <p class="sub">This is what we will wire up. Copy it and send it back — we'll go through every app on your list one by one and tell you exactly which ones are ready and which ones still need something from you.</p>
     <pre id="summaryOut" aria-live="polite"></pre>
     <div class="btnrow">
       <button type="button" class="copybtn" id="copyBtn">Copy it all</button>
@@ -967,7 +967,7 @@
     if(!lines.length) L.push('(none written)');
     else lines.forEach(function(s){ L.push(s); });
     L.push('');
-    L.push('Nothing connected yet. Every app ticked above is being prepared;');
+    L.push('Nothing connected yet. We will go through every app on your list one by one:');
     L.push('each one still waits for Earl\u2019s own go before it is switched on.');
     return L.join('\n');
   }
