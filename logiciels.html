@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earl Super Assistant — your software setup</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%23B85042'/%3E%3C/svg%3E">
+<meta name="description" content="Thirty-five questions, one per task: which app do you use for each? Tick, don't type. Nothing is connected without your go.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#B85042; --forest:#2C5F2D; --sand:#E7E8D1; --ink:#1F2421; --paper:#FBF9F4;
+    --muted:#5A5F58; --surface:#FFFFFF; --ink-soft:#3C423C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+  h1,h2{font-family:'Playfair Display',Georgia,serif}
+  .progress{position:sticky;top:0;z-index:10;background:rgba(251,249,244,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--sand);padding:14px 0}
+  .progress .bar{height:6px;background:var(--sand);border-radius:999px;overflow:hidden}
+  .progress .fill{height:100%;width:0%;background:var(--terracotta);border-radius:999px;transition:width .4s cubic-bezier(.22,1,.36,1)}
+  .progress .meta{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:6px;font-weight:500;padding-right:96px}
+  header.hero{padding:64px 0 44px;text-align:center}
+  .eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta);margin-bottom:12px}
+  header.hero h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;line-height:1.15;letter-spacing:-.015em;margin-bottom:14px}
+  header.hero .sub{color:var(--muted);max-width:52ch;margin:0 auto}
+  header.hero .sub b{color:var(--ink);font-weight:600}
+  .trust{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+  .trust span{font-size:.78rem;color:var(--forest);background:rgba(44,95,45,.07);border:1px solid rgba(44,95,45,.25);border-radius:999px;padding:5px 14px;font-weight:600}
+  .screen{display:none;padding:10px 0 60px}
+  .screen.active{display:block;animation:fadein .35s ease}
+  .dhead{display:flex;align-items:baseline;gap:14px;margin-bottom:4px}
+  .secnum{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:800;color:var(--sand);line-height:1}
+  .dhead h2{font-size:1.5rem;font-weight:700;letter-spacing:-.01em}
+  .dsub{color:var(--muted);font-size:.93rem;margin:0 0 18px;max-width:58ch}
+  .qhead{font-weight:700;font-size:1.05rem;margin:26px 0 4px}
+  .qhead:first-of-type{margin-top:0}
+  .qwhy{font-size:.84rem;color:var(--muted);margin-bottom:14px;font-style:italic}
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opt{position:relative;display:flex;align-items:flex-start;gap:12px;padding:14px 18px;background:var(--surface);border:1px solid var(--sand);border-radius:12px;cursor:pointer;transition:border-color .15s, background .15s, transform .15s;font-size:.95rem}
+  .opt:hover{border-color:var(--terracotta);transform:translateX(2px)}
+  .opt input{position:absolute;opacity:0;pointer-events:none}
+  .opt .box{width:18px;height:18px;flex:none;margin-top:3px;border-radius:5px;border:2px solid var(--muted);position:relative;transition:border-color .15s}
+  .opt:has(input:focus-visible){outline:3px solid var(--terracotta);outline-offset:2px}
+  .opt:has(input:checked){border-color:var(--terracotta);background:rgba(184,80,66,.05)}
+  .opt:has(input:checked) .box{border-color:var(--terracotta)}
+  .opt:has(input:checked) .box::after{content:"";position:absolute;inset:3px;border-radius:2px;background:var(--terracotta)}
+  .opt.checked{border-color:var(--terracotta);background:rgba(184,80,66,.05)}
+  .opt.checked .box{border-color:var(--terracotta)}
+  .opt.checked .box::after{content:"";position:absolute;inset:3px;border-radius:2px;background:var(--terracotta)}
+  .opt:focus-visible,input:focus-visible,button:focus-visible,textarea:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
+  .freetext{margin-top:12px}
+  .freetext.show{display:block;animation:fadein .3s ease}
+  textarea{width:100%;min-height:96px;resize:vertical;font-family:'Inter',sans-serif;font-size:.95rem;color:var(--ink);background:var(--surface);border:1px solid var(--sand);border-radius:12px;padding:12px 14px;outline:none;transition:border-color .2s}
+  textarea:focus{border-color:var(--terracotta)}
+  .freetext label{display:block;font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:6px}
+  @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px}
+  .back{background:none;border:none;color:var(--muted);font-size:.9rem;font-weight:600;padding:10px 6px;cursor:pointer;font-family:'Inter',sans-serif;visibility:hidden;min-height:48px}
+  .back.visible{visibility:visible}
+  .savenext{background:var(--forest);color:#fff;border:none;border-radius:999px;padding:13px 28px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .2s, background .2s;min-height:48px}
+  .savenext:hover{transform:translateY(-2px);background:#254c25}
+  .savenext:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
+  .summary{margin:30px 0 30px;background:var(--ink);border-radius:20px;padding:34px 30px;color:var(--paper);box-shadow:0 16px 44px rgba(31,36,33,.26)}
+  .summary .eyebrow{color:var(--sand)}
+  .summary h2{color:var(--paper);font-size:1.7rem;font-weight:800;margin-bottom:8px}
+  .summary .sub{color:rgba(231,232,209,.75);font-size:.92rem;margin-bottom:20px}
+  #summaryOut{font-family:ui-monospace,'Cascadia Code',Consolas,Menlo,monospace;font-size:.82rem;line-height:1.75;white-space:pre-wrap;color:var(--sand);background:rgba(251,249,244,.05);border:1px solid rgba(231,232,209,.12);border-radius:12px;padding:18px 20px;max-height:340px;overflow-y:auto}
+  .copybtn{margin-top:16px;background:var(--sand);color:var(--ink);border:none;border-radius:999px;padding:13px 30px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .2s, background .2s;min-height:48px}
+  .copybtn:hover{transform:translateY(-2px);background:#fff}
+  .copybtn.done{background:var(--forest);color:#fff}
+  .copybtn.second{background:transparent;color:var(--sand);border:1px solid rgba(231,232,209,.35)}
+  .copybtn.second:hover{background:rgba(231,232,209,.12)}
+  .copybtn:focus-visible{outline:3px solid var(--paper);outline-offset:2px}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+  .copied{font-size:.85rem;color:rgba(231,232,209,.85);margin-top:12px;min-height:1.4em}
+  .ghost{margin-top:20px;background:none;border:none;color:rgba(231,232,209,.6);font-size:.85rem;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:'Inter',sans-serif;padding:8px}
+  .ghost:hover{color:var(--sand)}
+  footer{padding:34px 0 60px;text-align:center;color:var(--muted);font-size:.82rem}
+  footer .rule{width:60px;height:2px;background:var(--sand);margin:0 auto 16px;border-radius:2px}
+  .startbtn{background:var(--forest);color:#fff;border:none;border-radius:999px;padding:15px 46px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .2s, background .2s;min-height:48px;margin-top:26px}
+  .startbtn:hover{transform:translateY(-2px);background:#254c25}
+  .startbtn:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
+
+  /* --- software questionnaire: additions on top of the assistant.html system --- */
+  .trustnote{font-size:.86rem;color:var(--muted);max-width:52ch;margin:16px auto 0;text-align:center}
+  .trustnote b{color:var(--ink);font-weight:600}
+  .jumpbox{margin:0 0 30px;padding:22px 20px;background:var(--surface);border:1px solid var(--sand);border-radius:16px}
+  .jumpgrid{display:flex;flex-wrap:wrap;gap:7px}
+  .jumpbtn{width:38px;height:38px;border-radius:10px;border:1px solid var(--sand);background:var(--paper);
+    color:var(--muted);font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;
+    transition:border-color .15s,color .15s,background .15s;min-width:38px}
+  .jumpbtn:hover{border-color:var(--terracotta);color:var(--terracotta)}
+  .jumpbtn:has(input:checked){background:var(--terracotta);border-color:var(--terracotta);color:#fff}
+  .jumpbtn:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
+  .opt-hand{border-style:dashed;background:rgba(44,95,45,.04);border-color:rgba(44,95,45,.3)}
+  .opt-hand:has(input:checked){border-color:var(--forest);background:rgba(44,95,45,.09)}
+  .opt-hand:has(input:checked) .box{border-color:var(--forest)}
+  .opt-hand:has(input:checked) .box::after{background:var(--forest)}
+  .other{margin-top:16px}
+  .other label{display:block;font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:6px}
+  .other input[type=text]{width:100%;font-family:'Inter',sans-serif;font-size:.95rem;color:var(--ink);
+    background:var(--surface);border:1px solid var(--sand);border-radius:12px;padding:13px 14px;outline:none;
+    transition:border-color .2s;min-height:48px}
+  .other input[type=text]:focus{border-color:var(--terracotta)}
+  .other input[type=text]:focus-visible{outline:3px solid var(--terracotta);outline-offset:2px}
+  #s-all textarea{min-height:260px;font-size:.95rem;line-height:1.7}
+  .progbtn{position:absolute;right:24px;top:10px;background:none;border:1px solid var(--sand);border-radius:999px;
+    padding:5px 12px;font-size:.72rem;font-weight:700;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif;
+    min-height:30px}
+  .progbtn:hover{border-color:var(--terracotta);color:var(--terracotta)}
+  .progress .wrap{position:relative}
+  .countbadge{display:inline-block;margin-left:6px;font-size:.7rem;font-weight:700;color:var(--forest);
+    background:rgba(44,95,45,.08);border:1px solid rgba(44,95,45,.25);border-radius:999px;padding:2px 9px}
+  @media print{
+    .jumpbox,.progbtn{display:none!important}
+    .screen{display:none!important}
+    #s-end{display:block!important}
+    .summary{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:20px}
+    #summaryOut{max-height:none;overflow:visible;font-size:9pt}
+  }
+  @media (max-width:600px){
+    .jumpgrid{gap:6px}
+    .jumpbtn{width:100%;min-width:0;flex:1 1 40px}
+    .progbtn{position:static;margin-top:8px;display:block;width:100%}
+  }
+
+</style>
+</head>
+<body>
+<div class="progress">
+  <div class="wrap">
+    <div class="bar"><div class="fill" id="pfill"></div></div>
+    <div class="meta"><span id="pcount">0 of 35 answered</span><span>about 6 minutes</span></div>
+    <button type="button" class="progbtn" data-goto="s-intro">Index</button>
+  </div>
+</div>
+<main class="wrap">
+<section class="screen" id="s-intro" aria-labelledby="h-intro">
+  <header class="hero">
+    <p class="eyebrow">Earl Super Assistant — the software setup</p>
+    <h1>Which app do you use?</h1>
+    <p class="sub">We already have your tasks, <b>word for word</b>. What we are missing is the software you actually use — so every one of those tasks can be wired to the right tool instead of guessed at.</p>
+    <div class="trust">
+      <span>✓ Nothing to type — you tick</span>
+      <span>✓ 35 questions, about 6 minutes</span>
+      <span>✓ Nothing leaves your phone until you tap Copy</span>
+    </div>
+    <p class="trustnote">Your answers are used to <b>prepare the connections</b> (a Google login, a Microsoft login, an API key). <b>Nothing is connected, sent or shared without your go.</b></p>
+    <button type="button" class="startbtn" data-next>Start</button>
+  </header>
+  <div class="jumpbox">
+    <p class="qhead" id="h-jump">Jump to a question</p>
+    <p class="qwhy">Every question has its own screen. Tap a number to go straight there.</p>
+    <div class="jumpgrid"><button type="button" class="jumpbtn" data-goto="s-q1" aria-label="Question 1">1</button><button type="button" class="jumpbtn" data-goto="s-q2" aria-label="Question 2">2</button><button type="button" class="jumpbtn" data-goto="s-q3" aria-label="Question 3">3</button><button type="button" class="jumpbtn" data-goto="s-q4" aria-label="Question 4">4</button><button type="button" class="jumpbtn" data-goto="s-q5" aria-label="Question 5">5</button><button type="button" class="jumpbtn" data-goto="s-q6" aria-label="Question 6">6</button><button type="button" class="jumpbtn" data-goto="s-q7" aria-label="Question 7">7</button><button type="button" class="jumpbtn" data-goto="s-q8" aria-label="Question 8">8</button><button type="button" class="jumpbtn" data-goto="s-q9" aria-label="Question 9">9</button><button type="button" class="jumpbtn" data-goto="s-q10" aria-label="Question 10">10</button><button type="button" class="jumpbtn" data-goto="s-q11" aria-label="Question 11">11</button><button type="button" class="jumpbtn" data-goto="s-q12" aria-label="Question 12">12</button><button type="button" class="jumpbtn" data-goto="s-q13" aria-label="Question 13">13</button><button type="button" class="jumpbtn" data-goto="s-q14" aria-label="Question 14">14</button><button type="button" class="jumpbtn" data-goto="s-q15" aria-label="Question 15">15</button><button type="button" class="jumpbtn" data-goto="s-q16" aria-label="Question 16">16</button><button type="button" class="jumpbtn" data-goto="s-q17" aria-label="Question 17">17</button><button type="button" class="jumpbtn" data-goto="s-q18" aria-label="Question 18">18</button><button type="button" class="jumpbtn" data-goto="s-q19" aria-label="Question 19">19</button><button type="button" class="jumpbtn" data-goto="s-q20" aria-label="Question 20">20</button><button type="button" class="jumpbtn" data-goto="s-q21" aria-label="Question 21">21</button><button type="button" class="jumpbtn" data-goto="s-q22" aria-label="Question 22">22</button><button type="button" class="jumpbtn" data-goto="s-q23" aria-label="Question 23">23</button><button type="button" class="jumpbtn" data-goto="s-q24" aria-label="Question 24">24</button><button type="button" class="jumpbtn" data-goto="s-q25" aria-label="Question 25">25</button><button type="button" class="jumpbtn" data-goto="s-q26" aria-label="Question 26">26</button><button type="button" class="jumpbtn" data-goto="s-q27" aria-label="Question 27">27</button><button type="button" class="jumpbtn" data-goto="s-q28" aria-label="Question 28">28</button><button type="button" class="jumpbtn" data-goto="s-q29" aria-label="Question 29">29</button><button type="button" class="jumpbtn" data-goto="s-q30" aria-label="Question 30">30</button><button type="button" class="jumpbtn" data-goto="s-q31" aria-label="Question 31">31</button><button type="button" class="jumpbtn" data-goto="s-q32" aria-label="Question 32">32</button><button type="button" class="jumpbtn" data-goto="s-q33" aria-label="Question 33">33</button><button type="button" class="jumpbtn" data-goto="s-q34" aria-label="Question 34">34</button><button type="button" class="jumpbtn" data-goto="s-q35" aria-label="Question 35">35</button></div>
+  </div>
+</section>
+
+<section class="screen" id="s-q1" aria-labelledby="h-q1">
+  <div class="dhead"><span class="secnum">01</span><h2 id="h-q1">The day ahead at 7am</h2></div>
+  <p class="dsub">Give me the day ahead at 7am: meetings, travel, the three things that need me.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Which calendar and which travel app? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q1">
+<label class="opt"><input type="checkbox" name="q1" value="Google Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Google Calendar</span></label><label class="opt"><input type="checkbox" name="q1" value="Outlook Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Outlook Calendar</span></label><label class="opt"><input type="checkbox" name="q1" value="iCloud Calendar"><span class="box" aria-hidden="true"></span><span class="txt">iCloud Calendar</span></label><label class="opt"><input type="checkbox" name="q1" value="Google Maps"><span class="box" aria-hidden="true"></span><span class="txt">Google Maps</span></label><label class="opt"><input type="checkbox" name="q1" value="Citymapper"><span class="box" aria-hidden="true"></span><span class="txt">Citymapper</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q1_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q1">Another one — write it here (optional)</label>
+    <input type="text" id="t-q1" data-key="q1_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q2" aria-labelledby="h-q2">
+  <div class="dhead"><span class="secnum">02</span><h2 id="h-q2">Rearrange my week</h2></div>
+  <p class="dsub">Rearrange my week when the news hits it — and show me why before anything moves.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Which app holds your week? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q2">
+<label class="opt"><input type="checkbox" name="q2" value="Google Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Google Calendar</span></label><label class="opt"><input type="checkbox" name="q2" value="Outlook Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Outlook Calendar</span></label><label class="opt"><input type="checkbox" name="q2" value="Todoist"><span class="box" aria-hidden="true"></span><span class="txt">Todoist</span></label><label class="opt"><input type="checkbox" name="q2" value="Notion"><span class="box" aria-hidden="true"></span><span class="txt">Notion</span></label><label class="opt"><input type="checkbox" name="q2" value="Trello"><span class="box" aria-hidden="true"></span><span class="txt">Trello</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q2_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q2">Another one — write it here (optional)</label>
+    <input type="text" id="t-q2" data-key="q2_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q3" aria-labelledby="h-q3">
+  <div class="dhead"><span class="secnum">03</span><h2 id="h-q3">Move the train and the hotel</h2></div>
+  <p class="dsub">When a meeting moves, move the train and hotel with it and ask me to confirm.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you book trains and rooms? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q3">
+<label class="opt"><input type="checkbox" name="q3" value="Trainline"><span class="box" aria-hidden="true"></span><span class="txt">Trainline</span></label><label class="opt"><input type="checkbox" name="q3" value="SNCF Connect"><span class="box" aria-hidden="true"></span><span class="txt">SNCF Connect</span></label><label class="opt"><input type="checkbox" name="q3" value="Booking.com"><span class="box" aria-hidden="true"></span><span class="txt">Booking.com</span></label><label class="opt"><input type="checkbox" name="q3" value="Airbnb"><span class="box" aria-hidden="true"></span><span class="txt">Airbnb</span></label><label class="opt"><input type="checkbox" name="q3" value="Expedia"><span class="box" aria-hidden="true"></span><span class="txt">Expedia</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q3_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q3">Another one — write it here (optional)</label>
+    <input type="text" id="t-q3" data-key="q3_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q4" aria-labelledby="h-q4">
+  <div class="dhead"><span class="secnum">04</span><h2 id="h-q4">Track my flight, move the car</h2></div>
+  <p class="dsub">Track my flight and move the car with it — the driver waits when the plane is late.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you check the flight and book the car? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q4">
+<label class="opt"><input type="checkbox" name="q4" value="Google Flights"><span class="box" aria-hidden="true"></span><span class="txt">Google Flights</span></label><label class="opt"><input type="checkbox" name="q4" value="FlightAware"><span class="box" aria-hidden="true"></span><span class="txt">FlightAware</span></label><label class="opt"><input type="checkbox" name="q4" value="Skyscanner"><span class="box" aria-hidden="true"></span><span class="txt">Skyscanner</span></label><label class="opt"><input type="checkbox" name="q4" value="Uber"><span class="box" aria-hidden="true"></span><span class="txt">Uber</span></label><label class="opt"><input type="checkbox" name="q4" value="Blacklane"><span class="box" aria-hidden="true"></span><span class="txt">Blacklane</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q4_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q4">Another one — write it here (optional)</label>
+    <input type="text" id="t-q4" data-key="q4_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q5" aria-labelledby="h-q5">
+  <div class="dhead"><span class="secnum">05</span><h2 id="h-q5">Carbon report for my travel</h2></div>
+  <p class="dsub">Run the carbon report for my travel, when a client asks.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you keep the trips you report on? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q5">
+<label class="opt"><input type="checkbox" name="q5" value="Google Flights"><span class="box" aria-hidden="true"></span><span class="txt">Google Flights</span></label><label class="opt"><input type="checkbox" name="q5" value="Trainline"><span class="box" aria-hidden="true"></span><span class="txt">Trainline</span></label><label class="opt"><input type="checkbox" name="q5" value="Rail Europe"><span class="box" aria-hidden="true"></span><span class="txt">Rail Europe</span></label><label class="opt"><input type="checkbox" name="q5" value="Skyscanner"><span class="box" aria-hidden="true"></span><span class="txt">Skyscanner</span></label><label class="opt"><input type="checkbox" name="q5" value="Uber"><span class="box" aria-hidden="true"></span><span class="txt">Uber</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q5_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q5">Another one — write it here (optional)</label>
+    <input type="text" id="t-q5" data-key="q5_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q6" aria-labelledby="h-q6">
+  <div class="dhead"><span class="secnum">06</span><h2 id="h-q6">Chase the late invoice</h2></div>
+  <p class="dsub">Draft the chase email when an invoice is about to go late.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Which inbox do the invoices arrive in? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q6">
+<label class="opt"><input type="checkbox" name="q6" value="Gmail"><span class="box" aria-hidden="true"></span><span class="txt">Gmail</span></label><label class="opt"><input type="checkbox" name="q6" value="Outlook.com"><span class="box" aria-hidden="true"></span><span class="txt">Outlook.com</span></label><label class="opt"><input type="checkbox" name="q6" value="Microsoft 365"><span class="box" aria-hidden="true"></span><span class="txt">Microsoft 365</span></label><label class="opt"><input type="checkbox" name="q6" value="Fastmail"><span class="box" aria-hidden="true"></span><span class="txt">Fastmail</span></label><label class="opt"><input type="checkbox" name="q6" value="Proton Mail"><span class="box" aria-hidden="true"></span><span class="txt">Proton Mail</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q6_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q6">Another one — write it here (optional)</label>
+    <input type="text" id="t-q6" data-key="q6_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q7" aria-labelledby="h-q7">
+  <div class="dhead"><span class="secnum">07</span><h2 id="h-q7">Age every open invoice</h2></div>
+  <p class="dsub">Keep every open invoice aged — polite nudge, firmer note, escalation — each draft ready, none sent without me.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where does the invoice register live? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q7">
+<label class="opt"><input type="checkbox" name="q7" value="Microsoft Excel"><span class="box" aria-hidden="true"></span><span class="txt">Microsoft Excel</span></label><label class="opt"><input type="checkbox" name="q7" value="Google Sheets"><span class="box" aria-hidden="true"></span><span class="txt">Google Sheets</span></label><label class="opt"><input type="checkbox" name="q7" value="Xero"><span class="box" aria-hidden="true"></span><span class="txt">Xero</span></label><label class="opt"><input type="checkbox" name="q7" value="QuickBooks"><span class="box" aria-hidden="true"></span><span class="txt">QuickBooks</span></label><label class="opt"><input type="checkbox" name="q7" value="FreeAgent"><span class="box" aria-hidden="true"></span><span class="txt">FreeAgent</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q7_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q7">Another one — write it here (optional)</label>
+    <input type="text" id="t-q7" data-key="q7_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q8" aria-labelledby="h-q8">
+  <div class="dhead"><span class="secnum">08</span><h2 id="h-q8">One page per site</h2></div>
+  <p class="dsub">Keep one page per site: who's who, phone numbers, gate rules, access times.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you keep your site pages? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q8">
+<label class="opt"><input type="checkbox" name="q8" value="Microsoft Word"><span class="box" aria-hidden="true"></span><span class="txt">Microsoft Word</span></label><label class="opt"><input type="checkbox" name="q8" value="Google Docs"><span class="box" aria-hidden="true"></span><span class="txt">Google Docs</span></label><label class="opt"><input type="checkbox" name="q8" value="Notion"><span class="box" aria-hidden="true"></span><span class="txt">Notion</span></label><label class="opt"><input type="checkbox" name="q8" value="OneNote"><span class="box" aria-hidden="true"></span><span class="txt">OneNote</span></label><label class="opt"><input type="checkbox" name="q8" value="Evernote"><span class="box" aria-hidden="true"></span><span class="txt">Evernote</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q8_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q8">Another one — write it here (optional)</label>
+    <input type="text" id="t-q8" data-key="q8_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q9" aria-labelledby="h-q9">
+  <div class="dhead"><span class="secnum">09</span><h2 id="h-q9">Track the family lunch</h2></div>
+  <p class="dsub">Track who's coming to the family lunch and chase the ones who haven't answered.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you collect the answers? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q9">
+<label class="opt"><input type="checkbox" name="q9" value="WhatsApp"><span class="box" aria-hidden="true"></span><span class="txt">WhatsApp</span></label><label class="opt"><input type="checkbox" name="q9" value="Gmail"><span class="box" aria-hidden="true"></span><span class="txt">Gmail</span></label><label class="opt"><input type="checkbox" name="q9" value="Outlook.com"><span class="box" aria-hidden="true"></span><span class="txt">Outlook.com</span></label><label class="opt"><input type="checkbox" name="q9" value="Google Forms"><span class="box" aria-hidden="true"></span><span class="txt">Google Forms</span></label><label class="opt"><input type="checkbox" name="q9" value="Microsoft Forms"><span class="box" aria-hidden="true"></span><span class="txt">Microsoft Forms</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q9_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q9">Another one — write it here (optional)</label>
+    <input type="text" id="t-q9" data-key="q9_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q10" aria-labelledby="h-q10">
+  <div class="dhead"><span class="secnum">10</span><h2 id="h-q10">Find a gift</h2></div>
+  <p class="dsub">Find a gift for someone who has everything — and let me pick from three.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you shop for gifts? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q10">
+<label class="opt"><input type="checkbox" name="q10" value="Amazon"><span class="box" aria-hidden="true"></span><span class="txt">Amazon</span></label><label class="opt"><input type="checkbox" name="q10" value="eBay"><span class="box" aria-hidden="true"></span><span class="txt">eBay</span></label><label class="opt"><input type="checkbox" name="q10" value="John Lewis"><span class="box" aria-hidden="true"></span><span class="txt">John Lewis</span></label><label class="opt"><input type="checkbox" name="q10" value="Etsy"><span class="box" aria-hidden="true"></span><span class="txt">Etsy</span></label><label class="opt"><input type="checkbox" name="q10" value="Notonthehighstreet"><span class="box" aria-hidden="true"></span><span class="txt">Notonthehighstreet</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q10_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q10">Another one — write it here (optional)</label>
+    <input type="text" id="t-q10" data-key="q10_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q11" aria-labelledby="h-q11">
+  <div class="dhead"><span class="secnum">11</span><h2 id="h-q11">Remember last year's gifts</h2></div>
+  <p class="dsub">Remember what I gave people last year so I never repeat.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where is the gift record? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q11">
+<label class="opt"><input type="checkbox" name="q11" value="Google Sheets"><span class="box" aria-hidden="true"></span><span class="txt">Google Sheets</span></label><label class="opt"><input type="checkbox" name="q11" value="Microsoft Excel"><span class="box" aria-hidden="true"></span><span class="txt">Microsoft Excel</span></label><label class="opt"><input type="checkbox" name="q11" value="Notion"><span class="box" aria-hidden="true"></span><span class="txt">Notion</span></label><label class="opt"><input type="checkbox" name="q11" value="Airtable"><span class="box" aria-hidden="true"></span><span class="txt">Airtable</span></label><label class="opt"><input type="checkbox" name="q11" value="Apple Notes"><span class="box" aria-hidden="true"></span><span class="txt">Apple Notes</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q11_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q11">Another one — write it here (optional)</label>
+    <input type="text" id="t-q11" data-key="q11_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q12" aria-labelledby="h-q12">
+  <div class="dhead"><span class="secnum">12</span><h2 id="h-q12">Handle the RSVPs</h2></div>
+  <p class="dsub">Handle RSVPs for the wedding, the reunion, the christening.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do the replies come back to? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q12">
+<label class="opt"><input type="checkbox" name="q12" value="WhatsApp"><span class="box" aria-hidden="true"></span><span class="txt">WhatsApp</span></label><label class="opt"><input type="checkbox" name="q12" value="Google Forms"><span class="box" aria-hidden="true"></span><span class="txt">Google Forms</span></label><label class="opt"><input type="checkbox" name="q12" value="Microsoft Forms"><span class="box" aria-hidden="true"></span><span class="txt">Microsoft Forms</span></label><label class="opt"><input type="checkbox" name="q12" value="Gmail"><span class="box" aria-hidden="true"></span><span class="txt">Gmail</span></label><label class="opt"><input type="checkbox" name="q12" value="Outlook.com"><span class="box" aria-hidden="true"></span><span class="txt">Outlook.com</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q12_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q12">Another one — write it here (optional)</label>
+    <input type="text" id="t-q12" data-key="q12_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q13" aria-labelledby="h-q13">
+  <div class="dhead"><span class="secnum">13</span><h2 id="h-q13">Source a client gift</h2></div>
+  <p class="dsub">Source the gift for a client I've never met — found, wrapped, carded, delivered, within budget.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you buy client gifts? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q13">
+<label class="opt"><input type="checkbox" name="q13" value="Amazon"><span class="box" aria-hidden="true"></span><span class="txt">Amazon</span></label><label class="opt"><input type="checkbox" name="q13" value="Etsy"><span class="box" aria-hidden="true"></span><span class="txt">Etsy</span></label><label class="opt"><input type="checkbox" name="q13" value="John Lewis"><span class="box" aria-hidden="true"></span><span class="txt">John Lewis</span></label><label class="opt"><input type="checkbox" name="q13" value="eBay"><span class="box" aria-hidden="true"></span><span class="txt">eBay</span></label><label class="opt"><input type="checkbox" name="q13" value="Moonpig"><span class="box" aria-hidden="true"></span><span class="txt">Moonpig</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q13_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q13">Another one — write it here (optional)</label>
+    <input type="text" id="t-q13" data-key="q13_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q14" aria-labelledby="h-q14">
+  <div class="dhead"><span class="secnum">14</span><h2 id="h-q14">Reorder my prescription</h2></div>
+  <p class="dsub">Remind me to reorder my prescription before I run out.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Which pharmacy app do you use? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q14">
+<label class="opt"><input type="checkbox" name="q14" value="NHS app"><span class="box" aria-hidden="true"></span><span class="txt">NHS app</span></label><label class="opt"><input type="checkbox" name="q14" value="MyPharmacy"><span class="box" aria-hidden="true"></span><span class="txt">MyPharmacy</span></label><label class="opt"><input type="checkbox" name="q14" value="Echo Pharmacy"><span class="box" aria-hidden="true"></span><span class="txt">Echo Pharmacy</span></label><label class="opt"><input type="checkbox" name="q14" value="Chemist4U"><span class="box" aria-hidden="true"></span><span class="txt">Chemist4U</span></label><label class="opt"><input type="checkbox" name="q14" value="my local pharmacy's app"><span class="box" aria-hidden="true"></span><span class="txt">my local pharmacy's app</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q14_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q14">Another one — write it here (optional)</label>
+    <input type="text" id="t-q14" data-key="q14_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q15" aria-labelledby="h-q15">
+  <div class="dhead"><span class="secnum">15</span><h2 id="h-q15">Find a physio</h2></div>
+  <p class="dsub">Find a physio near home with slots outside work hours.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you look for a physio? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q15">
+<label class="opt"><input type="checkbox" name="q15" value="Google Maps"><span class="box" aria-hidden="true"></span><span class="txt">Google Maps</span></label><label class="opt"><input type="checkbox" name="q15" value="Fresha"><span class="box" aria-hidden="true"></span><span class="txt">Fresha</span></label><label class="opt"><input type="checkbox" name="q15" value="Treatwell"><span class="box" aria-hidden="true"></span><span class="txt">Treatwell</span></label><label class="opt"><input type="checkbox" name="q15" value="MyPhysio"><span class="box" aria-hidden="true"></span><span class="txt">MyPhysio</span></label><label class="opt"><input type="checkbox" name="q15" value="Nuffield Health"><span class="box" aria-hidden="true"></span><span class="txt">Nuffield Health</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q15_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q15">Another one — write it here (optional)</label>
+    <input type="text" id="t-q15" data-key="q15_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q16" aria-labelledby="h-q16">
+  <div class="dhead"><span class="secnum">16</span><h2 id="h-q16">Vaccinations and medical records</h2></div>
+  <p class="dsub">Keep vaccinations and medical records in one place for travel and for work.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do the records live? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q16">
+<label class="opt"><input type="checkbox" name="q16" value="NHS app"><span class="box" aria-hidden="true"></span><span class="txt">NHS app</span></label><label class="opt"><input type="checkbox" name="q16" value="Google Drive"><span class="box" aria-hidden="true"></span><span class="txt">Google Drive</span></label><label class="opt"><input type="checkbox" name="q16" value="OneDrive"><span class="box" aria-hidden="true"></span><span class="txt">OneDrive</span></label><label class="opt"><input type="checkbox" name="q16" value="Dropbox"><span class="box" aria-hidden="true"></span><span class="txt">Dropbox</span></label><label class="opt"><input type="checkbox" name="q16" value="Notion"><span class="box" aria-hidden="true"></span><span class="txt">Notion</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q16_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q16">Another one — write it here (optional)</label>
+    <input type="text" id="t-q16" data-key="q16_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q17" aria-labelledby="h-q17">
+  <div class="dhead"><span class="secnum">17</span><h2 id="h-q17">The awkward emails</h2></div>
+  <p class="dsub">Draft the awkward emails: to doctors, dentists, insurers. I send them.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Which inbox do you write them in? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q17">
+<label class="opt"><input type="checkbox" name="q17" value="Gmail"><span class="box" aria-hidden="true"></span><span class="txt">Gmail</span></label><label class="opt"><input type="checkbox" name="q17" value="Outlook.com"><span class="box" aria-hidden="true"></span><span class="txt">Outlook.com</span></label><label class="opt"><input type="checkbox" name="q17" value="Microsoft 365"><span class="box" aria-hidden="true"></span><span class="txt">Microsoft 365</span></label><label class="opt"><input type="checkbox" name="q17" value="Proton Mail"><span class="box" aria-hidden="true"></span><span class="txt">Proton Mail</span></label><label class="opt"><input type="checkbox" name="q17" value="Fastmail"><span class="box" aria-hidden="true"></span><span class="txt">Fastmail</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q17_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q17">Another one — write it here (optional)</label>
+    <input type="text" id="t-q17" data-key="q17_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q18" aria-labelledby="h-q18">
+  <div class="dhead"><span class="secnum">18</span><h2 id="h-q18">Runs and sleep</h2></div>
+  <p class="dsub">Track my runs and my sleep and give me one honest line a week.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Which tracker do you wear? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q18">
+<label class="opt"><input type="checkbox" name="q18" value="Strava"><span class="box" aria-hidden="true"></span><span class="txt">Strava</span></label><label class="opt"><input type="checkbox" name="q18" value="Garmin Connect"><span class="box" aria-hidden="true"></span><span class="txt">Garmin Connect</span></label><label class="opt"><input type="checkbox" name="q18" value="Fitbit"><span class="box" aria-hidden="true"></span><span class="txt">Fitbit</span></label><label class="opt"><input type="checkbox" name="q18" value="Apple Health"><span class="box" aria-hidden="true"></span><span class="txt">Apple Health</span></label><label class="opt"><input type="checkbox" name="q18" value="Samsung Health"><span class="box" aria-hidden="true"></span><span class="txt">Samsung Health</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q18_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q18">Another one — write it here (optional)</label>
+    <input type="text" id="t-q18" data-key="q18_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q19" aria-labelledby="h-q19">
+  <div class="dhead"><span class="secnum">19</span><h2 id="h-q19">Plumber, electrician, three quotes</h2></div>
+  <p class="dsub">Find a plumber or electrician with good reviews and ask three of them to quote.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you find tradespeople? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q19">
+<label class="opt"><input type="checkbox" name="q19" value="Google Maps"><span class="box" aria-hidden="true"></span><span class="txt">Google Maps</span></label><label class="opt"><input type="checkbox" name="q19" value="Checkatrade"><span class="box" aria-hidden="true"></span><span class="txt">Checkatrade</span></label><label class="opt"><input type="checkbox" name="q19" value="RatedPeople"><span class="box" aria-hidden="true"></span><span class="txt">RatedPeople</span></label><label class="opt"><input type="checkbox" name="q19" value="TrustMark"><span class="box" aria-hidden="true"></span><span class="txt">TrustMark</span></label><label class="opt"><input type="checkbox" name="q19" value="MyBuilder"><span class="box" aria-hidden="true"></span><span class="txt">MyBuilder</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q19_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q19">Another one — write it here (optional)</label>
+    <input type="text" id="t-q19" data-key="q19_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q20" aria-labelledby="h-q20">
+  <div class="dhead"><span class="secnum">20</span><h2 id="h-q20">Shopping list and staples</h2></div>
+  <p class="dsub">Keep a running shopping list; reorder the staples every week.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where does the list live? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q20">
+<label class="opt"><input type="checkbox" name="q20" value="Amazon"><span class="box" aria-hidden="true"></span><span class="txt">Amazon</span></label><label class="opt"><input type="checkbox" name="q20" value="Tesco"><span class="box" aria-hidden="true"></span><span class="txt">Tesco</span></label><label class="opt"><input type="checkbox" name="q20" value="Sainsbury's"><span class="box" aria-hidden="true"></span><span class="txt">Sainsbury's</span></label><label class="opt"><input type="checkbox" name="q20" value="Ocado"><span class="box" aria-hidden="true"></span><span class="txt">Ocado</span></label><label class="opt"><input type="checkbox" name="q20" value="Morrisons"><span class="box" aria-hidden="true"></span><span class="txt">Morrisons</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q20_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q20">Another one — write it here (optional)</label>
+    <input type="text" id="t-q20" data-key="q20_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q21" aria-labelledby="h-q21">
+  <div class="dhead"><span class="secnum">21</span><h2 id="h-q21">Bins tonight</h2></div>
+  <p class="dsub">Tell me which bins go out tonight.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where is the collection calendar? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q21">
+<label class="opt"><input type="checkbox" name="q21" value="my council app"><span class="box" aria-hidden="true"></span><span class="txt">my council app</span></label><label class="opt"><input type="checkbox" name="q21" value="Google Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Google Calendar</span></label><label class="opt"><input type="checkbox" name="q21" value="Outlook Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Outlook Calendar</span></label><label class="opt"><input type="checkbox" name="q21" value="Google Maps"><span class="box" aria-hidden="true"></span><span class="txt">Google Maps</span></label><label class="opt"><input type="checkbox" name="q21" value="my phone notes"><span class="box" aria-hidden="true"></span><span class="txt">my phone notes</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q21_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q21">Another one — write it here (optional)</label>
+    <input type="text" id="t-q21" data-key="q21_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q22" aria-labelledby="h-q22">
+  <div class="dhead"><span class="secnum">22</span><h2 id="h-q22">The letters I keep postponing</h2></div>
+  <p class="dsub">Draft the letters I keep postponing — landlord, council, gym cancellation, complaint.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you write, and where do you send from? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q22">
+<label class="opt"><input type="checkbox" name="q22" value="Gmail"><span class="box" aria-hidden="true"></span><span class="txt">Gmail</span></label><label class="opt"><input type="checkbox" name="q22" value="Outlook.com"><span class="box" aria-hidden="true"></span><span class="txt">Outlook.com</span></label><label class="opt"><input type="checkbox" name="q22" value="Microsoft Word"><span class="box" aria-hidden="true"></span><span class="txt">Microsoft Word</span></label><label class="opt"><input type="checkbox" name="q22" value="Google Docs"><span class="box" aria-hidden="true"></span><span class="txt">Google Docs</span></label><label class="opt"><input type="checkbox" name="q22" value="Notion"><span class="box" aria-hidden="true"></span><span class="txt">Notion</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q22_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q22">Another one — write it here (optional)</label>
+    <input type="text" id="t-q22" data-key="q22_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q23" aria-labelledby="h-q23">
+  <div class="dhead"><span class="secnum">23</span><h2 id="h-q23">The stock-take</h2></div>
+  <p class="dsub">Run the stock-take: what's used up at home and needs replacing.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where is the stock-take list? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q23">
+<label class="opt"><input type="checkbox" name="q23" value="Google Sheets"><span class="box" aria-hidden="true"></span><span class="txt">Google Sheets</span></label><label class="opt"><input type="checkbox" name="q23" value="Microsoft Excel"><span class="box" aria-hidden="true"></span><span class="txt">Microsoft Excel</span></label><label class="opt"><input type="checkbox" name="q23" value="Notion"><span class="box" aria-hidden="true"></span><span class="txt">Notion</span></label><label class="opt"><input type="checkbox" name="q23" value="Airtable"><span class="box" aria-hidden="true"></span><span class="txt">Airtable</span></label><label class="opt"><input type="checkbox" name="q23" value="Google Photos"><span class="box" aria-hidden="true"></span><span class="txt">Google Photos</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q23_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q23">Another one — write it here (optional)</label>
+    <input type="text" id="t-q23" data-key="q23_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q24" aria-labelledby="h-q24">
+  <div class="dhead"><span class="secnum">24</span><h2 id="h-q24">The connected house kit</h2></div>
+  <p class="dsub">Tie the connected house kit into one routine — the lights, the purifier — on my words, not an app-hunt.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Which app controls your kit? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q24">
+<label class="opt"><input type="checkbox" name="q24" value="Philips Hue"><span class="box" aria-hidden="true"></span><span class="txt">Philips Hue</span></label><label class="opt"><input type="checkbox" name="q24" value="SwitchBot"><span class="box" aria-hidden="true"></span><span class="txt">SwitchBot</span></label><label class="opt"><input type="checkbox" name="q24" value="Google Home"><span class="box" aria-hidden="true"></span><span class="txt">Google Home</span></label><label class="opt"><input type="checkbox" name="q24" value="Amazon Alexa"><span class="box" aria-hidden="true"></span><span class="txt">Amazon Alexa</span></label><label class="opt"><input type="checkbox" name="q24" value="Home Assistant"><span class="box" aria-hidden="true"></span><span class="txt">Home Assistant</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q24_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q24">Another one — write it here (optional)</label>
+    <input type="text" id="t-q24" data-key="q24_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q25" aria-labelledby="h-q25">
+  <div class="dhead"><span class="secnum">25</span><h2 id="h-q25">The house year</h2></div>
+  <p class="dsub">Keep the house year honest — alarms in autumn, boiler before winter, first-aid kit restocked — booked and logged.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where are the dates tracked? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q25">
+<label class="opt"><input type="checkbox" name="q25" value="Google Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Google Calendar</span></label><label class="opt"><input type="checkbox" name="q25" value="Outlook Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Outlook Calendar</span></label><label class="opt"><input type="checkbox" name="q25" value="Todoist"><span class="box" aria-hidden="true"></span><span class="txt">Todoist</span></label><label class="opt"><input type="checkbox" name="q25" value="Google Sheets"><span class="box" aria-hidden="true"></span><span class="txt">Google Sheets</span></label><label class="opt"><input type="checkbox" name="q25" value="Notion"><span class="box" aria-hidden="true"></span><span class="txt">Notion</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q25_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q25">Another one — write it here (optional)</label>
+    <input type="text" id="t-q25" data-key="q25_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q26" aria-labelledby="h-q26">
+  <div class="dhead"><span class="secnum">26</span><h2 id="h-q26">Chase the volunteers</h2></div>
+  <p class="dsub">Chase the volunteers who haven't confirmed the match-day roster.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you message them and hold the roster? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q26">
+<label class="opt"><input type="checkbox" name="q26" value="WhatsApp"><span class="box" aria-hidden="true"></span><span class="txt">WhatsApp</span></label><label class="opt"><input type="checkbox" name="q26" value="Gmail"><span class="box" aria-hidden="true"></span><span class="txt">Gmail</span></label><label class="opt"><input type="checkbox" name="q26" value="Outlook.com"><span class="box" aria-hidden="true"></span><span class="txt">Outlook.com</span></label><label class="opt"><input type="checkbox" name="q26" value="Google Sheets"><span class="box" aria-hidden="true"></span><span class="txt">Google Sheets</span></label><label class="opt"><input type="checkbox" name="q26" value="Trello"><span class="box" aria-hidden="true"></span><span class="txt">Trello</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q26_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q26">Another one — write it here (optional)</label>
+    <input type="text" id="t-q26" data-key="q26_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q27" aria-labelledby="h-q27">
+  <div class="dhead"><span class="secnum">27</span><h2 id="h-q27">Certifications due for renewal</h2></div>
+  <p class="dsub">Remind me when my safety certifications are due for renewal — months early, not days.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where are the expiry dates written down? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q27">
+<label class="opt"><input type="checkbox" name="q27" value="Google Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Google Calendar</span></label><label class="opt"><input type="checkbox" name="q27" value="Outlook Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Outlook Calendar</span></label><label class="opt"><input type="checkbox" name="q27" value="Todoist"><span class="box" aria-hidden="true"></span><span class="txt">Todoist</span></label><label class="opt"><input type="checkbox" name="q27" value="Notion"><span class="box" aria-hidden="true"></span><span class="txt">Notion</span></label><label class="opt"><input type="checkbox" name="q27" value="Microsoft Excel"><span class="box" aria-hidden="true"></span><span class="txt">Microsoft Excel</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q27_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q27">Another one — write it here (optional)</label>
+    <input type="text" id="t-q27" data-key="q27_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q28" aria-labelledby="h-q28">
+  <div class="dhead"><span class="secnum">28</span><h2 id="h-q28">Reorder the regulars</h2></div>
+  <p class="dsub">Reorder the regulars — shirts, boots, filters — when they run low.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you buy the regulars? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q28">
+<label class="opt"><input type="checkbox" name="q28" value="Amazon"><span class="box" aria-hidden="true"></span><span class="txt">Amazon</span></label><label class="opt"><input type="checkbox" name="q28" value="eBay"><span class="box" aria-hidden="true"></span><span class="txt">eBay</span></label><label class="opt"><input type="checkbox" name="q28" value="Wiggle"><span class="box" aria-hidden="true"></span><span class="txt">Wiggle</span></label><label class="opt"><input type="checkbox" name="q28" value="John Lewis"><span class="box" aria-hidden="true"></span><span class="txt">John Lewis</span></label><label class="opt"><input type="checkbox" name="q28" value="Screwfix"><span class="box" aria-hidden="true"></span><span class="txt">Screwfix</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q28_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q28">Another one — write it here (optional)</label>
+    <input type="text" id="t-q28" data-key="q28_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q29" aria-labelledby="h-q29">
+  <div class="dhead"><span class="secnum">29</span><h2 id="h-q29">A private room for a client dinner</h2></div>
+  <p class="dsub">Book a private room for a client dinner — eight people, discreet.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Which booking site do you use? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q29">
+<label class="opt"><input type="checkbox" name="q29" value="TheFork"><span class="box" aria-hidden="true"></span><span class="txt">TheFork</span></label><label class="opt"><input type="checkbox" name="q29" value="OpenTable"><span class="box" aria-hidden="true"></span><span class="txt">OpenTable</span></label><label class="opt"><input type="checkbox" name="q29" value="DineOut"><span class="box" aria-hidden="true"></span><span class="txt">DineOut</span></label><label class="opt"><input type="checkbox" name="q29" value="SquareMeal"><span class="box" aria-hidden="true"></span><span class="txt">SquareMeal</span></label><label class="opt"><input type="checkbox" name="q29" value="the restaurant's own website"><span class="box" aria-hidden="true"></span><span class="txt">the restaurant's own website</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q29_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q29">Another one — write it here (optional)</label>
+    <input type="text" id="t-q29" data-key="q29_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q30" aria-labelledby="h-q30">
+  <div class="dhead"><span class="secnum">30</span><h2 id="h-q30">The same table I liked last time</h2></div>
+  <p class="dsub">Book the same table I liked last time — and tell them it's my anniversary.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where is that table written down? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q30">
+<label class="opt"><input type="checkbox" name="q30" value="TheFork"><span class="box" aria-hidden="true"></span><span class="txt">TheFork</span></label><label class="opt"><input type="checkbox" name="q30" value="OpenTable"><span class="box" aria-hidden="true"></span><span class="txt">OpenTable</span></label><label class="opt"><input type="checkbox" name="q30" value="DineOut"><span class="box" aria-hidden="true"></span><span class="txt">DineOut</span></label><label class="opt"><input type="checkbox" name="q30" value="Google Maps"><span class="box" aria-hidden="true"></span><span class="txt">Google Maps</span></label><label class="opt"><input type="checkbox" name="q30" value="my notes app"><span class="box" aria-hidden="true"></span><span class="txt">my notes app</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q30_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q30">Another one — write it here (optional)</label>
+    <input type="text" id="t-q30" data-key="q30_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q31" aria-labelledby="h-q31">
+  <div class="dhead"><span class="secnum">31</span><h2 id="h-q31">My usual spots on file</h2></div>
+  <p class="dsub">Keep my usual spots on file — the place, the table, the time — and just use them.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you keep the list of favourites? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q31">
+<label class="opt"><input type="checkbox" name="q31" value="Google Maps"><span class="box" aria-hidden="true"></span><span class="txt">Google Maps</span></label><label class="opt"><input type="checkbox" name="q31" value="Apple Maps"><span class="box" aria-hidden="true"></span><span class="txt">Apple Maps</span></label><label class="opt"><input type="checkbox" name="q31" value="Google Keep"><span class="box" aria-hidden="true"></span><span class="txt">Google Keep</span></label><label class="opt"><input type="checkbox" name="q31" value="Notion"><span class="box" aria-hidden="true"></span><span class="txt">Notion</span></label><label class="opt"><input type="checkbox" name="q31" value="my phone notes"><span class="box" aria-hidden="true"></span><span class="txt">my phone notes</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q31_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q31">Another one — write it here (optional)</label>
+    <input type="text" id="t-q31" data-key="q31_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q32" aria-labelledby="h-q32">
+  <div class="dhead"><span class="secnum">32</span><h2 id="h-q32">Honest alternatives</h2></div>
+  <p class="dsub">When the first choice is full, come back with the honest alternatives — other nights, other times, nearby.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you look when it's full? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q32">
+<label class="opt"><input type="checkbox" name="q32" value="TheFork"><span class="box" aria-hidden="true"></span><span class="txt">TheFork</span></label><label class="opt"><input type="checkbox" name="q32" value="OpenTable"><span class="box" aria-hidden="true"></span><span class="txt">OpenTable</span></label><label class="opt"><input type="checkbox" name="q32" value="DineOut"><span class="box" aria-hidden="true"></span><span class="txt">DineOut</span></label><label class="opt"><input type="checkbox" name="q32" value="Google Maps"><span class="box" aria-hidden="true"></span><span class="txt">Google Maps</span></label><label class="opt"><input type="checkbox" name="q32" value="SquareMeal"><span class="box" aria-hidden="true"></span><span class="txt">SquareMeal</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q32_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q32">Another one — write it here (optional)</label>
+    <input type="text" id="t-q32" data-key="q32_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q33" aria-labelledby="h-q33">
+  <div class="dhead"><span class="secnum">33</span><h2 id="h-q33">Client hospitality</h2></div>
+  <p class="dsub">Book client hospitality — the seats, the lunch, the room — when a client deserves a day.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do you book the seats and the room? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q33">
+<label class="opt"><input type="checkbox" name="q33" value="Ticketmaster"><span class="box" aria-hidden="true"></span><span class="txt">Ticketmaster</span></label><label class="opt"><input type="checkbox" name="q33" value="StubHub"><span class="box" aria-hidden="true"></span><span class="txt">StubHub</span></label><label class="opt"><input type="checkbox" name="q33" value="SeatPlan"><span class="box" aria-hidden="true"></span><span class="txt">SeatPlan</span></label><label class="opt"><input type="checkbox" name="q33" value="Google Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Google Calendar</span></label><label class="opt"><input type="checkbox" name="q33" value="Outlook Calendar"><span class="box" aria-hidden="true"></span><span class="txt">Outlook Calendar</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q33_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q33">Another one — write it here (optional)</label>
+    <input type="text" id="t-q33" data-key="q33_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q34" aria-labelledby="h-q34">
+  <div class="dhead"><span class="secnum">34</span><h2 id="h-q34">Cancel the forgotten ones</h2></div>
+  <p class="dsub">Cancel the forgotten ones — the trials that became payments, the apps I never open.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where do the charges come from? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q34">
+<label class="opt"><input type="checkbox" name="q34" value="Gmail"><span class="box" aria-hidden="true"></span><span class="txt">Gmail</span></label><label class="opt"><input type="checkbox" name="q34" value="Outlook.com"><span class="box" aria-hidden="true"></span><span class="txt">Outlook.com</span></label><label class="opt"><input type="checkbox" name="q34" value="PayPal"><span class="box" aria-hidden="true"></span><span class="txt">PayPal</span></label><label class="opt"><input type="checkbox" name="q34" value="App Store (Apple)"><span class="box" aria-hidden="true"></span><span class="txt">App Store (Apple)</span></label><label class="opt"><input type="checkbox" name="q34" value="Google Play"><span class="box" aria-hidden="true"></span><span class="txt">Google Play</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q34_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q34">Another one — write it here (optional)</label>
+    <input type="text" id="t-q34" data-key="q34_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-q35" aria-labelledby="h-q35">
+  <div class="dhead"><span class="secnum">35</span><h2 id="h-q35">My medical one-liner</h2></div>
+  <p class="dsub">Write my medical one-liner — blood group, prescriptions, allergies, my wishes in three sentences.</p>
+  <p class="qhead">Which app do you use for this?</p>
+  <p class="qwhy">Where would you want that one page to be? Tick every one you use — there is no wrong answer and no limit.</p>
+  <div class="opts" role="group" aria-labelledby="h-q35">
+<label class="opt"><input type="checkbox" name="q35" value="NHS app"><span class="box" aria-hidden="true"></span><span class="txt">NHS app</span></label><label class="opt"><input type="checkbox" name="q35" value="Google Drive"><span class="box" aria-hidden="true"></span><span class="txt">Google Drive</span></label><label class="opt"><input type="checkbox" name="q35" value="OneDrive"><span class="box" aria-hidden="true"></span><span class="txt">OneDrive</span></label><label class="opt"><input type="checkbox" name="q35" value="Apple Notes"><span class="box" aria-hidden="true"></span><span class="txt">Apple Notes</span></label><label class="opt"><input type="checkbox" name="q35" value="Dropbox"><span class="box" aria-hidden="true"></span><span class="txt">Dropbox</span></label>
+    <label class="opt opt-hand"><input type="checkbox" name="q35_hand" value="by hand"><span class="box" aria-hidden="true"></span><span class="txt">I do this by hand — don’t wire anything for this one</span></label>
+  </div>
+  <div class="other">
+    <label for="t-q35">Another one — write it here (optional)</label>
+    <input type="text" id="t-q35" data-key="q35_other" maxlength="120" placeholder="Any other app, paper, or person you use for this" autocomplete="off">
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>Next</button>
+  </div>
+</section>
+
+<section class="screen" id="s-all" aria-labelledby="h-all">
+  <div class="dhead"><span class="secnum">··</span><h2 id="h-all">Everything else I use</h2></div>
+  <p class="dsub">The 35 questions above can never cover everything. If you are not sure which box something belongs in, write it here — your apps, your banks, your subscriptions, your travel sites, your invoicing tools, whatever else runs your day.</p>
+  <p class="qhead">Everything I use, in my own list</p>
+  <p class="qwhy">One per line. This list matters more than the ticks above — it is the complete picture of your setup.</p>
+  <div class="freetext show">
+    <label for="t-all">My full list of apps, banks, sites and tools</label>
+    <textarea id="t-all" data-key="all_other" rows="12" placeholder="Gmail&#10;Google Drive&#10;Monzo&#10;Trainline&#10;Excel&#10;WhatsApp"></textarea>
+  </div>
+  <div class="nav">
+    <button type="button" class="back" data-back>‹ Back</button>
+    <button type="button" class="savenext" data-next>See my answers</button>
+  </div>
+</section>
+
+<section class="screen" id="s-end" aria-labelledby="h-end">
+  <div class="summary">
+    <p class="eyebrow" id="endStatus">Done</p>
+    <h2 id="h-end">Your software setup, ready to send.</h2>
+    <p class="sub">This is what we will wire up. Copy it and send it back — each app you ticked becomes a prepared connection waiting for your login.</p>
+    <pre id="summaryOut" aria-live="polite"></pre>
+    <div class="btnrow">
+      <button type="button" class="copybtn" id="copyBtn">Copy it all</button>
+      <button type="button" class="copybtn second" id="copyTableBtn">Copy the setup table only</button>
+      <button type="button" class="copybtn second" id="waBtn">Send on WhatsApp</button>
+      <button type="button" class="copybtn second" id="tgBtn">Send on Telegram</button>
+    </div>
+    <p class="copied" id="copied"></p>
+    <button type="button" class="ghost" id="restart">Start over</button>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap">
+    <div class="rule"></div>
+    <p>Earl Super Assistant — the software setup, v1.<br>Nothing leaves your phone until you tap Copy.</p>
+  </div>
+</footer>
+<script>
+
+(function(){
+  var STORE_KEY = 'earl_sw_v1';
+  var DATA = [{"n": 1, "short": "The day ahead at 7am", "sent": "Give me the day ahead at 7am: meetings, travel, the three things that need me.", "apps": ["Google Calendar", "Outlook Calendar", "iCloud Calendar", "Google Maps", "Citymapper"], "sec": "Calendar & Meetings"}, {"n": 2, "short": "Rearrange my week", "sent": "Rearrange my week when the news hits it — and show me why before anything moves.", "apps": ["Google Calendar", "Outlook Calendar", "Todoist", "Notion", "Trello"], "sec": "Calendar & Meetings"}, {"n": 3, "short": "Move the train and the hotel", "sent": "When a meeting moves, move the train and hotel with it and ask me to confirm.", "apps": ["Trainline", "SNCF Connect", "Booking.com", "Airbnb", "Expedia"], "sec": "Travel & Bookings"}, {"n": 4, "short": "Track my flight, move the car", "sent": "Track my flight and move the car with it — the driver waits when the plane is late.", "apps": ["Google Flights", "FlightAware", "Skyscanner", "Uber", "Blacklane"], "sec": "Travel & Bookings"}, {"n": 5, "short": "Carbon report for my travel", "sent": "Run the carbon report for my travel, when a client asks.", "apps": ["Google Flights", "Trainline", "Rail Europe", "Skyscanner", "Uber"], "sec": "Travel & Bookings"}, {"n": 6, "short": "Chase the late invoice", "sent": "Draft the chase email when an invoice is about to go late.", "apps": ["Gmail", "Outlook.com", "Microsoft 365", "Fastmail", "Proton Mail"], "sec": "Money & Receipts"}, {"n": 7, "short": "Age every open invoice", "sent": "Keep every open invoice aged — polite nudge, firmer note, escalation — each draft ready, none sent without me.", "apps": ["Microsoft Excel", "Google Sheets", "Xero", "QuickBooks", "FreeAgent"], "sec": "Money & Receipts"}, {"n": 8, "short": "One page per site", "sent": "Keep one page per site: who's who, phone numbers, gate rules, access times.", "apps": ["Microsoft Word", "Google Docs", "Notion", "OneNote", "Evernote"], "sec": "My Safety Work"}, {"n": 9, "short": "Track the family lunch", "sent": "Track who's coming to the family lunch and chase the ones who haven't answered.", "apps": ["WhatsApp", "Gmail", "Outlook.com", "Google Forms", "Microsoft Forms"], "sec": "Family, Friends & Gifts"}, {"n": 10, "short": "Find a gift", "sent": "Find a gift for someone who has everything — and let me pick from three.", "apps": ["Amazon", "eBay", "John Lewis", "Etsy", "Notonthehighstreet"], "sec": "Family, Friends & Gifts"}, {"n": 11, "short": "Remember last year's gifts", "sent": "Remember what I gave people last year so I never repeat.", "apps": ["Google Sheets", "Microsoft Excel", "Notion", "Airtable", "Apple Notes"], "sec": "Family, Friends & Gifts"}, {"n": 12, "short": "Handle the RSVPs", "sent": "Handle RSVPs for the wedding, the reunion, the christening.", "apps": ["WhatsApp", "Google Forms", "Microsoft Forms", "Gmail", "Outlook.com"], "sec": "Family, Friends & Gifts"}, {"n": 13, "short": "Source a client gift", "sent": "Source the gift for a client I've never met — found, wrapped, carded, delivered, within budget.", "apps": ["Amazon", "Etsy", "John Lewis", "eBay", "Moonpig"], "sec": "Family, Friends & Gifts"}, {"n": 14, "short": "Reorder my prescription", "sent": "Remind me to reorder my prescription before I run out.", "apps": ["NHS app", "MyPharmacy", "Echo Pharmacy", "Chemist4U", "my local pharmacy's app"], "sec": "Health"}, {"n": 15, "short": "Find a physio", "sent": "Find a physio near home with slots outside work hours.", "apps": ["Google Maps", "Fresha", "Treatwell", "MyPhysio", "Nuffield Health"], "sec": "Health"}, {"n": 16, "short": "Vaccinations and medical records", "sent": "Keep vaccinations and medical records in one place for travel and for work.", "apps": ["NHS app", "Google Drive", "OneDrive", "Dropbox", "Notion"], "sec": "Health"}, {"n": 17, "short": "The awkward emails", "sent": "Draft the awkward emails: to doctors, dentists, insurers. I send them.", "apps": ["Gmail", "Outlook.com", "Microsoft 365", "Proton Mail", "Fastmail"], "sec": "Health"}, {"n": 18, "short": "Runs and sleep", "sent": "Track my runs and my sleep and give me one honest line a week.", "apps": ["Strava", "Garmin Connect", "Fitbit", "Apple Health", "Samsung Health"], "sec": "Health"}, {"n": 19, "short": "Plumber, electrician, three quotes", "sent": "Find a plumber or electrician with good reviews and ask three of them to quote.", "apps": ["Google Maps", "Checkatrade", "RatedPeople", "TrustMark", "MyBuilder"], "sec": "Home & Errands"}, {"n": 20, "short": "Shopping list and staples", "sent": "Keep a running shopping list; reorder the staples every week.", "apps": ["Amazon", "Tesco", "Sainsbury's", "Ocado", "Morrisons"], "sec": "Home & Errands"}, {"n": 21, "short": "Bins tonight", "sent": "Tell me which bins go out tonight.", "apps": ["my council app", "Google Calendar", "Outlook Calendar", "Google Maps", "my phone notes"], "sec": "Home & Errands"}, {"n": 22, "short": "The letters I keep postponing", "sent": "Draft the letters I keep postponing — landlord, council, gym cancellation, complaint.", "apps": ["Gmail", "Outlook.com", "Microsoft Word", "Google Docs", "Notion"], "sec": "Home & Errands"}, {"n": 23, "short": "The stock-take", "sent": "Run the stock-take: what's used up at home and needs replacing.", "apps": ["Google Sheets", "Microsoft Excel", "Notion", "Airtable", "Google Photos"], "sec": "Home & Errands"}, {"n": 24, "short": "The connected house kit", "sent": "Tie the connected house kit into one routine — the lights, the purifier — on my words, not an app-hunt.", "apps": ["Philips Hue", "SwitchBot", "Google Home", "Amazon Alexa", "Home Assistant"], "sec": "Home & Errands"}, {"n": 25, "short": "The house year", "sent": "Keep the house year honest — alarms in autumn, boiler before winter, first-aid kit restocked — booked and logged.", "apps": ["Google Calendar", "Outlook Calendar", "Todoist", "Google Sheets", "Notion"], "sec": "Home & Errands"}, {"n": 26, "short": "Chase the volunteers", "sent": "Chase the volunteers who haven't confirmed the match-day roster.", "apps": ["WhatsApp", "Gmail", "Outlook.com", "Google Sheets", "Trello"], "sec": "Charity"}, {"n": 27, "short": "Certifications due for renewal", "sent": "Remind me when my safety certifications are due for renewal — months early, not days.", "apps": ["Google Calendar", "Outlook Calendar", "Todoist", "Notion", "Microsoft Excel"], "sec": "Learning"}, {"n": 28, "short": "Reorder the regulars", "sent": "Reorder the regulars — shirts, boots, filters — when they run low.", "apps": ["Amazon", "eBay", "Wiggle", "John Lewis", "Screwfix"], "sec": "Shopping & Deliveries"}, {"n": 29, "short": "A private room for a client dinner", "sent": "Book a private room for a client dinner — eight people, discreet.", "apps": ["TheFork", "OpenTable", "DineOut", "SquareMeal", "the restaurant's own website"], "sec": "Restaurants & Tables"}, {"n": 30, "short": "The same table I liked last time", "sent": "Book the same table I liked last time — and tell them it's my anniversary.", "apps": ["TheFork", "OpenTable", "DineOut", "Google Maps", "my notes app"], "sec": "Restaurants & Tables"}, {"n": 31, "short": "My usual spots on file", "sent": "Keep my usual spots on file — the place, the table, the time — and just use them.", "apps": ["Google Maps", "Apple Maps", "Google Keep", "Notion", "my phone notes"], "sec": "Restaurants & Tables"}, {"n": 32, "short": "Honest alternatives", "sent": "When the first choice is full, come back with the honest alternatives — other nights, other times, nearby.", "apps": ["TheFork", "OpenTable", "DineOut", "Google Maps", "SquareMeal"], "sec": "Restaurants & Tables"}, {"n": 33, "short": "Client hospitality", "sent": "Book client hospitality — the seats, the lunch, the room — when a client deserves a day.", "apps": ["Ticketmaster", "StubHub", "SeatPlan", "Google Calendar", "Outlook Calendar"], "sec": "Events & Tickets"}, {"n": 34, "short": "Cancel the forgotten ones", "sent": "Cancel the forgotten ones — the trials that became payments, the apps I never open.", "apps": ["Gmail", "Outlook.com", "PayPal", "App Store (Apple)", "Google Play"], "sec": "Bills & Subscriptions"}, {"n": 35, "short": "My medical one-liner", "sent": "Write my medical one-liner — blood group, prescriptions, allergies, my wishes in three sentences.", "apps": ["NHS app", "Google Drive", "OneDrive", "Apple Notes", "Dropbox"], "sec": "The No-Panic Page"}];
+  var TOTAL = 35;
+  var ORDER = ["s-intro", "s-q1", "s-q2", "s-q3", "s-q4", "s-q5", "s-q6", "s-q7", "s-q8", "s-q9", "s-q10", "s-q11", "s-q12", "s-q13", "s-q14", "s-q15", "s-q16", "s-q17", "s-q18", "s-q19", "s-q20", "s-q21", "s-q22", "s-q23", "s-q24", "s-q25", "s-q26", "s-q27", "s-q28", "s-q29", "s-q30", "s-q31", "s-q32", "s-q33", "s-q34", "s-q35", "s-all", "s-end"];
+  var screens = ORDER;
+  var cur = 0;
+  var state = { picks: {}, other: {}, hand: {}, all: '' };
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      if(raw){ var o = JSON.parse(raw);
+        state.picks = o.picks || {}; state.other = o.other || {};
+        state.hand = o.hand || {}; state.all = o.all || ''; }
+    }catch(e){}
+  }
+  function save(){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+  function el(id){ return document.getElementById(id); }
+
+  /* ---- reflect state into the DOM (checkboxes + text) ---- */
+  function reflect(){
+    DATA.forEach(function(d){
+      var set = state.picks[d.n] || [];
+      var boxes = document.querySelectorAll('#s-q'+d.n+' input[type=checkbox][name="q'+d.n+'"]');
+      boxes.forEach(function(b){
+        var on = set.indexOf(b.value) >= 0;
+        if(b.checked !== on){ b.checked = on; }
+        var lab = b.closest('label.opt');
+        if(lab) lab.classList.toggle('checked', on);
+      });
+      var hb = document.querySelector('#s-q'+d.n+' input[name="q'+d.n+'_hand"]');
+      if(hb){ hb.checked = !!state.hand[d.n];
+        var hl = hb.closest('label.opt'); if(hl) hl.classList.toggle('checked', !!state.hand[d.n]); }
+      var ti = el('t-q'+d.n);
+      if(ti && ti.value !== (state.other[d.n] || '')) ti.value = state.other[d.n] || '';
+    });
+    var ta = el('t-all');
+    if(ta && ta.value !== state.all) ta.value = state.all;
+    /* index dots */
+    DATA.forEach(function(d){
+      var jb = document.querySelector('.jumpbtn[data-goto="s-q'+d.n+'"]');
+      if(jb) jb.classList.toggle('done', answered(d.n));
+    });
+  }
+  function answered(n){
+    return ((state.picks[n]||[]).length > 0) || !!state.hand[n] || !!((state.other[n]||'').trim());
+  }
+  function answeredCount(){
+    return DATA.filter(function(d){ return answered(d.n); }).length;
+  }
+
+  /* ---- navigation ---- */
+  function show(i){
+    cur = Math.max(0, Math.min(screens.length-1, i));
+    screens.forEach(function(id, k){
+      var s = el(id); if(!s) return;
+      s.classList.toggle('active', k === cur);
+    });
+    var b = document.querySelectorAll('.back');
+    b.forEach(function(x){ x.classList.toggle('visible', cur > 0); });
+    var nxt = document.querySelector('#s-'+ (cur===0?'intro':'') );
+    window.scrollTo({top:0, behavior:'smooth'});
+    updateProgress();
+    reflect();
+  }
+  function updateProgress(){
+    var c = answeredCount();
+    var fill = el('pfill');
+    if(fill) fill.style.width = Math.round(c/TOTAL*100) + '%';
+    var pc = el('pcount');
+    if(pc) pc.innerHTML = c + ' of ' + TOTAL + ' answered';
+  }
+  function gotoId(id){
+    var i = screens.indexOf(id);
+    if(i < 0) return;
+    show(i);
+  }
+
+  /* ---- summary ---- */
+  function buildSummary(){
+    var L = [];
+    L.push('EARL - SOFTWARE SETUP');
+    L.push('');
+    L.push('task | apps ticked | another one | by hand ?');
+    L.push('--- | --- | --- | ---');
+    DATA.forEach(function(d){
+      var apps = (state.picks[d.n]||[]).join('; ');
+      var other = (state.other[d.n]||'').trim();
+      var hand = state.hand[d.n] ? 'yes' : 'no';
+      L.push(d.n + '. ' + d.sent + ' | ' + (apps || '-') + ' | ' + (other || '-') + ' | ' + hand);
+    });
+    L.push('');
+    L.push('ALL MY OTHER APPS (my own list)');
+    L.push('---');
+    var lines = (state.all||'').split(/\r?\n/).map(function(s){ return s.trim(); })
+      .filter(function(s){ return s.length > 0; });
+    if(!lines.length) L.push('(none written)');
+    else lines.forEach(function(s){ L.push(s); });
+    L.push('');
+    L.push('Nothing connected yet. Every app ticked above is being prepared;');
+    L.push('each one still waits for Earl\u2019s own go before it is switched on.');
+    return L.join('\n');
+  }
+  function buildTable(){
+    var L = [];
+    L.push('task | apps ticked | another one | by hand ?');
+    L.push('--- | --- | --- | ---');
+    DATA.forEach(function(d){
+      var apps = (state.picks[d.n]||[]).join('; ');
+      var other = (state.other[d.n]||'').trim();
+      var hand = state.hand[d.n] ? 'yes' : 'no';
+      L.push(d.n + '. ' + d.sent + ' | ' + (apps || '-') + ' | ' + (other || '-') + ' | ' + hand);
+    });
+    L.push('');
+    L.push('ALL MY OTHER APPS (my own list)');
+    L.push('---');
+    var lines = (state.all||'').split(/\r?\n/).map(function(s){ return s.trim(); })
+      .filter(function(s){ return s.length > 0; });
+    if(!lines.length) L.push('(none written)');
+    else lines.forEach(function(s){ L.push(s); });
+    return L.join('\n');
+  }
+  function renderSummary(){
+    var out = el('summaryOut');
+    if(!out) return;
+    out.textContent = buildSummary();
+    var st = el('endStatus');
+    if(st){
+      var c = answeredCount();
+      st.textContent = c === TOTAL ? 'All ' + TOTAL + ' answered' : c + ' of ' + TOTAL + ' answered';
+    }
+  }
+
+  /* ---- copy ---- */
+  function legacyCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try{ ok = document.execCommand('copy'); }catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  function attachCopy(btn, getText){
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var txt = getText();
+      var note = el('copied');
+      var old = btn.textContent;
+      function ok(){
+        if(note) note.textContent = 'Copied. Paste it back to whoever sent you this page.';
+        btn.classList.add('done'); btn.textContent = 'Copied \u2713';
+        setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 2200);
+      }
+      function fail(){
+        if(note) note.textContent = 'Copy blocked by the browser \u2014 select the text above and copy it by hand.';
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(ok, function(){ if(legacyCopy(txt)) ok(); else fail(); });
+      } else { if(legacyCopy(txt)) ok(); else fail(); }
+    });
+  }
+
+  /* ---- wiring ---- */
+  document.addEventListener('click', function(e){
+    var t = e.target.closest ? e.target.closest('[data-next],[data-back],[data-goto]') : null;
+    if(!t) return;
+    if(t.hasAttribute('data-next')){ show(cur+1); if(screens[cur]==='s-end') renderSummary(); }
+    else if(t.hasAttribute('data-back')){ show(cur-1); }
+    else if(t.hasAttribute('data-goto')){ gotoId(t.getAttribute('data-goto')); }
+  });
+
+  document.addEventListener('change', function(e){
+    var eln = e.target;
+    if(eln.type !== 'checkbox') return;
+    var m = /^q(\d+)_hand$/.exec(eln.name);
+    if(m){
+      state.hand[m[1]] = eln.checked;
+      save(); reflect(); updateProgress(); return;
+    }
+    var m2 = /^q(\d+)$/.exec(eln.name);
+    if(m2){
+      var n = m2[1];
+      var set = state.picks[n] || [];
+      var i = set.indexOf(eln.value);
+      if(eln.checked && i < 0) set.push(eln.value);
+      if(!eln.checked && i >= 0) set.splice(i,1);
+      state.picks[n] = set;
+      save(); reflect(); updateProgress(); return;
+    }
+  });
+
+  document.addEventListener('input', function(e){
+    var t = e.target;
+    if(t.tagName === 'TEXTAREA' && t.dataset && t.dataset.key){
+      state.all = t.value; save(); return;
+    }
+    if(t.tagName === 'INPUT' && t.dataset && t.dataset.key){
+      var n = t.dataset.key.replace('q','').replace('_other','');
+      state.other[n] = t.value; save(); updateProgress(); reflect(); return;
+    }
+  });
+
+  attachCopy(el('copyBtn'), buildSummary);
+  attachCopy(el('copyTableBtn'), buildTable);
+  var wa = el('waBtn');
+  if(wa) wa.addEventListener('click', function(){ window.location.href = 'https://wa.me/?text=' + encodeURIComponent(buildSummary()); });
+  var tg = el('tgBtn');
+  if(tg) tg.addEventListener('click', function(){ window.location.href = 'https://t.me/share/url?url=&text=' + encodeURIComponent(buildSummary()); });
+  var rs = el('restart');
+  if(rs) rs.addEventListener('click', function(){
+    try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+    state = { picks:{}, other:{}, hand:{}, all:'' };
+    reflect(); updateProgress(); show(0);
+  });
+
+  load();
+  reflect();
+  show(0);
+  updateProgress();
+})();
+
+</script>
+</body>
+</html>
